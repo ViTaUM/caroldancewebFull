@@ -26,6 +26,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 isAvailable={seat.isAvailable}
+                valor={seat.valor}
               />
             ))
           ) : (
@@ -46,6 +47,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                 selectedSeats={selectedSeats}
                 setSelectedSeats={setSelectedSeats}
                 isAvailable={seat.isAvailable}
+                valor={seat.valor}
               />
             ))
           ) : (

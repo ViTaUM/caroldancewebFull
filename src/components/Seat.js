@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 
-export default function Seat({ name, isAvailable, seatId, selectedSeats, setSelectedSeats }) {
+export default function Seat({ name, isAvailable, seatId, selectedSeats, setSelectedSeats, valor }) {
   const [ selected, setSelected ] = useState(false);
-
-  function selectSeat(seatId, name, isSelected, isAvailable) {
+  console.log(selected)
+  function selectSeat(seatId, name, isSelected, isAvailable, valor) {
     setSelected(!selected);
 
     if (!isAvailable) {
@@ -21,7 +21,7 @@ export default function Seat({ name, isAvailable, seatId, selectedSeats, setSele
 
   return (
     <SeatButton selected={selected} isAvailable={isAvailable}>
-      <button onClick={() => selectSeat(seatId, name, selected, isAvailable)} >{name}</button>
+      <button onClick={() => selectSeat(seatId, name, selected, isAvailable, valor)} >{name}</button>
     </SeatButton>
   );
 }

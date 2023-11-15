@@ -48,6 +48,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       cpf,
       email,
       ids: selectedSeats.map((seat) => seat.seatId),
+      valor: selectedSeats.map((seat) => seat.valor),
     };
 
     setBuyerData({ ...body, ids: selectedSeats });
