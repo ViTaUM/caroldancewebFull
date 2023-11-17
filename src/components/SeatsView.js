@@ -52,7 +52,7 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
         <img src={logo} alt="Logo" />
         <NameTime>
           <h3>Descendentes</h3>
-          <p>07/12/2023 - Quinta-feira às 15:00 horas</p>
+          <p>07/12/2023 - Quinta-feira às 19:30 horas</p>
         </NameTime>
       </Footer>
     </SeatsContent>
