@@ -46,12 +46,11 @@ const CircleColor = styled.div`
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
-  border-radius: 50%;
   background-color: ${props => {
     if (props.type === "disponivel") {
-      return "#C3CFD9";
+      return "#3AA8F9";
     } else if (props.type === "indisponivel") {
-      return "#FBE192";
+      return "#C3CFD9";
     } else if (props.type === "cortesia") {
       return "#FF0000";
     }
@@ -60,11 +59,11 @@ const CircleColor = styled.div`
   }};
   border: 1px solid ${props => {
     if (props.type === "disponivel") {
-      return "#7B8B99";
+      return "#3AA8F9";
     } else if (props.type === "indisponivel") {
-      return "#F7C52B";
+      return "#C3CFD9";
     }
 
-    return "#1AAE9E";
+    return "#FFFFF";
   }};
 `

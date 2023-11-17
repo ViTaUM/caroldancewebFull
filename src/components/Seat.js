@@ -28,20 +28,27 @@ export default function Seat({ name, isAvailable, seatId, selectedSeats, setSele
 
 const SeatButton = styled.li`
   button {
-    width: 30px;
-    height: 30px;
-    margin: 4px 2px;
+    width: 40px;
+    height: 40px;
     text-align: center;
-    border-radius: 50%;
     font-size: 12px;
+    color: ${props => {
+      if (props.isAvailable && props.selected) {
+        return "#000";
+      } else if (props.isAvailable) {
+        return "#FFF";
+      }
+
+      return "#000000";
+    }};
     background-color: ${props => {
       if (props.isAvailable && props.selected) {
         return "#8DD7CF";
       } else if (props.isAvailable) {
-        return "#C3CFD9";
+        return "#3AA8F9";
       }
 
-      return "#FBE192";
+      return "#C3CFD9";
     }};
     border: 1px solid ${props => {
       if (props.isAvailable && props.selected) {
@@ -50,7 +57,7 @@ const SeatButton = styled.li`
         return "#7B8B99";
       }
 
-      return "#F7C52B";
+      return "#C3CFD9";
     }};
     cursor: ${props => props.isAvailable ? "pointer" : "unset"};
   }

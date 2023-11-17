@@ -3,14 +3,10 @@ import Seat from "./Seat";
 
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // Filtrar assentos ímpares
-  const oddSeats = seats.filter(
-    (seat) => parseInt(seat.id) % 2 !== 0
-  );
+  const oddSeats = seats.filter((seat) => parseInt(seat.id) % 2 !== 0);
 
   // Filtrar assentos pares
-  const evenSeats = seats.filter(
-    (seat) => parseInt(seat.id) % 2 === 0
-  );
+  const evenSeats = seats.filter((seat) => parseInt(seat.id) % 2 === 0);
 
   return (
     <SeatsContainer>
@@ -62,12 +58,16 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
 const SeatsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 1366px) {
+    flex-direction: column;
+  }
 `;
 
 const SeatsColumn = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%; // Ajuste a largura conforme necessário
+  
 
   h2 {
     margin: 60px 0;
