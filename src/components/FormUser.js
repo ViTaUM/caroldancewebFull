@@ -113,6 +113,7 @@ const Form = styled.form`
   padding: 24px;
   margin-bottom: 100px;
   max-width: 1450px;
+  gap: 10px;
 
   button {
     margin: 50px;
@@ -132,15 +133,19 @@ const InputContainer = styled.div`
   width: 100%;
   margin-bottom: 12px;
   font-size: 18px;
+  font-weight: 700;
 
   label {
-    color: #293845;
+    color: #000;
     margin-bottom: 8px;
   }
 
   input {
     padding: 10px 18px;
     font-size: 18px;
+    border-radius: 10px;
+    border: 0;
+    height: 50px;
   }
 
   input::-webkit-input-placeholder {

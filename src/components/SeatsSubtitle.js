@@ -5,19 +5,19 @@ export default function SeatsSubtitle() {
     <ColorsSubtitle>
       <ColorContainer>
         <CircleColor type="selecionado" />
-        <p>Selecionado</p>
+        <span>Selecionado</span>
       </ColorContainer>
       <ColorContainer>
         <CircleColor type="disponivel" />
-        <p>Disponível</p>
+        <span>Disponível</span>
       </ColorContainer>
       <ColorContainer>
         <CircleColor type="cortesia" />
-        <p>Cortesia</p>
+        <span>Cortesia</span>
       </ColorContainer>
       <ColorContainer>
         <CircleColor type="indisponivel" />
-        <p>Indisponível</p>
+        <span>Indisponível</span>
       </ColorContainer>
     </ColorsSubtitle>
   );
@@ -36,9 +36,10 @@ const ColorContainer = styled.div`
   align-items: center;
   margin-top: 20px;
 
-  p {
-    font-size: 12px;
-    color: #4E5A65;
+  span {
+    font-size: 14px;
+    color: #000;
+    font-weight: 600;
   }
 `;
 
@@ -46,7 +47,7 @@ const CircleColor = styled.div`
   width: 30px;
   height: 30px;
   margin-bottom: 10px;
-  background-color: ${props => {
+  background-color: ${(props) => {
     if (props.type === "disponivel") {
       return "#3AA8F9";
     } else if (props.type === "indisponivel") {
@@ -57,13 +58,14 @@ const CircleColor = styled.div`
 
     return "#8DD7CF";
   }};
-  border: 1px solid ${props => {
-    if (props.type === "disponivel") {
-      return "#3AA8F9";
-    } else if (props.type === "indisponivel") {
-      return "#C3CFD9";
-    }
+  border: 1px solid
+    ${(props) => {
+      if (props.type === "disponivel") {
+        return "#3AA8F9";
+      } else if (props.type === "indisponivel") {
+        return "#C3CFD9";
+      }
 
-    return "#FFFFF";
-  }};
-`
+      return "#FFFFF";
+    }};
+`;
