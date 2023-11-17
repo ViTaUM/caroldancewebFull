@@ -2,13 +2,17 @@ import styled from "styled-components";
 import qrcode from "./qr-code.png";
 
 export default function SucessPurchase({ buyerData }) {
+  let totalValor = 0;
+
   return (
     <PurchaseContainer>
       <PurchaseInfo>
         <h2>Ingressos</h2>
-        {buyerData.ids.map((seat, index) => (
-          <p key={index}>{`Assento ${seat.name} - ${seat.valor}`}</p>
-        ))}
+        {buyerData.ids.map((seat, index) => {
+          // Some o valor do assento a totalValor
+          totalValor += seat.valor;
+          return <p key={index}>{`Assento ${seat.name} - R$ ${seat.valor},00`}</p>;
+        })}
       </PurchaseInfo>
       <PurchaseInfo>
         <h2>Comprador</h2>
@@ -23,7 +27,7 @@ export default function SucessPurchase({ buyerData }) {
         </p>
         <p>{`CHAVE: (71) 98690-4826`}</p>
         <p>{`NOME: BEATRIZ DA SILVA SANTOS BARROS`}</p>
-        <p>{`VALOR: ${buyerData.totalValor}`}</p>
+        <p>{`VALOR: R$ ${totalValor},00`}</p>
       </PurchaseInfo>
     </PurchaseContainer>
   );

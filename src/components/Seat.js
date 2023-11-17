@@ -15,7 +15,7 @@ export default function Seat({ name, isAvailable, seatId, selectedSeats, setSele
     if (isSelected) {
       setSelectedSeats(selectedSeats.filter(seat => seat !== seatId));
     } else if (!isSelected && isAvailable) {
-      setSelectedSeats([...selectedSeats, { name, seatId }]);
+      setSelectedSeats([...selectedSeats, { name, seatId, valor }]);
     }
   }
 

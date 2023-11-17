@@ -3,10 +3,14 @@ import Seat from "./Seat";
 
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // Filtrar assentos ímpares
-  const oddSeats = seats.filter((seat) => parseInt(seat.id) % 2 !== 0);
+  const oddSeats = seats.map((row, index) =>
+    row.filter((seat) => parseInt(seat.id) % 2 !== 0)
+  );
 
   // Filtrar assentos pares
-  const evenSeats = seats.filter((seat) => parseInt(seat.id) % 2 === 0);
+  const evenSeats = seats.map((row, index) =>
+    row.filter((seat) => parseInt(seat.id) % 2 === 0)
+  );
 
   return (
     <SeatsContainer>
@@ -14,19 +18,25 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
         <h2>Ímpares</h2>
         <SeatsImpares>
           {oddSeats.length > 0 ? (
-            oddSeats.map((seat, index) => (
-              <Seat
-                key={index}
-                name={seat.name}
-                seatId={seat.id}
-                selectedSeats={selectedSeats}
-                setSelectedSeats={setSelectedSeats}
-                isAvailable={seat.isAvailable}
-                valor={seat.valor}
-              />
-            ))
+            oddSeats.map((row, index) => {
+              return (
+                <DivImpar>
+                  {row.map((seat, index) => (
+                    <Seat
+                      key={index}
+                      name={seat.name}
+                      seatId={seat.id}
+                      selectedSeats={selectedSeats}
+                      setSelectedSeats={setSelectedSeats}
+                      isAvailable={seat.isAvailable}
+                      valor={seat.valor}
+                    />
+                  ))}
+                </DivImpar>
+              );
+            })
           ) : (
-            <p>Nenhum assento ímpar disponível.</p>
+            <p>Nenhuma assento ímpar disponível.</p>
           )}
         </SeatsImpares>
       </SeatsColumn>
@@ -35,25 +45,33 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
         <h2>Pares</h2>
         <SeatsPar>
           {evenSeats.length > 0 ? (
-            evenSeats.map((seat, index) => (
-              <Seat
-                key={index}
-                name={seat.name}
-                seatId={seat.id}
-                selectedSeats={selectedSeats}
-                setSelectedSeats={setSelectedSeats}
-                isAvailable={seat.isAvailable}
-                valor={seat.valor}
-              />
-            ))
+            evenSeats.map((row, index) => {
+              return row.map((seat, index) => (
+                <Seat
+                  key={index}
+                  name={seat.name}
+                  seatId={seat.id}
+                  selectedSeats={selectedSeats}
+                  setSelectedSeats={setSelectedSeats}
+                  isAvailable={seat.isAvailable}
+                  valor={seat.valor}
+                />
+              ));
+            })
           ) : (
-            <p>Nenhum assento par disponível.</p>
+            <p>Nenhuma assento Pares disponível.</p>
           )}
         </SeatsPar>
       </SeatsColumn>
     </SeatsContainer>
   );
 }
+
+const DivImpar = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+`;
 
 const SeatsContainer = styled.div`
   display: flex;
@@ -67,7 +85,6 @@ const SeatsContainer = styled.div`
 const SeatsColumn = styled.div`
   display: flex;
   flex-direction: column;
-  
 
   h2 {
     margin: 60px 0;
@@ -87,7 +104,8 @@ const SeatsPar = styled.ul`
 `;
 
 const SeatsImpares = styled.ul`
-  display: grid;
+  flex-direction: column;
+  display: flex;
   gap: 10px 10px;
   grid-template-columns: repeat(13, 1fr);
   padding: 20px;
