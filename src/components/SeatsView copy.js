@@ -5,15 +5,34 @@ import SeatsSubtitle from "./SeatsSubtitle";
 import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
-import Assentos from "../evento/assentos.json"
+import axios from "axios"; // Importe o Axios
+// import sessionDataJson from "../evento/assentos.json";
 
 export default function SeatsView({ setBuyerData, setSessionData }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
   useEffect(() => {
-    // Definindo os filmes com os dados importados do JSON
-    setSeats(Assentos);
+    // Cria a configuração dos cabeçalhos para o Axios
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
+        // Exemplo: Adiciona um cabeçalho de autorização
+        // 'Authorization': 'Bearer seu-token-aqui'
+        // Adicione outros cabeçalhos conforme necessário
+      },
+    };
+
+    // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
+    axios
+      .get("http://localhost:3333/assentos", config)
+      .then((response) => {
+        setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar os assentos:", error);
+      });
   }, []);
 
   return (

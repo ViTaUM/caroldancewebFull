@@ -1,5 +1,9 @@
 [
+  { "id": 1, "name": "A", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 1, "name": "A1", "isAvailable": true, "valor": "30,00" },
+  { "id": 2, "name": "A", "isAvailable": false, "valor": "30,00" },
+  { "id": 2, "name": "X", "isAvailable": false, "valor": "30,00" },
   { "id": 2, "name": "A2", "isAvailable": true, "valor": "30,00" },
   { "id": 3, "name": "A3", "isAvailable": true, "valor": "30,00" },
   { "id": 4, "name": "A4", "isAvailable": true, "valor": "30,00" },
@@ -22,6 +26,8 @@
   { "id": 21, "name": "A21", "isAvailable": true, "valor": "30,00" },
   { "id": 22, "name": "A22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "B", "isAvailable": false, "valor": "30,00" },
+  { "id": 1, "name": "B", "isAvailable": false, "valor": "0" },
   { "id": 23, "name": "B1", "isAvailable": true, "valor": "30,00" },
   { "id": 24, "name": "B2", "isAvailable": true, "valor": "30,00" },
   { "id": 25, "name": "B3", "isAvailable": true, "valor": "30,00" },
@@ -47,6 +53,10 @@
   { "id": 45, "name": "B23", "isAvailable": true, "valor": "30,00" },
   { "id": 46, "name": "B24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 1, "name": "C", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "C", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 47, "name": "C1", "isAvailable": true, "valor": "30,00" },
   { "id": 48, "name": "C2", "isAvailable": true, "valor": "30,00" },
   { "id": 49, "name": "C3", "isAvailable": true, "valor": "30,00" },
@@ -70,6 +80,8 @@
   { "id": 67, "name": "C21", "isAvailable": true, "valor": "30,00" },
   { "id": 68, "name": "C22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "D", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "D", "isAvailable": false, "valor": "0" },
   { "id": 69, "name": "D1", "isAvailable": true, "valor": "30,00" },
   { "id": 70, "name": "D2", "isAvailable": true, "valor": "30,00" },
   { "id": 71, "name": "D3", "isAvailable": true, "valor": "30,00" },
@@ -95,6 +107,10 @@
   { "id": 91, "name": "D23", "isAvailable": true, "valor": "30,00" },
   { "id": 92, "name": "D24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "E", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "E", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 93, "name": "E1", "isAvailable": true, "valor": "30,00" },
   { "id": 94, "name": "E2", "isAvailable": true, "valor": "30,00" },
   { "id": 95, "name": "E3", "isAvailable": true, "valor": "30,00" },
@@ -118,6 +134,8 @@
   { "id": 113, "name": "E21", "isAvailable": true, "valor": "30,00" },
   { "id": 114, "name": "E22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "F", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "F", "isAvailable": false, "valor": "0" },
   { "id": 115, "name": "F1", "isAvailable": true, "valor": "30,00" },
   { "id": 116, "name": "F2", "isAvailable": true, "valor": "30,00" },
   { "id": 117, "name": "F3", "isAvailable": true, "valor": "30,00" },
@@ -143,6 +161,10 @@
   { "id": 137, "name": "F23", "isAvailable": true, "valor": "30,00" },
   { "id": 138, "name": "F24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "G", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "G", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 139, "name": "G1", "isAvailable": true, "valor": "30,00" },
   { "id": 140, "name": "G2", "isAvailable": true, "valor": "30,00" },
   { "id": 141, "name": "G3", "isAvailable": true, "valor": "30,00" },
@@ -166,6 +188,8 @@
   { "id": 159, "name": "G21", "isAvailable": true, "valor": "30,00" },
   { "id": 160, "name": "G22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "H", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "H", "isAvailable": false, "valor": "0" },
   { "id": 161, "name": "H1", "isAvailable": true, "valor": "30,00" },
   { "id": 162, "name": "H2", "isAvailable": true, "valor": "30,00" },
   { "id": 163, "name": "H3", "isAvailable": true, "valor": "30,00" },
@@ -191,6 +215,10 @@
   { "id": 183, "name": "H23", "isAvailable": true, "valor": "30,00" },
   { "id": 184, "name": "H24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "I", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "I", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 185, "name": "I1", "isAvailable": true, "valor": "30,00" },
   { "id": 186, "name": "I2", "isAvailable": true, "valor": "30,00" },
   { "id": 187, "name": "I3", "isAvailable": true, "valor": "30,00" },
@@ -214,6 +242,8 @@
   { "id": 205, "name": "I21", "isAvailable": true, "valor": "30,00" },
   { "id": 206, "name": "I22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "J", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "J", "isAvailable": false, "valor": "0" },
   { "id": 207, "name": "J1", "isAvailable": true, "valor": "30,00" },
   { "id": 208, "name": "J2", "isAvailable": true, "valor": "30,00" },
   { "id": 209, "name": "J3", "isAvailable": true, "valor": "30,00" },
@@ -239,6 +269,10 @@
   { "id": 229, "name": "J23", "isAvailable": true, "valor": "30,00" },
   { "id": 230, "name": "J24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "L", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "L", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 231, "name": "L1", "isAvailable": true, "valor": "30,00" },
   { "id": 232, "name": "L2", "isAvailable": true, "valor": "30,00" },
   { "id": 233, "name": "L3", "isAvailable": true, "valor": "30,00" },
@@ -262,6 +296,8 @@
   { "id": 251, "name": "L21", "isAvailable": true, "valor": "30,00" },
   { "id": 252, "name": "L22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "M", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "M", "isAvailable": false, "valor": "0" },
   { "id": 253, "name": "M1", "isAvailable": true, "valor": "30,00" },
   { "id": 254, "name": "M2", "isAvailable": true, "valor": "30,00" },
   { "id": 255, "name": "M3", "isAvailable": true, "valor": "30,00" },
@@ -287,6 +323,10 @@
   { "id": 275, "name": "M23", "isAvailable": true, "valor": "30,00" },
   { "id": 276, "name": "M24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "N", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "N", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 277, "name": "N1", "isAvailable": true, "valor": "30,00" },
   { "id": 278, "name": "N2", "isAvailable": true, "valor": "30,00" },
   { "id": 279, "name": "N3", "isAvailable": true, "valor": "30,00" },
@@ -310,6 +350,8 @@
   { "id": 297, "name": "N21", "isAvailable": true, "valor": "30,00" },
   { "id": 298, "name": "N22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "O", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "O", "isAvailable": false, "valor": "0" },
   { "id": 299, "name": "O1", "isAvailable": true, "valor": "30,00" },
   { "id": 300, "name": "O2", "isAvailable": true, "valor": "30,00" },
   { "id": 301, "name": "O3", "isAvailable": true, "valor": "30,00" },
@@ -335,6 +377,10 @@
   { "id": 321, "name": "O23", "isAvailable": true, "valor": "30,00" },
   { "id": 322, "name": "O24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "P", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "P", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 323, "name": "P1", "isAvailable": true, "valor": "30,00" },
   { "id": 324, "name": "P2", "isAvailable": true, "valor": "30,00" },
   { "id": 325, "name": "P3", "isAvailable": true, "valor": "30,00" },
@@ -358,6 +404,8 @@
   { "id": 343, "name": "P21", "isAvailable": true, "valor": "30,00" },
   { "id": 344, "name": "P22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "Q", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "Q", "isAvailable": false, "valor": "0" },
   { "id": 345, "name": "Q1", "isAvailable": true, "valor": "30,00" },
   { "id": 346, "name": "Q2", "isAvailable": true, "valor": "30,00" },
   { "id": 347, "name": "Q3", "isAvailable": true, "valor": "30,00" },
@@ -383,6 +431,10 @@
   { "id": 367, "name": "Q23", "isAvailable": true, "valor": "30,00" },
   { "id": 368, "name": "Q24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "R", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "R", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 369, "name": "R1", "isAvailable": true, "valor": "30,00" },
   { "id": 370, "name": "R2", "isAvailable": true, "valor": "30,00" },
   { "id": 371, "name": "R3", "isAvailable": true, "valor": "30,00" },
@@ -406,6 +458,8 @@
   { "id": 389, "name": "R21", "isAvailable": true, "valor": "30,00" },
   { "id": 390, "name": "R22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "S", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "S", "isAvailable": false, "valor": "0" },
   { "id": 391, "name": "S1", "isAvailable": true, "valor": "30,00" },
   { "id": 392, "name": "S2", "isAvailable": true, "valor": "30,00" },
   { "id": 393, "name": "S3", "isAvailable": true, "valor": "30,00" },
@@ -431,6 +485,10 @@
   { "id": 413, "name": "S23", "isAvailable": true, "valor": "30,00" },
   { "id": 414, "name": "S24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "T", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "T", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 415, "name": "T1", "isAvailable": true, "valor": "30,00" },
   { "id": 416, "name": "T2", "isAvailable": true, "valor": "30,00" },
   { "id": 417, "name": "T3", "isAvailable": true, "valor": "30,00" },
@@ -454,6 +512,8 @@
   { "id": 435, "name": "T21", "isAvailable": true, "valor": "30,00" },
   { "id": 436, "name": "T22", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "U", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "U", "isAvailable": false, "valor": "0" },
   { "id": 437, "name": "U1", "isAvailable": true, "valor": "30,00" },
   { "id": 438, "name": "U2", "isAvailable": true, "valor": "30,00" },
   { "id": 439, "name": "U3", "isAvailable": true, "valor": "30,00" },
@@ -479,6 +539,10 @@
   { "id": 459, "name": "U23", "isAvailable": true, "valor": "30,00" },
   { "id": 460, "name": "U24", "isAvailable": true, "valor": "30,00" },
 
+  { "id": 0, "name": "V", "isAvailable": false, "valor": "0" },
+  { "id": 0, "name": "X", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "V", "isAvailable": false, "valor": "0" },
+  { "id": 1, "name": "X", "isAvailable": false, "valor": "0" },
   { "id": 461, "name": "V1", "isAvailable": true, "valor": "30,00" },
   { "id": 462, "name": "V2", "isAvailable": true, "valor": "30,00" },
   { "id": 463, "name": "V3", "isAvailable": true, "valor": "30,00" },

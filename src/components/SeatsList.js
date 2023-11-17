@@ -4,19 +4,19 @@ import Seat from "./Seat";
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // Filtrar assentos ímpares
   const oddSeats = seats.filter(
-    (seat) => parseInt(seat.name.substring(1)) % 2 !== 0
+    (seat) => parseInt(seat.id) % 2 !== 0
   );
 
   // Filtrar assentos pares
   const evenSeats = seats.filter(
-    (seat) => parseInt(seat.name.substring(1)) % 2 === 0
+    (seat) => parseInt(seat.id) % 2 === 0
   );
 
   return (
     <SeatsContainer>
       <SeatsColumn>
         <h2>Ímpares</h2>
-        <Seats>
+        <SeatsImpares>
           {oddSeats.length > 0 ? (
             oddSeats.map((seat, index) => (
               <Seat
@@ -32,12 +32,12 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
           ) : (
             <p>Nenhum assento ímpar disponível.</p>
           )}
-        </Seats>
+        </SeatsImpares>
       </SeatsColumn>
 
       <SeatsColumn>
         <h2>Pares</h2>
-        <Seats>
+        <SeatsPar>
           {evenSeats.length > 0 ? (
             evenSeats.map((seat, index) => (
               <Seat
@@ -53,7 +53,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
           ) : (
             <p>Nenhum assento par disponível.</p>
           )}
-        </Seats>
+        </SeatsPar>
       </SeatsColumn>
     </SeatsContainer>
   );
@@ -77,10 +77,18 @@ const SeatsColumn = styled.div`
   }
 `;
 
-const Seats = styled.ul`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  width: 100%;
-  padding: 0 14px;
+const SeatsPar = styled.ul`
+  display: grid;
+  gap: 10px 10px;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(21, 1fr);
+  padding: 20px;
+  flex-direction: row-reverse;
+`;
+
+const SeatsImpares = styled.ul`
+  display: grid;
+  gap: 10px 10px;
+  grid-template-columns: repeat(13, 1fr);
+  padding: 20px;
 `;
