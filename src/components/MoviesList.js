@@ -27,5 +27,4 @@ const Movies = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  max-width: 200px;
 `;
