@@ -118,12 +118,17 @@ const Form = styled.form`
   button {
     margin: 50px;
     padding: 10px 20px;
-    background-color: #CD0077;
+    background-color: #cd0077;
     border-radius: 4px;
     border: none;
     color: #ffffff;
     text-align: center;
     font-size: 18px;
+    transition: background-color 0.3s ease; /* Adiciona uma transição suave para a mudança de cor */
+  }
+
+  button:hover {
+    background-color: #ff1493; /* Define a cor de fundo quando o mouse passa por cima */
   }
 `;
 
@@ -144,25 +149,26 @@ const InputContainer = styled.div`
     padding: 10px 18px;
     font-size: 18px;
     border-radius: 10px;
-    border: 0;
+    border: 1px solid #EEE;
     height: 50px;
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
   }
 
   input::-webkit-input-placeholder {
     font-size: 18px;
-    font-style: italic;
-    color: #afafaf;
+    color: #000;
   }
 
   input:-ms-input-placeholder {
     font-size: 18px;
-    font-style: italic;
-    color: #afafaf;
+    color: #000;
   }
 
   input::placeholder {
     font-size: 18px;
-    font-style: italic;
-    color: #afafaf;
+    color: #000;
   }
 `;
