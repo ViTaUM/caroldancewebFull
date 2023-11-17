@@ -5,7 +5,7 @@ import SeatsSubtitle from "./SeatsSubtitle";
 import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
-import Assentos from "../evento/assentos.json"
+import Assentos from "../evento/assentos.json";
 
 export default function SeatsView({ setBuyerData, setSessionData }) {
   const [seats, setSeats] = useState([]);
@@ -18,9 +18,9 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
 
   return (
     <SeatsContent>
-      <h2>Selecione o(s) assento(s)</h2>
       <div class="header">
         <h1>PALCO</h1>
+        <h2>Selecione o(s) assento(s)</h2>
       </div>
       <SeatsList
         seats={seats}
@@ -44,23 +44,23 @@ const SeatsContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100vw;
-  margin: 60px 0 100px 0;
+  width: 100%;
+  margin-top: 60px;
   h1 {
     font-weight: bold;
     font-size: 24px;
   }
   h2 {
-    margin: 60px 0;
     font-size: 24px;
     color: #293845;
   }
   .header {
     justify-content: center;
-    width: 100vw;
-    padding: 20px;
-    background-color: #f2dcdc;
+    width: 100%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 `;
 

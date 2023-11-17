@@ -5,11 +5,10 @@ import TopBar from "./TopBar";
 import MoviesView from "./MoviesView";
 import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
-// import SessionsView from "./SessionsView";
 
 export default function App() {
-  const [ buyerData, setBuyerData ] = useState({});
-  const [ sessionData, setSessionData ] = useState({});
+  const [buyerData, setBuyerData] = useState({});
+  const [sessionData, setSessionData] = useState({});
 
   function restartData() {
     setBuyerData({});
@@ -17,16 +16,34 @@ export default function App() {
   }
 
   return (
-    <>
+    <main>
       <GlobalStyle />
+      <TopBar />
       <BrowserRouter>
-        <TopBar />
         <Routes>
-          <Route path="/" element={ <MoviesView /> } />
-          <Route path="/assentos/1" element={ <SeatsView setBuyerData={ setBuyerData } sessionData={ sessionData } setSessionData={ setSessionData } />} />
-          <Route path="/sucesso" element={ <SucessView buyerData={ buyerData } sessionData={ sessionData } restartData={ restartData } />} />
+          <Route path="/" element={<MoviesView />} />
+          <Route
+            path="/assentos/1"
+            element={
+              <SeatsView
+                setBuyerData={setBuyerData}
+                sessionData={sessionData}
+                setSessionData={setSessionData}
+              />
+            }
+          />
+          <Route
+            path="/sucesso"
+            element={
+              <SucessView
+                buyerData={buyerData}
+                sessionData={sessionData}
+                restartData={restartData}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
-    </>
+    </main>
   );
 }

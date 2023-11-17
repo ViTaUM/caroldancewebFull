@@ -111,6 +111,8 @@ const Form = styled.form`
   margin-top: 42px;
   width: 100%;
   padding: 24px;
+  margin-bottom: 100px;
+  max-width: 1450px;
 
   button {
     margin: 50px;

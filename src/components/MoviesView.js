@@ -13,7 +13,7 @@ export default function MoviesView() {
 
   return (
     <Content>
-      <h2>Click no evento</h2>
+      <h2>Clique no evento</h2>
       <MoviesList movies={movies} />
     </Content>
   );
@@ -24,7 +24,7 @@ const Content = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 60px;
-  width: 100vw;
+  width: 100%;
 
   h2 {
     margin: 50px 0;
