@@ -47,21 +47,21 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       name,
       cpf,
       email,
-      ids: selectedSeats.map((seat) => seat.seatId),
+      assentos: selectedSeats.map((seat) => seat.seatId),
       valor: selectedSeats.map((seat) => seat.valor),
     };
 
     setBuyerData({ ...body, ids: selectedSeats });
 
     const promise = axios.post(
-      "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many",
+      "https://api-carol-dance-web-o5zr.vercel.app/reservas",
       body
     );
 
     promise
       .catch((err) =>
         console.log(
-          `Erro no envio dos dados da compra, status: ${err.response.status}`
+          `Erro no envio dos dados da reserva do assentos, status: ${err.response.status}`
         )
       )
       .then((response) => navigate("/sucesso", { replace: true }));
