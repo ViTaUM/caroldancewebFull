@@ -149,7 +149,7 @@ const InputContainer = styled.div`
     padding: 10px 18px;
     font-size: 18px;
     border-radius: 10px;
-    border: 1px solid #EEE;
+    border: 1px solid #000;
     height: 50px;
     outline: none;
     background: rgba(255, 255, 255, 0.3);

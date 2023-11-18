@@ -25,9 +25,9 @@ export default function SeatsSubtitle() {
 
 const ColorsSubtitle = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
-  padding: 0 10%;
+  gap: 30px;
 `;
 
 const ColorContainer = styled.div`

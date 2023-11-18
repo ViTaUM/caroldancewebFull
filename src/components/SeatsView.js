@@ -27,7 +27,6 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
       />
-      <SeatsSubtitle />
       <FormUser selectedSeats={selectedSeats} setBuyerData={setBuyerData} />
       <Footer>
         <img src={logo} alt="Logo" />

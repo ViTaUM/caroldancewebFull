@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Seat from "./Seat";
+import SeatsSubtitle from "./SeatsSubtitle";
 
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // Filtrar assentos ímpares
@@ -14,58 +15,68 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
 
   return (
     <SeatsContainer>
-      <SeatsColumn>
-        <h2>Ímpares</h2>
-        <SeatsImpares>
-          {oddSeats.length > 0 ? (
-            oddSeats.map((row, index) => {
-              return (
-                <DivImpar>
-                  {row.map((seat, index) => (
-                    <Seat
-                      key={index}
-                      name={seat.name}
-                      seatId={seat.id}
-                      selectedSeats={selectedSeats}
-                      setSelectedSeats={setSelectedSeats}
-                      isAvailable={seat.isAvailable}
-                      valor={seat.valor}
-                    />
-                  ))}
-                </DivImpar>
-              );
-            })
-          ) : (
-            <p>Nenhuma assento ímpar disponível.</p>
-          )}
-        </SeatsImpares>
-      </SeatsColumn>
+      <SeatsWrapper>
+        <SeatsColumn>
+          <h2>Ímpares</h2>
+          <SeatsImpares>
+            {oddSeats.length > 0 ? (
+              oddSeats.map((row, index) => {
+                return (
+                  <DivImpar>
+                    {row.map((seat, index) => (
+                      <Seat
+                        key={index}
+                        name={seat.name}
+                        seatId={seat.id}
+                        selectedSeats={selectedSeats}
+                        setSelectedSeats={setSelectedSeats}
+                        isAvailable={seat.isAvailable}
+                        valor={seat.valor}
+                      />
+                    ))}
+                  </DivImpar>
+                );
+              })
+            ) : (
+              <p>Nenhuma assento ímpar disponível.</p>
+            )}
+          </SeatsImpares>
+        </SeatsColumn>
 
-      <SeatsColumn>
-        <h2>Pares</h2>
-        <SeatsPar>
-          {evenSeats.length > 0 ? (
-            evenSeats.map((row, index) => {
-              return row.map((seat, index) => (
-                <Seat
-                  key={index}
-                  name={seat.name}
-                  seatId={seat.id}
-                  selectedSeats={selectedSeats}
-                  setSelectedSeats={setSelectedSeats}
-                  isAvailable={seat.isAvailable}
-                  valor={seat.valor}
-                />
-              ));
-            })
-          ) : (
-            <p>Nenhuma assento Pares disponível.</p>
-          )}
-        </SeatsPar>
-      </SeatsColumn>
+        <SeatsColumn>
+          <h2>Pares</h2>
+          <SeatsPar>
+            {evenSeats.length > 0 ? (
+              evenSeats.map((row, index) => {
+                return row.map((seat, index) => (
+                  <Seat
+                    key={index}
+                    name={seat.name}
+                    seatId={seat.id}
+                    selectedSeats={selectedSeats}
+                    setSelectedSeats={setSelectedSeats}
+                    isAvailable={seat.isAvailable}
+                    valor={seat.valor}
+                  />
+                ));
+              })
+            ) : (
+              <p>Nenhuma assento Pares disponível.</p>
+            )}
+          </SeatsPar>
+        </SeatsColumn>
+      </SeatsWrapper>
+      <SeatsSubtitle />
     </SeatsContainer>
   );
 }
+
+const SeatsWrapper = styled.div`
+  display: flex;
+  @media (max-width: 1376px) {
+    flex-direction: column;
+  }
+`;
 
 const DivImpar = styled.div`
   display: flex;
@@ -75,6 +86,7 @@ const DivImpar = styled.div`
 
 const SeatsContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
