@@ -1,14 +1,7 @@
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import SucessPurchase from "./SucessPurchase";
 
 export default function SucessView({ buyerData, restartData }) {
-  const navigate = useNavigate();
-
-  function backHome() {
-    restartData();
-    navigate("/", { replace: true });
-  }
 
   function AddWhatsApp() {
     const whatsappURL = "https://wa.me/5571986904826";
