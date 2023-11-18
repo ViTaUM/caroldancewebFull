@@ -26,7 +26,7 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("http://localhost:3333/assentos", config)
+      .get("https://api-carol-dance-web-o5zr.vercel.app/assentos", config)
       .then((response) => {
         setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
       })
