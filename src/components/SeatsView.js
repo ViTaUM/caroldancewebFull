@@ -4,7 +4,6 @@ import SeatsList from "./SeatsList";
 import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
-import Assentos from "../evento/assentos.json";
 import axios from "axios";
 
 export default function SeatsView({ setBuyerData, setSessionData }) {
