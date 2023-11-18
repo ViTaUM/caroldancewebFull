@@ -7,6 +7,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
   const [name, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
+  const [aluna, setAluna] = useState("");
   const navigate = useNavigate();
 
   // Função para validar um e-mail usando regex
@@ -35,7 +36,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     }
   }
 
-  function confirmPurchase(e) {
+  async function confirmPurchase(e) {
     e.preventDefault();
 
     if (!isValidEmail(email)) {
@@ -47,6 +48,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       name,
       cpf,
       email,
+      aluna,
       idassentos: selectedSeats.map((seat) => seat.seatId),
       assentos: selectedSeats.map((seat) => seat.name),
       valor: selectedSeats.map((seat) => seat.valor),
@@ -54,19 +56,39 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
 
     setBuyerData({ ...body, ids: selectedSeats });
 
-    const promise = axios.post(
+    const promise = await axios.post(
       "https://api-carol-dance-web-o5zr.vercel.app/reserva",
       body
     );
 
-    promise
-      .catch((err) =>
-        console.log(
-          `Erro no envio dos dados da reserva do assentos, status: ${err.response.status}`
-        )
-      )
-      .then((response) => navigate("/sucesso", { replace: true }));
+    if (promise.status === 200) {
+      for (const seat of selectedSeats) {
+        console.log(seat.seatId)
+        try {
+          await axios.post(
+            `https://api-carol-dance-web-o5zr.vercel.app/assentos/${seat.seatId}/false`
+          );
+        } catch (error) {
+          console.log(`Erro ao enviar idassento ${seat.seatId}: ${error.message}`);
+          // Lide com erros individuais, se necessário
+        }
+      }
+
+      navigate("/sucesso", { replace: true });
+    } else {
+      console.log(`Erro ao enviar a reserva: ${promise.status}`);
+      // Lide com erros de reserva, se necessário
+    }
   }
+
+    // promise
+    //   .catch((err) =>
+    //     console.log(
+    //       `Erro no envio dos dados da reserva do assentos, status: ${err.response.status}`
+    //     )
+    //   )
+    //   .then((response) => navigate("/sucesso", { replace: true }));
+  
 
   return (
     <Form onSubmit={confirmPurchase}>
@@ -97,6 +119,16 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
           value={email}
           placeholder="Digite seu E-mail..."
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </InputContainer>
+      <InputContainer>
+        <label htmlFor="aluna">Nome da Aluna:</label>
+        <input
+          id="aluna"
+          value={aluna}
+          placeholder="Digite o nome da Aluna..."
+          onChange={(e) => setAluna(e.target.value)}
           required
         />
       </InputContainer>

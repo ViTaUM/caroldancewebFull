@@ -10,11 +10,21 @@ export default function SucessView({ buyerData, restartData }) {
     navigate("/", { replace: true });
   }
 
+  function AddWhatsApp() {
+    const whatsappURL = "https://wa.me/5571986904826";
+    window.open(whatsappURL, "_blank"); // Abre em uma nova aba
+  }
+
   return (
     <SucessContent>
       <SucessMessage>Pedido aguardando pagamento!</SucessMessage>
-      <SucessPurchase buyerData={ buyerData } />
-      <button onClick={ backHome }>Voltar pra Home</button>
+      <SucessPurchase buyerData={buyerData} />
+      <ButtonContainer>
+        <ButtonPagamento>Pagamento Efetuado</ButtonPagamento>
+        <ButtonWhatsApp onClick={AddWhatsApp}>
+          Enviar Comprovante de Pagamento
+        </ButtonWhatsApp>
+      </ButtonContainer>
     </SucessContent>
   );
 }
@@ -25,22 +35,51 @@ const SucessContent = styled.div`
   align-items: center;
   margin: 60px 0;
 
-  button {
-    margin: 50px;
-    padding: 10px 20px;
-    background-color: #CD0077;
-    border-radius: 4px;
-    border: none;
-    color: #FFFFFF;
-    text-align: center;
-    font-size: 18px;
-  }
+  // button {
+  //   margin: 50px;
+  //   padding: 10px 20px;
+  //   background-color: #cd0077;
+  //   border-radius: 4px;
+  //   border: none;
+  //   color: #ffffff;
+  //   text-align: center;
+  //   font-size: 18px;
+  // }
 `;
 
 const SucessMessage = styled.h2`
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  color: #247A6B;
+  color: #247a6b;
   width: 40%;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 20px; /* Espaçamento entre os botões */
+`;
+
+const ButtonWhatsApp = styled.div`
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #4caf50; /* Cor verde */
+  border-radius: 4px;
+  border: none;
+  color: #ffffff; /* Cor branca */
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer; /* Mostrar cursor de mão ao passar o mouse */
+`;
+
+const ButtonPagamento = styled.div`
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #cd0077;
+  border-radius: 4px;
+  border: none;
+  color: #ffffff; /* Cor branca */
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer; /* Mostrar cursor de mão ao passar o mouse */
 `;

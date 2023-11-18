@@ -27,7 +27,7 @@ export default function SucessPurchase({ buyerData }) {
         </p>
         <p>{`CHAVE: (71) 98690-4826`}</p>
         <p>{`NOME: BEATRIZ DA SILVA SANTOS BARROS`}</p>
-        <p>{`VALOR: R$ ${totalValor},00`}</p>
+        <p>{`VALOR TOTAL: R$ ${totalValor},00`}</p>
       </PurchaseInfo>
     </PurchaseContainer>
   );

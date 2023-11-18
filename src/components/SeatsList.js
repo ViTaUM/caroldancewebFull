@@ -73,7 +73,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
 
 const SeatsWrapper = styled.div`
   display: flex;
-  @media (max-width: 1376px) {
+  @media (max-width: 1176px) {
     flex-direction: column;
   }
 `;
@@ -97,7 +97,7 @@ const SeatsContainer = styled.div`
   padding: 20px;
   margin-top: 30px;
 
-  @media (max-width: 1366px) {
+  @media (max-width: 1176px) {
     flex-direction: column;
   }
 `;

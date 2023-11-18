@@ -5,6 +5,7 @@ import TopBar from "./TopBar";
 import MoviesView from "./MoviesView";
 import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
+import Relatorio from "./Relatorio";
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
@@ -42,6 +43,7 @@ export default function App() {
               />
             }
           />
+          <Route path="/relatorio" element={<Relatorio />} />
         </Routes>
       </BrowserRouter>
     </main>
