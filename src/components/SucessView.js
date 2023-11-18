@@ -23,7 +23,7 @@ const SucessContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100px;
+  margin: 60px 0;
 
   button {
     margin: 50px;
