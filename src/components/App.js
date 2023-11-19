@@ -24,6 +24,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MoviesView />} />
+          <Route path="/relatorios" element={<Relatorio />} />
+          <Route path="/relatorio" element={<Teste />} />
           <Route
             path="/assentos/1"
             element={
@@ -44,8 +46,6 @@ export default function App() {
               />
             }
           />
-          <Route path="/relatorios" element={<Relatorio />} />
-          <Route path="/relatorio" element={<Teste />} />
         </Routes>
       </BrowserRouter>
     </main>
