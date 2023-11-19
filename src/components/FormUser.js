@@ -50,8 +50,8 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       email,
       aluna,
       idassentos: selectedSeats.map((seat) => seat.seatId),
-      assentos: selectedSeats.map((seat) => seat.name),
-      valor: selectedSeats.map((seat) => seat.valor),
+      assentos: selectedSeats.map((seat) => seat.name).join(" - "),
+      valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
     };
 
     setBuyerData({ ...body, ids: selectedSeats });
@@ -80,15 +80,6 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       // Lide com erros de reserva, se necessário
     }
   }
-
-    // promise
-    //   .catch((err) =>
-    //     console.log(
-    //       `Erro no envio dos dados da reserva do assentos, status: ${err.response.status}`
-    //     )
-    //   )
-    //   .then((response) => navigate("/sucesso", { replace: true }));
-  
 
   return (
     <Form onSubmit={confirmPurchase}>

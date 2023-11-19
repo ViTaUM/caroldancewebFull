@@ -27,17 +27,6 @@ const SucessContent = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 60px 0;
-
-  // button {
-  //   margin: 50px;
-  //   padding: 10px 20px;
-  //   background-color: #cd0077;
-  //   border-radius: 4px;
-  //   border: none;
-  //   color: #ffffff;
-  //   text-align: center;
-  //   font-size: 18px;
-  // }
 `;
 
 const SucessMessage = styled.h2`
