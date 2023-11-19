@@ -44,6 +44,11 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       return;
     }
 
+    if (selectedSeats.length === 0) {
+      alert("Por favor, selecione pelo menos um assento.");
+      return;
+    }
+
     const body = {
       name,
       cpf,
@@ -63,13 +68,15 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
 
     if (promise.status === 200) {
       for (const seat of selectedSeats) {
-        console.log(seat.seatId)
+        console.log(seat.seatId);
         try {
           await axios.post(
             `https://api-carol-dance-web-o5zr.vercel.app/assentos/${seat.seatId}/false`
           );
         } catch (error) {
-          console.log(`Erro ao enviar idassento ${seat.seatId}: ${error.message}`);
+          console.log(
+            `Erro ao enviar idassento ${seat.seatId}: ${error.message}`
+          );
           // Lide com erros individuais, se necessário
         }
       }
@@ -149,6 +156,7 @@ const Form = styled.form`
     text-align: center;
     font-size: 18px;
     transition: background-color 0.3s ease; /* Adiciona uma transição suave para a mudança de cor */
+    cursor: pointer;
   }
 
   button:hover {
