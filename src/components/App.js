@@ -43,7 +43,7 @@ export default function App() {
               />
             }
           />
-          <Route path="/relatorio" element={<Relatorio />} />
+          <Route path="/relatorios" element={<Relatorio />} />
         </Routes>
       </BrowserRouter>
     </main>
