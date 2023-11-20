@@ -5,7 +5,7 @@ import TopBar from "./TopBar";
 import MoviesView from "./MoviesView";
 import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
-import Teste from "./teste";
+import Relatorio from "./Relatorio";
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
@@ -23,7 +23,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MoviesView />} />
-          <Route path="/teste" element={<Teste />} />
+          <Route path="/relatorio" element={<Relatorio />} />
           <Route
             path="/assentos/1"
             element={

@@ -87,7 +87,7 @@ export default function Relatorio() {
     <SeatsContent>
       <div className="header">
         <h1>RELATÓRIO</h1>
-        <h2>Abaixo a lista dos compradores aguardando pagamento</h2>
+        <h2>Abaixo a lista dos compradores aguardando confirmação de pagamento</h2>
       </div>
       <TableContainer>
         <table>
