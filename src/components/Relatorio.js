@@ -19,7 +19,7 @@ export default function Relatorio() {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://api-carol-dance-web-o5zr.vercel.app/reservas", config)
+      .get("https://api-carol-dance-web.vercel.app/reservas", config)
       .then((response) => {
         setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
       })
@@ -41,7 +41,7 @@ export default function Relatorio() {
 
     if (confirmDelete) {
       axios
-        .delete(`https://api-carol-dance-web-o5zr.vercel.app/reservas/${id}`)
+        .delete(`https://api-carol-dance-web.vercel.app/reservas/${id}`)
         .then((response) => {
           if (response.status === 204) {
             // Reserva excluída com sucesso
@@ -66,7 +66,7 @@ export default function Relatorio() {
 
     if (confirmPag) {
       axios
-        .put(`https://api-carol-dance-web-o5zr.vercel.app/reservas/pagar/${id}`)
+        .put(`https://api-carol-dance-web.vercel.app/reservas/pagar/${id}`)
         .then((response) => {
           if (response.status === 204) {
             // Reserva excluída com sucesso

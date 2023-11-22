@@ -62,7 +62,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     setBuyerData({ ...body, ids: selectedSeats });
 
     const promise = await axios.post(
-      "https://api-carol-dance-web-o5zr.vercel.app/reserva",
+      "https://api-carol-dance-web.vercel.app/reserva",
       body
     );
 
@@ -71,7 +71,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
         console.log(seat.seatId);
         try {
           await axios.post(
-            `https://api-carol-dance-web-o5zr.vercel.app/assentos/${seat.seatId}/false`
+            `https://api-carol-dance-web.vercel.app/assentos/${seat.seatId}/false`
           );
         } catch (error) {
           console.log(
