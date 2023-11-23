@@ -126,7 +126,7 @@ export default function Relatorio() {
                     {seat.nome}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.assentos.replace(/[\[\]"]+/g, "")}
+                    {seat.assentos.replace(/[\\[\]"]+/g, "")}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.email}
