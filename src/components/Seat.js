@@ -12,7 +12,17 @@ export default function Seat({
   const [selected, setSelected] = useState(false);
 
   function selectSeat(seatId, name, isSelected, isAvailable, valor) {
-    setSelected(!selected);
+    // Contar assentos selecionados com valor 0 e 30
+    const countValor0 = selectedSeats.filter((seat) => seat.valor === 0).length;
+    const countValor30 = selectedSeats.filter(
+      (seat) => seat.valor === 30
+    ).length;
+
+    // Verifica se está tentando selecionar um novo assento
+    if (!isSelected && selectedSeats.length >= 5) {
+      alert("Você pode selecionar no máximo 5 assentos.");
+      return;
+    }
 
     if (!isAvailable) {
       alert("Esse assento não está disponível");
@@ -22,8 +32,20 @@ export default function Seat({
     if (isSelected) {
       // Remover o assento desmarcado com base no seatId
       setSelectedSeats(selectedSeats.filter((seat) => seat.seatId !== seatId));
-    } else if (!isSelected && isAvailable) {
+      setSelected(false);
+    } else {
+      // Regras para adicionar assento
+      if (valor === 0 && countValor0 >= 3) {
+        alert("Você só pode selecionar no máximo 3 assentos cortesia.");
+        return;
+      }
+      if (valor === 30 && countValor30 >= 2) {
+        alert("Você só pode selecionar no máximo 2 assentos normais.");
+        return;
+      }
+
       setSelectedSeats([...selectedSeats, { name, seatId, valor }]);
+      setSelected(true);
     }
   }
 
