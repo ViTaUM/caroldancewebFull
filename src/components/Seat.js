@@ -35,12 +35,12 @@ export default function Seat({
       setSelected(false);
     } else {
       // Regras para adicionar assento
-      if (valor === 0 && countValor0 >= 3) {
-        alert("Você só pode selecionar no máximo 3 assentos cortesia.");
+      if (valor === 0 && countValor0 >= 2) {
+        alert("Você só pode selecionar no máximo 2 assentos cortesia.");
         return;
       }
-      if (valor === 30 && countValor30 >= 2) {
-        alert("Você só pode selecionar no máximo 2 assentos normais.");
+      if (valor === 30 && countValor30 >= 3) {
+        alert("Você só pode selecionar no máximo 3 assentos normais.");
         return;
       }
 
