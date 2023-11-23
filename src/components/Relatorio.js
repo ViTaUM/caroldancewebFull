@@ -19,7 +19,7 @@ export default function Relatorio() {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://api-carol-dance-web.vercel.app/reservas", config)
+      .get("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", config)
       .then((response) => {
         setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
       })
@@ -38,10 +38,15 @@ export default function Relatorio() {
     const confirmDelete = window.confirm(
       "Tem certeza de que deseja excluir esta reserva?"
     );
-
+    const body = {
+      id,
+    };
     if (confirmDelete) {
       axios
-        .delete(`https://api-carol-dance-web.vercel.app/reservas/${id}`)
+        .delete(
+          `https://h-simcepi.smsprefeiturasp.com.br/python/reservas`,
+          body
+        )
         .then((response) => {
           if (response.status === 204) {
             // Reserva excluída com sucesso
@@ -64,9 +69,13 @@ export default function Relatorio() {
       "Tem certeza de que deseja confirmar pagamento?"
     );
 
+    const body = {
+      id,
+    };
+
     if (confirmPag) {
       axios
-        .put(`https://api-carol-dance-web.vercel.app/reservas/pagar/${id}`)
+        .put(`https://h-simcepi.smsprefeiturasp.com.br/python/reservas`, body)
         .then((response) => {
           if (response.status === 204) {
             // Reserva excluída com sucesso
@@ -87,7 +96,9 @@ export default function Relatorio() {
     <SeatsContent>
       <div className="header">
         <h1>RELATÓRIO</h1>
-        <h2>Abaixo a lista dos compradores aguardando confirmação de pagamento</h2>
+        <h2>
+          Abaixo a lista dos compradores aguardando confirmação de pagamento
+        </h2>
       </div>
       <TableContainer>
         <table>

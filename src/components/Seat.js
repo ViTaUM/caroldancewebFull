@@ -10,7 +10,7 @@ export default function Seat({
   valor,
 }) {
   const [selected, setSelected] = useState(false);
-  
+
   function selectSeat(seatId, name, isSelected, isAvailable, valor) {
     setSelected(!selected);
 
@@ -20,7 +20,8 @@ export default function Seat({
     }
 
     if (isSelected) {
-      setSelectedSeats(selectedSeats.filter((seat) => seat !== seatId));
+      // Remover o assento desmarcado com base no seatId
+      setSelectedSeats(selectedSeats.filter((seat) => seat.seatId !== seatId));
     } else if (!isSelected && isAvailable) {
       setSelectedSeats([...selectedSeats, { name, seatId, valor }]);
     }

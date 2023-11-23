@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import SucessPurchase from "./SucessPurchase";
 
-export default function SucessView({ buyerData, restartData }) {
+export default function SucessView({ buyerData }) {
   function AddWhatsApp() {
     const whatsappURL = "https://wa.me/5571986904826";
     window.open(whatsappURL, "_blank"); // Abre em uma nova aba

@@ -5,12 +5,12 @@ import SeatsSubtitle from "./SeatsSubtitle";
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // Filtrar assentos ímpares
   const oddSeats = seats.map((row, index) =>
-    row.filter((seat) => parseInt(seat.id) % 2 !== 0)
+    row.filter((seat) => parseInt(seat.numero) % 2 !== 0)
   );
 
   // Filtrar assentos pares
   const evenSeats = seats.map((row, index) =>
-    row.filter((seat) => parseInt(seat.id) % 2 === 0)
+    row.filter((seat) => parseInt(seat.numero) % 2 === 0)
   );
 
   return (
@@ -26,11 +26,11 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                     {row.map((seat, index) => (
                       <Seat
                         key={index}
-                        name={seat.name}
+                        name={seat.nome}
                         seatId={seat.id}
                         selectedSeats={selectedSeats}
                         setSelectedSeats={setSelectedSeats}
-                        isAvailable={seat.isAvailable}
+                        isAvailable={seat.disponivel}
                         valor={seat.valor}
                       />
                     ))}
@@ -51,11 +51,11 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                 return row.map((seat, index) => (
                   <Seat
                     key={index}
-                    name={seat.name}
+                    name={seat.nome}
                     seatId={seat.id}
                     selectedSeats={selectedSeats}
                     setSelectedSeats={setSelectedSeats}
-                    isAvailable={seat.isAvailable}
+                    isAvailable={seat.disponivel}
                     valor={seat.valor}
                   />
                 ));

@@ -6,7 +6,7 @@ import Footer from "./Fotter";
 import logo from "./logo.jpg";
 import axios from "axios";
 
-export default function SeatsView({ setBuyerData, setSessionData }) {
+export default function SeatsView({ setBuyerData }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
 
@@ -24,7 +24,7 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://api-carol-dance-web.vercel.app/assentos", config)
+      .get("https://h-simcepi.smsprefeiturasp.com.br/python/assentos", config)
       .then((response) => {
         setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
       })
@@ -32,7 +32,7 @@ export default function SeatsView({ setBuyerData, setSessionData }) {
         console.error("Erro ao buscar os assentos:", error);
       });
   }, []);
-
+  
   return (
     <SeatsContent>
       <div class="header">

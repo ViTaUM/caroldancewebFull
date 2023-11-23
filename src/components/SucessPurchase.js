@@ -12,8 +12,6 @@ export default function SucessPurchase({ buyerData }) {
     <PurchaseContainer>
       <LeftColumn>
         <OrderDetails>
-          {/* <p>Número do pedido:</p>
-          <span>123456</span> */}
           <p>A confirmação foi enviada para o e-mail: </p>
           <span>{buyerData.email}</span>
         </OrderDetails>

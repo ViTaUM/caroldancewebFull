@@ -4,7 +4,7 @@ import { useState } from "react";
 import styled from "styled-components";
 
 export default function FormUser({ selectedSeats, setBuyerData }) {
-  const [name, setName] = useState("");
+  const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
@@ -50,51 +50,41 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     }
 
     const body = {
-      name,
+      nome,
       cpf,
       email,
       aluna,
-      idassentos: selectedSeats.map((seat) => seat.seatId),
+      idassentos: selectedSeats.map((seat) => seat.seatId).join(","),
       assentos: selectedSeats.map((seat) => seat.name).join(" - "),
       valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
     };
-
     setBuyerData({ ...body, ids: selectedSeats });
 
-    const promise = await axios.post(
-      "https://api-carol-dance-web.vercel.app/reserva",
-      body
-    );
-
-    if (promise.status === 200) {
-      for (const seat of selectedSeats) {
-        console.log(seat.seatId);
-        try {
-          await axios.post(
-            `https://api-carol-dance-web.vercel.app/assentos/${seat.seatId}/false`
-          );
-        } catch (error) {
-          console.log(
-            `Erro ao enviar idassento ${seat.seatId}: ${error.message}`
-          );
-          // Lide com erros individuais, se necessário
+    await axios
+      .post("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", body)
+      .then((res) => {
+        if (res.data && res.data.code === 400) {
+          // Tratar o erro do CPF inválido
+          console.log(res.data.message);
+          alert(res.data.message);
+        } else {
+          // Se não houver erro, prosseguir para a rota de sucesso
+          navigate("/sucesso", { replace: true });
         }
-      }
-
-      navigate("/sucesso", { replace: true });
-    } else {
-      console.log(`Erro ao enviar a reserva: ${promise.status}`);
-      // Lide com erros de reserva, se necessário
-    }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(`Erro na requisição: ${err.response ? err.response.status : 'Desconhecido'}`);
+      });
   }
 
   return (
     <Form onSubmit={confirmPurchase}>
       <InputContainer>
-        <label htmlFor="name">Nome do Comprador:</label>
+        <label htmlFor="nome">Nome Completo do Comprador:</label>
         <input
-          id="name"
-          value={name}
+          id="nome"
+          value={nome}
           placeholder="Digite seu nome..."
           onChange={(e) => setName(e.target.value)}
           required
@@ -121,7 +111,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
         />
       </InputContainer>
       <InputContainer>
-        <label htmlFor="aluna">Nome da Aluna:</label>
+        <label htmlFor="aluna">Nome Completo da Aluna:</label>
         <input
           id="aluna"
           value={aluna}

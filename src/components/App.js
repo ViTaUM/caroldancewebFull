@@ -9,11 +9,9 @@ import Relatorio from "./Relatorio";
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
-  const [sessionData, setSessionData] = useState({});
 
   function restartData() {
     setBuyerData({});
-    setSessionData([]);
   }
 
   return (
@@ -29,8 +27,6 @@ export default function App() {
             element={
               <SeatsView
                 setBuyerData={setBuyerData}
-                sessionData={sessionData}
-                setSessionData={setSessionData}
               />
             }
           />
@@ -39,7 +35,6 @@ export default function App() {
             element={
               <SucessView
                 buyerData={buyerData}
-                sessionData={sessionData}
                 restartData={restartData}
               />
             }
