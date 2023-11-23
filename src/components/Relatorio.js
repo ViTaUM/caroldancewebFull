@@ -39,22 +39,24 @@ export default function Relatorio() {
       "Tem certeza de que deseja excluir esta reserva?"
     );
     const body = {
-      id,
+      id: id,
     };
     if (confirmDelete) {
       axios
-        .delete(
-          `https://h-simcepi.smsprefeiturasp.com.br/python/reservas`,
-          body
-        )
+        .delete(`https://h-simcepi.smsprefeiturasp.com.br/python/reservas`, {
+          data: body,
+        })
         .then((response) => {
-          if (response.status === 204) {
+          const {
+            data: { message, code },
+          } = response;
+          if (code === 200) {
             // Reserva excluída com sucesso
-            alert("Reserva excluída com sucesso.");
+            alert(message);
             // Atualize a página para refletir as alterações
             setShouldReload(true);
           } else {
-            console.error(`Erro ao excluir reserva com ID ${id}.`);
+            alert(message);
           }
         })
         .catch((error) => {
@@ -70,16 +72,19 @@ export default function Relatorio() {
     );
 
     const body = {
-      id,
+      id: id,
     };
 
     if (confirmPag) {
       axios
         .put(`https://h-simcepi.smsprefeiturasp.com.br/python/reservas`, body)
         .then((response) => {
-          if (response.status === 204) {
+          const {
+            data: { message, code },
+          } = response;
+          if (code === 200) {
             // Reserva excluída com sucesso
-            alert("Confirmação realizada com sucesso!");
+            alert(message);
             // Atualize a página para refletir as alterações
             setShouldReload(true);
           } else {
@@ -113,49 +118,51 @@ export default function Relatorio() {
             </tr>
           </thead>
           <tbody>
-            {seats.map((seat, index) => (
-              <tr key={index}>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {seat.name}
-                </td>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {seat.assentos}
-                </td>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {seat.email}
-                </td>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  R${seat.valor},00
-                </td>
-                <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                  {seat.status}
-                </td>
-                <td>
-                  <BoxAcoes>
-                    {seat.status === "pago" ? (
-                      ""
-                    ) : (
-                      <>
-                        <img
-                          src={Confirmar}
-                          alt="Confirmação de Pagamento"
-                          width={50}
-                          onClick={() => handleConfirmarPag(seat.id)}
-                          style={{ cursor: "pointer" }}
-                        />
-                        <img
-                          src={Excluir}
-                          alt="Excluir Registro"
-                          width={50}
-                          onClick={() => handleExcluir(seat.id)}
-                          style={{ cursor: "pointer" }}
-                        />
-                      </>
-                    )}
-                  </BoxAcoes>
-                </td>
-              </tr>
-            ))}
+            {seats
+              .filter((seat) => seat.status !== "CANCELADO")
+              .map((seat, index) => (
+                <tr key={index}>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.nome}
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.assentos.replace(/[\[\]"]+/g, "")}
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.email}
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    R${seat.valor},00
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.status}
+                  </td>
+                  <td>
+                    <BoxAcoes>
+                      {seat.status === "pago" ? (
+                        ""
+                      ) : (
+                        <>
+                          <img
+                            src={Confirmar}
+                            alt="Confirmação de Pagamento"
+                            width={50}
+                            onClick={() => handleConfirmarPag(seat.id)}
+                            style={{ cursor: "pointer" }}
+                          />
+                          <img
+                            src={Excluir}
+                            alt="Excluir Registro"
+                            width={50}
+                            onClick={() => handleExcluir(seat.id)}
+                            style={{ cursor: "pointer" }}
+                          />
+                        </>
+                      )}
+                    </BoxAcoes>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </TableContainer>
