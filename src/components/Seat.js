@@ -56,6 +56,8 @@ const SeatButton = styled.li`
     background-color: ${(props) => {
       if (props.isAvailable && props.selected) {
         return "#8DD7CF";
+      } else if (!props.isAvailable && props.valor === 0) {
+        return "#C3CFD9";
       } else if (props.valor === 0) {
         return "#FF0000";
       } else if (props.isAvailable) {
