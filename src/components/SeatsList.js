@@ -48,17 +48,21 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
           <SeatsPar>
             {evenSeats.length > 0 ? (
               evenSeats.map((row, index) => {
-                return row.map((seat, index) => (
-                  <Seat
-                    key={index}
-                    name={seat.nome}
-                    seatId={seat.id}
-                    selectedSeats={selectedSeats}
-                    setSelectedSeats={setSelectedSeats}
-                    isAvailable={seat.disponivel}
-                    valor={seat.valor}
-                  />
-                ));
+                return (
+                  <DivPar>
+                    {row.map((seat, index) => (
+                      <Seat
+                        key={index}
+                        name={seat.nome}
+                        seatId={seat.id}
+                        selectedSeats={selectedSeats}
+                        setSelectedSeats={setSelectedSeats}
+                        isAvailable={seat.disponivel}
+                        valor={seat.valor}
+                      />
+                    ))}
+                  </DivPar>
+                );
               })
             ) : (
               <p>Nenhuma assento Pares disponível.</p>
@@ -74,6 +78,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
 const SeatsWrapper = styled.div`
   display: flex;
   @media (max-width: 1176px) {
+    width: 100%;
     flex-direction: column;
   }
 `;
@@ -82,6 +87,19 @@ const DivImpar = styled.div`
   display: flex;
   flex-direction: row-reverse;
   gap: 10px;
+  @media (max-width: 1176px) {
+    overflow: scroll;
+    width: 100%;
+  }
+`;
+
+const DivPar = styled.div`
+  display: flex;
+  gap: 10px;
+  @media (max-width: 1176px) {
+    overflow: scroll;
+    width: 100%;
+  }
 `;
 
 const SeatsContainer = styled.div`
@@ -98,6 +116,7 @@ const SeatsContainer = styled.div`
   margin-top: 30px;
 
   @media (max-width: 1176px) {
+    width: 100%;
     flex-direction: column;
   }
 `;
@@ -114,12 +133,14 @@ const SeatsColumn = styled.div`
 `;
 
 const SeatsPar = styled.ul`
-  display: grid;
+  flex-direction: column;
+  display: flex;
   gap: 10px 10px;
   grid-template-columns: repeat(13, 1fr);
-  grid-template-rows: repeat(21, 1fr);
   padding: 20px;
-  flex-direction: row-reverse;
+  @media (max-width: 1176px) {
+    flex-wrap: wrap;
+  }
 `;
 
 const SeatsImpares = styled.ul`
@@ -128,4 +149,7 @@ const SeatsImpares = styled.ul`
   gap: 10px 10px;
   grid-template-columns: repeat(13, 1fr);
   padding: 20px;
+  @media (max-width: 1176px) {
+    flex-wrap: wrap;
+  }
 `;

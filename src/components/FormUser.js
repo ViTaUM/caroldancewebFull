@@ -96,22 +96,12 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     await axios
       .post("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", body)
       .then((res) => {
-        if (res.data && res.data.code === 400) {
-          // Tratar o erro do CPF inválido
-          console.log(res.data.message);
-          alert(res.data.message);
-        } else {
-          // Se não houver erro, prosseguir para a rota de sucesso
-          navigate("/sucesso", { replace: true });
-        }
+        // Se não houver erro, prosseguir para a rota de sucesso
+        navigate("/sucesso", { replace: true });
       })
       .catch((err) => {
         console.log(err);
-        alert(
-          `Erro na requisição: ${
-            err.response ? err.response.status : "Desconhecido"
-          }`
-        );
+        alert(err.response.data.message);
       });
   }
 

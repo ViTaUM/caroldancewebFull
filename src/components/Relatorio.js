@@ -109,12 +109,12 @@ export default function Relatorio() {
         <table>
           <thead>
             <tr>
-              <th>Nome</th>
-              <th>Assento</th>
-              <th>E-mail</th>
-              <th>Valor(R$)</th>
-              <th>Status</th>
-              <th>Ações</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Nome</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Assento</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>E-mail</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Valor(R$)</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Status</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Ações</th>
             </tr>
           </thead>
           <tbody>
