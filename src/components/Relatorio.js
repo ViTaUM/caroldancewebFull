@@ -113,6 +113,7 @@ export default function Relatorio() {
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Assento</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>E-mail</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Valor(R$)</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Aluna</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Status</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Ações</th>
             </tr>
@@ -133,6 +134,9 @@ export default function Relatorio() {
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     R${seat.valor},00
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.aluna}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.status}
