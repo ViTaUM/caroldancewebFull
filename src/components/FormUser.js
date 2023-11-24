@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export default function FormUser({ selectedSeats, setBuyerData }) {
@@ -9,6 +9,30 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const navigate = useNavigate();
+
+  const [seats, setSeats] = useState([]);
+  useEffect(() => {
+    // Cria a configuração dos cabeçalhos para o Axios
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
+        // Exemplo: Adiciona um cabeçalho de autorização
+        // 'Authorization': 'Bearer seu-token-aqui'
+        // Adicione outros cabeçalhos conforme necessário
+      },
+    };
+
+    // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
+    axios
+      .get("https://h-simcepi.smsprefeiturasp.com.br/python/alunos", config)
+      .then((response) => {
+        setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar os assentos:", error);
+      });
+  }, []);
 
   // Função para validar um e-mail usando regex
   function isValidEmail(email) {
@@ -49,13 +73,22 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       return;
     }
 
+    const oddSeatsIds = seats
+      .filter((seat) => seat.nome === aluna) // Filtra os assentos onde o nome corresponde ao da aluna
+      .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
+
+    // Verifica se encontrou a aluna nos assentos
+    if (!oddSeatsIds) {
+      alert("Erro: O nome da aluna não consta na lista.");
+      return;
+    }
+
     const body = {
       nome,
       cpf,
       email,
-      aluna,
+      aluna: oddSeatsIds[0],
       idassentos: selectedSeats.map((seat) => seat.seatId).join(","),
-      assentos: selectedSeats.map((seat) => seat.name).join(" - "),
       valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
     };
     setBuyerData({ ...body, ids: selectedSeats });
@@ -74,7 +107,11 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       })
       .catch((err) => {
         console.log(err);
-        alert(`Erro na requisição: ${err.response ? err.response.status : 'Desconhecido'}`);
+        alert(
+          `Erro na requisição: ${
+            err.response ? err.response.status : "Desconhecido"
+          }`
+        );
       });
   }
 
