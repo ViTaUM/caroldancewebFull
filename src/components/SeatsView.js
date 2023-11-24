@@ -9,6 +9,7 @@ import axios from "axios";
 export default function SeatsView({ setBuyerData }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
@@ -27,11 +28,16 @@ export default function SeatsView({ setBuyerData }) {
       .get("https://h-simcepi.smsprefeiturasp.com.br/python/assentos", config)
       .then((response) => {
         setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
+        setLoading(false)
       })
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
       });
   }, []);
+
+  if(loading){
+    return <></>
+  }
   
   return (
     <SeatsContent>
