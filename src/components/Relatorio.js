@@ -154,14 +154,14 @@ export default function Relatorio() {
                           <img
                             src={Confirmar}
                             alt="Confirmação de Pagamento"
-                            width={50}
+                            width={25}
                             onClick={() => handleConfirmarPag(seat.id)}
                             style={{ cursor: "pointer" }}
                           />
                           <img
                             src={Excluir}
                             alt="Excluir Registro"
-                            width={50}
+                            width={25}
                             onClick={() => handleExcluir(seat.id)}
                             style={{ cursor: "pointer" }}
                           />

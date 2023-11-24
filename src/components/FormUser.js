@@ -101,6 +101,16 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       })
       .catch((err) => {
         console.log(err);
+        if (
+          err.response.data.message === "'aluna'"
+        ) {
+          alert(
+            "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
+          );
+        } else {
+          // Mensagem de erro geral
+          alert("Ocorreu um erro: " + err.response.data.message);
+        }
         alert(err.response.data.message);
       });
   }
