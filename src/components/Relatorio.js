@@ -109,6 +109,7 @@ export default function Relatorio() {
         <table>
           <thead>
             <tr>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Data</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Nome</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>Assento</th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>E-mail</th>
@@ -123,6 +124,9 @@ export default function Relatorio() {
               .filter((seat) => seat.status !== "CANCELADO")
               .map((seat, index) => (
                 <tr key={index}>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.data_da_compra}
+                  </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.nome}
                   </td>
