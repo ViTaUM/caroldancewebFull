@@ -6,7 +6,7 @@ import Footer from "./Fotter";
 import logo from "./logo.jpg";
 import axios from "axios";
 
-export default function SeatsView({ setBuyerData }) {
+export default function SeatsView({ setBuyerData, avulso }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,7 +50,7 @@ export default function SeatsView({ setBuyerData }) {
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
       />
-      <FormUser selectedSeats={selectedSeats} setBuyerData={setBuyerData} />
+      <FormUser selectedSeats={selectedSeats} setBuyerData={setBuyerData} avulso={avulso} />
       <Footer>
         <img src={logo} alt="Logo" />
         <NameTime>

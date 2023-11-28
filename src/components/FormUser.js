@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function FormUser({ selectedSeats, setBuyerData }) {
+export default function FormUser({ selectedSeats, setBuyerData, avulso }) {
   const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
@@ -74,7 +74,21 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     }
 
     const oddSeatsIds = seats
-      .filter((seat) => seat.nome.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').toLowerCase() === aluna.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').toLowerCase()) // Filtra os assentos onde o nome corresponde ao da aluna
+      .filter(
+        (seat) =>
+          seat.nome
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "")
+            .toLowerCase() ===
+          aluna
+            .trim()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, "")
+            .toLowerCase()
+      ) // Filtra os assentos onde o nome corresponde ao da aluna
       .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
 
     // Verifica se encontrou a aluna nos assentos
@@ -87,7 +101,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       nome,
       cpf,
       email,
-      aluna: oddSeatsIds[0],
+      aluna: avulso ? 0 : oddSeatsIds[0],
       idassentos: selectedSeats.map((seat) => seat.seatId).join(","),
       valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
     };
@@ -100,9 +114,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       })
       .catch((err) => {
         console.log(err);
-        if (
-          err.response.data.message === "'aluna'"
-        ) {
+        if (err.response.data.message === "'aluna'") {
           alert(
             "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
           );
@@ -146,16 +158,18 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
           required
         />
       </InputContainer>
-      <InputContainer>
-        <label htmlFor="aluna">Nome Completo da Aluna:</label>
-        <input
-          id="aluna"
-          value={aluna}
-          placeholder="Digite o nome da Aluna..."
-          onChange={(e) => setAluna(e.target.value)}
-          required
-        />
-      </InputContainer>
+      {!avulso && (
+        <InputContainer>
+          <label htmlFor="aluna">Nome Completo da Aluna:</label>
+          <input
+            id="aluna"
+            value={aluna}
+            placeholder="Digite o nome da Aluna..."
+            onChange={(e) => setAluna(e.target.value)}
+            required
+          />
+        </InputContainer>
+      )}
       <button type="submit">Reservar Assento(s)</button>
     </Form>
   );

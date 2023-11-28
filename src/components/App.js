@@ -31,6 +31,15 @@ export default function App() {
             }
           />
           <Route
+            path="/avulso"
+            element={
+              <SeatsView
+                setBuyerData={setBuyerData}
+                avulso={true}
+              />
+            }
+          />
+          <Route
             path="/sucesso"
             element={
               <SucessView
