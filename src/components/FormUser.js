@@ -74,7 +74,7 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
     }
 
     const oddSeatsIds = seats
-      .filter((seat) => seat.nome === aluna) // Filtra os assentos onde o nome corresponde ao da aluna
+      .filter((seat) => seat.nome.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').toLowerCase() === aluna.trim().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/\s+/g, '').toLowerCase()) // Filtra os assentos onde o nome corresponde ao da aluna
       .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
 
     // Verifica se encontrou a aluna nos assentos
@@ -92,7 +92,6 @@ export default function FormUser({ selectedSeats, setBuyerData }) {
       valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
     };
     setBuyerData({ ...body, ids: selectedSeats });
-
     await axios
       .post("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", body)
       .then((res) => {
