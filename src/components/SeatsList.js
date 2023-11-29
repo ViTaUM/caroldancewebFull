@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Seat from "./Seat";
 import SeatsSubtitle from "./SeatsSubtitle";
 
-export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
+export default function SeatsList({ seats, selectedSeats, setSelectedSeats, avulso }) {
   // Filtrar assentos ímpares
   const oddSeats = seats.map((row, index) =>
     row.filter((seat) => parseInt(seat.numero) % 2 !== 0)
@@ -32,6 +32,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                         setSelectedSeats={setSelectedSeats}
                         isAvailable={seat.disponivel}
                         valor={seat.valor}
+                        avulso={avulso}
                       />
                     ))}
                   </DivImpar>

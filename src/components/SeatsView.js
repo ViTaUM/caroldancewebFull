@@ -49,6 +49,7 @@ export default function SeatsView({ setBuyerData, avulso }) {
         seats={seats}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
+        avulso={avulso}
       />
       <FormUser selectedSeats={selectedSeats} setBuyerData={setBuyerData} avulso={avulso} />
       <Footer>

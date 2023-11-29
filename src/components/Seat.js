@@ -8,6 +8,7 @@ export default function Seat({
   selectedSeats,
   setSelectedSeats,
   valor,
+  avulso,
 }) {
   const [selected, setSelected] = useState(false);
 
@@ -19,7 +20,7 @@ export default function Seat({
     ).length;
 
     // Verifica se está tentando selecionar um novo assento
-    if (!isSelected && selectedSeats.length >= 5) {
+    if (!isSelected && selectedSeats.length >= 5 && !avulso) {
       alert("Você pode selecionar no máximo 5 assentos.");
       return;
     }
@@ -35,11 +36,11 @@ export default function Seat({
       setSelected(false);
     } else {
       // Regras para adicionar assento
-      if (valor === 0 && countValor0 >= 2) {
+      if (valor === 0 && countValor0 >= 2 && !avulso) {
         alert("Você só pode selecionar no máximo 2 assentos cortesia.");
         return;
       }
-      if (valor === 30 && countValor30 >= 3) {
+      if (valor === 30 && countValor30 >= 3 && !avulso) {
         alert("Você só pode selecionar no máximo 3 assentos normais.");
         return;
       }

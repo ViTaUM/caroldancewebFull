@@ -121,7 +121,7 @@ export default function Relatorio() {
           </thead>
           <tbody>
             {seats
-              .filter((seat) => seat.status !== "CANCELADO" && seat.status !== "PAGO")
+              .filter((seat) => seat.status !== "CANCELADO")
               .map((seat, index) => (
                 <tr key={index}>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
