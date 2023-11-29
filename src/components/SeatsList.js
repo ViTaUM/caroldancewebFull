@@ -60,6 +60,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats, avul
                         setSelectedSeats={setSelectedSeats}
                         isAvailable={seat.disponivel}
                         valor={seat.valor}
+                        avulso={avulso}
                       />
                     ))}
                   </DivPar>
