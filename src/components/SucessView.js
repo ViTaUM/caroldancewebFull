@@ -8,8 +8,9 @@ export default function SucessView({ buyerData }) {
   }
 
   function ReturnHome() {
-    alert("Assim que seu pagamento for confirmado, você receberá um e-mail! Obrigado!");
-  window.location.href = '/'; // Redireciona para a página inicial
+    alert(
+      "Assim que seu pagamento for confirmado, você receberá um e-mail! Obrigado!"
+    );
   }
 
   return (
@@ -19,12 +20,16 @@ export default function SucessView({ buyerData }) {
         <p>
           Recebemos seu pedido com sucesso e estamos aguardando o pagamento do
           pix e o envio do comprovante de pagamento via WhatsApp:{" "}
-          <a href="https://wa.me/5571986904826" style={{ cursor: "pointer" }}>(71) 98690-4826.</a>
+          <a href="https://wa.me/5571986904826" style={{ cursor: "pointer" }}>
+            (71) 98690-4826.
+          </a>
         </p>
       </TextInfo>
       <SucessPurchase buyerData={buyerData} />
       <ButtonContainer>
-        <ButtonPagamento onClick={ReturnHome}>Pagamento Efetuado</ButtonPagamento>
+        <ButtonPagamento onClick={ReturnHome}>
+          Pagamento Efetuado
+        </ButtonPagamento>
         <ButtonWhatsApp onClick={AddWhatsApp}>
           Enviar Comprovante de Pagamento
         </ButtonWhatsApp>
