@@ -22,14 +22,15 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MoviesView />} />
           <Route path="/relatorio" element={<Relatorio />} />
-          <Route
+          {/* <Route
             path="/assentos/1"
             element={
               <SeatsView
                 setBuyerData={setBuyerData}
+                avulso={true}
               />
             }
-          />
+          /> */}
           <Route
             path="/avulso"
             element={
