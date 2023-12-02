@@ -89,7 +89,7 @@ const SeatButton = styled.li`
       } else if (props.valor === 0) {
         return "#FF0000";
       } else if (props.isAvailable) {
-        return "#3AA8F9";
+        return "#C3CFD9";
       }
 
       return "#C3CFD9";
