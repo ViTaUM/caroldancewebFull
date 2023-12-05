@@ -35,6 +35,11 @@ export default function Seat({
       return;
     }
 
+    if (countValor30 || valor !== 0){
+      alert("O assento selecionado está atualmente bloqueado e indisponível.");
+      return;
+    }
+
     if (isSelected) {
       // Remover o assento desmarcado com base no seatId
       setSelectedSeats(selectedSeats.filter((seat) => seat.seatId !== seatId));
