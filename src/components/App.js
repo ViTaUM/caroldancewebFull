@@ -40,7 +40,7 @@ export default function App() {
               />
             }
           />
-          <Route
+          {/* <Route
             path="/sucesso"
             element={
               <SucessView
@@ -48,7 +48,7 @@ export default function App() {
                 restartData={restartData}
               />
             }
-          />
+          /> */}
         </Routes>
       </BrowserRouter>
     </main>
