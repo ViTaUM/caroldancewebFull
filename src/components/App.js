@@ -22,33 +22,20 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MoviesView />} />
           <Route path="/relatorio" element={<Relatorio />} />
-          {/* <Route
+          <Route
             path="/assentos/1"
-            element={
-              <SeatsView
-                setBuyerData={setBuyerData}
-                avulso={true}
-              />
-            }
-          /> */}
+            element={<SeatsView setBuyerData={setBuyerData} avulso={true} />}
+          />
           <Route
             path="/avulso"
-            element={
-              <SeatsView
-                setBuyerData={setBuyerData}
-                avulso={true}
-              />
-            }
+            element={<SeatsView setBuyerData={setBuyerData} avulso={true} />}
           />
-          {/* <Route
+          <Route
             path="/sucesso"
             element={
-              <SucessView
-                buyerData={buyerData}
-                restartData={restartData}
-              />
+              <SucessView buyerData={buyerData} restartData={restartData} />
             }
-          /> */}
+          />
         </Routes>
       </BrowserRouter>
     </main>
