@@ -5,7 +5,6 @@ import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
 import axios from "axios";
-// import assentos from "../evento/assentos.json";
 
 export default function SeatsView({ setBuyerData, overview }) {
   const [seats, setSeats] = useState([]);
@@ -37,13 +36,7 @@ export default function SeatsView({ setBuyerData, overview }) {
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
       });
-  }, []);
-
-  // useEffect(() => {
-  //   // Carrega os dados dos assentos do arquivo JSON
-  //   setSeats(assentos);
-  //   setLoading(false);
-  // }, []);
+  }, [overview]);
 
   if (loading) {
     return <></>;
