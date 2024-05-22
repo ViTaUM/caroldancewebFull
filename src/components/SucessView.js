@@ -1,7 +1,20 @@
 import styled from "styled-components";
 import SucessPurchase from "./SucessPurchase";
+import SucessPurchaseFree from "./SucessPurchaseFree";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function SucessView({ buyerData }) {
+  const navigate = useNavigate();
+  
+   // Verifica se buyerData está vazio e redireciona para a página inicial
+   useEffect(() => {
+    if (!buyerData || Object.keys(buyerData).length === 0) {
+      navigate("/", { replace: true });
+    }
+  }, [buyerData, navigate]);
+
+  let totalValor = buyerData.ids.reduce((total, seat) => total + seat.valor, 0);
   function AddWhatsApp() {
     const whatsappURL = "https://wa.me/5571986904826";
     window.open(whatsappURL, "_blank"); // Abre em uma nova aba
@@ -13,31 +26,52 @@ export default function SucessView({ buyerData }) {
     );
   }
 
-  return (
-    <SucessContent>
-      <SucessMessage>Pedido realizado com sucesso!</SucessMessage>
-      <TextInfo>
-        <p>
-          Recebemos seu pedido com sucesso e estamos aguardando o pagamento do
-          pix e o envio do comprovante de pagamento via WhatsApp:{" "}
-          <a href="https://wa.me/5571986904826" style={{ cursor: "pointer" }}>
-            (71) 98690-4826.
-          </a>
-        </p>
-      </TextInfo>
-      <SucessPurchase buyerData={buyerData} />
-      <ButtonContainer>
-        <ButtonPagamento onClick={ReturnHome}>
-          Pagamento Efetuado
-        </ButtonPagamento>
-        <ButtonWhatsApp onClick={AddWhatsApp}>
-          Enviar Comprovante de Pagamento
-        </ButtonWhatsApp>
-      </ButtonContainer>
-    </SucessContent>
-  );
-}
+  function CloseAndGoHome() {
+    navigate("/");
+  }
 
+  if (totalValor === 0) {
+    return (
+      <SucessContent>
+        <SucessMessage>Pedido realizado com sucesso!</SucessMessage>
+        <TextInfo>
+          <p>
+            Recebemos seu pedido com sucesso! 🎉 As suas cortesia(s) já foram
+            enviadas para o seu e-mail. Mal podemos esperar para vê-lo no
+            espetáculo! 🌟
+          </p>
+        </TextInfo>
+        <SucessPurchaseFree buyerData={buyerData} />
+        <CloseButton onClick={CloseAndGoHome}>Fechar</CloseButton>
+      </SucessContent>
+    );
+  } else {
+    return (
+      <SucessContent>
+        <SucessMessage>Pedido realizado com sucesso!</SucessMessage>
+        <TextInfo>
+          <p>
+            Recebemos seu pedido com sucesso e estamos aguardando o pagamento do
+            pix e o envio do comprovante de pagamento via WhatsApp:{" "}
+            <a href="https://wa.me/5571986904826" style={{ cursor: "pointer" }}>
+              (71) 98690-4826.
+            </a>
+          </p>
+        </TextInfo>
+        <SucessPurchase buyerData={buyerData} />
+        <ButtonContainer>
+          <ButtonPagamento onClick={ReturnHome}>
+            Pagamento Efetuado
+          </ButtonPagamento>
+          <ButtonWhatsApp onClick={AddWhatsApp}>
+            Enviar Comprovante de Pagamento
+          </ButtonWhatsApp>
+        </ButtonContainer>
+        <CloseButton onClick={CloseAndGoHome}>Fechar</CloseButton>
+      </SucessContent>
+    );
+  }
+}
 const TextInfo = styled.div`
   margin-top: 10px;
   font-weight: bold;
@@ -92,5 +126,21 @@ const ButtonPagamento = styled.div`
 
   &:hover {
     background-color: #ff3366; /* Define a cor de fundo quando o mouse passa por cima */
+  }
+`;
+
+const CloseButton = styled.div`
+  margin: 20px;
+  padding: 10px 20px;
+  background-color: #f44336; /* Cor vermelha */
+  border-radius: 4px;
+  border: none;
+  color: #ffffff; /* Cor branca */
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer; /* Mostrar cursor de mão ao passar o mouse */
+
+  &:hover {
+    background-color: #e57373; /* Define a cor de fundo quando o mouse passa por cima */
   }
 `;

@@ -3,28 +3,30 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function FormUser({ selectedSeats, setBuyerData, avulso, overview }) {
+export default function FormUser({
+  selectedSeats,
+  setBuyerData,
+  avulso,
+  overview,
+}) {
   const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
-  const [estacionamento, setEstacionamento] = useState("não");
-  const [showModal, setShowModal] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
-    useState(false);
+  //const [estacionamento, setEstacionamento] = useState("não");
+  //const [showModal, setShowModal] = useState(false);
+  //const [isChecked, setIsChecked] = useState(false);
+  // const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
+  //   useState(false);
   const navigate = useNavigate();
   const [seats, setSeats] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
     const config = {
       headers: {
         "Content-Type": "application/json",
-        // "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
-        // Exemplo: Adiciona um cabeçalho de autorização
-        // 'Authorization': 'Bearer seu-token-aqui'
-        // Adicione outros cabeçalhos conforme necessário
       },
     };
 
@@ -105,7 +107,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
       return;
     }
 
-    const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
+    //const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
 
     const assentos = selectedSeats.reduce((acc, seat) => {
       acc[seat.seatId] = seat.valor;
@@ -119,10 +121,12 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
       periodo: overview,
       email,
       assentos,
-      estacionamento: estacionamentoValor ? 1 : 0,
+    // estacionamento: estacionamentoValor ? 1 : 0,
+      estacionamento:  0,
     };
 
     setBuyerData({ ...body, ids: selectedSeats });
+    setLoading(true);
     await axios
       .post(
         "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
@@ -133,7 +137,10 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
         navigate("/sucesso", { replace: true });
       })
       .catch((err) => {
-        if (err.response.data.error.description === "'É obrigatório informar o campo ALUNO'") {
+        if (
+          err.response.data.error.description ===
+          "'É obrigatório informar o campo ALUNO'"
+        ) {
           alert(
             "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
           );
@@ -141,24 +148,32 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
           // Mensagem de erro geral
           alert(err.response.data.error.description);
         }
+      })
+      .finally(() => {
+        setLoading(false); // Desativa o estado de carregamento
       });
   }
 
-  useEffect(() => {
-    if (estacionamento === "sim") {
-      setShowModal(true);
-    }
-  }, [estacionamento]);
+  // useEffect(() => {
+  //   if (estacionamento === "sim") {
+  //     setShowModal(true);
+  //   }
+  // }, [estacionamento]);
 
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-    if (e.target.checked) {
-      setIsEstacionamentoDisabled(true);
-    }
-  };
+  // const handleCheckboxChange = (e) => {
+  //   setIsChecked(e.target.checked);
+  //   if (e.target.checked) {
+  //     setIsEstacionamentoDisabled(true);
+  //   }
+  // };
 
   return (
     <>
+      {loading && (
+        <LoadingOverlay>
+          <LoadingText>Carregando...</LoadingText>
+        </LoadingOverlay>
+      )}
       <Form onSubmit={confirmPurchase}>
         <InputContainer>
           <label htmlFor="nome">Nome Completo do Comprador:</label>
@@ -202,7 +217,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
             />
           </InputContainer>
         )}
-        <InputContainer>
+        {/* <InputContainer>
           <label htmlFor="estacionamento">
             Deseja estacionar na escola Salesiano? Valor R$15,00
           </label>
@@ -216,17 +231,21 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
             <option value="não">Não</option>
             <option value="sim">Sim</option>
           </select>
-        </InputContainer>
+        </InputContainer> */}
         <button type="submit">Reservar Assento(s)</button>
       </Form>
-      {showModal && (
+      {/* {showModal && (
         <ModalOverlay>
           <ModalContent>
             <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
             <ModalText>
               O veículo deverá permanecer estacionado no Colégio Salesiano entre
-              o período das {overview === '08/06/2024 - SESSAO 1' ? '15h00 e 18h00' : '18:30 e 21h'}. Assim que o espetáculo terminar, será
-              necessário retirá-lo do local.
+              o período das{" "}
+              {overview === "08/06/2024 - SESSAO 1"
+                ? "15h00 e 18h00"
+                : "18:30 e 21h"}
+              . Assim que o espetáculo terminar, será necessário retirá-lo do
+              local.
             </ModalText>
             <CheckboxContainer>
               <input
@@ -246,7 +265,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
             </CloseButton>
           </ModalContent>
         </ModalOverlay>
-      )}
+      )} */}
     </>
   );
 }
@@ -325,7 +344,82 @@ const InputContainer = styled.div`
   }
 `;
 
-const ModalOverlay = styled.div`
+// const ModalOverlay = styled.div`
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   z-index: 1000;
+// `;
+
+// const ModalContent = styled.div`
+//   background: white;
+//   padding: 20px;
+//   border-radius: 10px;
+//   text-align: center;
+//   max-width: 500px;
+//   width: 80%;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+// `;
+
+// const ModalHeader = styled.h3`
+//   margin-bottom: 15px;
+//   font-size: 24px;
+//   font-weight: bold;
+//   color: #333;
+// `;
+
+// const ModalText = styled.p`
+//   margin-bottom: 20px;
+//   font-size: 18px;
+//   color: #555;
+//   line-height: 1.6;
+// `;
+
+// const CheckboxContainer = styled.div`
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 20px;
+//   font-size: 16px;
+
+//   input[type="checkbox"].large-checkbox {
+//     width: 25px; /* Aumente o tamanho conforme necessário */
+//     height: 25px; /* Aumente o tamanho conforme necessário */
+//     margin-right: 10px;
+//   }
+
+//   label {
+//     color: #555;
+//   }
+// `;
+
+// const CloseButton = styled.button`
+//   padding: 10px 20px;
+//   background-color: #cd0077;
+//   border-radius: 4px;
+//   border: none;
+//   color: #ffffff;
+//   text-align: center;
+//   font-size: 18px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+
+//   &:hover {
+//     background-color: #ff1493;
+//   }
+
+//   &:disabled {
+//     background-color: #ccc;
+//     cursor: not-allowed;
+//   }
+// `;
+
+const LoadingOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -338,64 +432,7 @@ const ModalOverlay = styled.div`
   z-index: 1000;
 `;
 
-const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 500px;
-  width: 80%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-`;
-
-const ModalHeader = styled.h3`
-  margin-bottom: 15px;
+const LoadingText = styled.p`
   font-size: 24px;
-  font-weight: bold;
-  color: #333;
-`;
-
-const ModalText = styled.p`
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: #555;
-  line-height: 1.6;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  font-size: 16px;
-
-  input[type="checkbox"].large-checkbox {
-    width: 25px; /* Aumente o tamanho conforme necessário */
-    height: 25px; /* Aumente o tamanho conforme necessário */
-    margin-right: 10px;
-  }
-
-  label {
-    color: #555;
-  }
-`;
-
-const CloseButton = styled.button`
-  padding: 10px 20px;
-  background-color: #cd0077;
-  border-radius: 4px;
-  border: none;
   color: #ffffff;
-  text-align: center;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #ff1493;
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-  }
 `;
