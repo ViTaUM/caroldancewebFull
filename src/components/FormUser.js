@@ -3,20 +3,25 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export default function FormUser({ selectedSeats, setBuyerData, avulso }) {
+export default function FormUser({ selectedSeats, setBuyerData, avulso, overview }) {
   const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
+  const [estacionamento, setEstacionamento] = useState("não");
+  const [showModal, setShowModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
+    useState(false);
   const navigate = useNavigate();
-
   const [seats, setSeats] = useState([]);
+
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
+        // "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
         // Exemplo: Adiciona um cabeçalho de autorização
         // 'Authorization': 'Bearer seu-token-aqui'
         // Adicione outros cabeçalhos conforme necessário
@@ -25,9 +30,12 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso }) {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://h-simcepi.smsprefeiturasp.com.br/python/alunos", config)
+      .get(
+        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/admin/student/list",
+        config
+      )
       .then((response) => {
-        setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
+        setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
       })
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
@@ -97,81 +105,148 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso }) {
       return;
     }
 
+    const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
+
+    const assentos = selectedSeats.reduce((acc, seat) => {
+      acc[seat.seatId] = seat.valor;
+      return acc;
+    }, {});
+
     const body = {
-      nome,
+      aluno: avulso ? 0 : oddSeatsIds[0],
       cpf,
+      nome,
+      periodo: overview,
       email,
-      aluna: avulso ? 0 : oddSeatsIds[0],
-      idassentos: selectedSeats.map((seat) => seat.seatId).join(","),
-      valor: selectedSeats.reduce((total, seat) => total + seat.valor, 0),
+      assentos,
+      estacionamento: estacionamentoValor ? 1 : 0,
     };
+
     setBuyerData({ ...body, ids: selectedSeats });
     await axios
-      .post("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", body)
+      .post(
+        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
+        body
+      )
       .then((res) => {
         // Se não houver erro, prosseguir para a rota de sucesso
         navigate("/sucesso", { replace: true });
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.data.message === "'aluna'") {
+        if (err.response.data.error.description === "'É obrigatório informar o campo ALUNO'") {
           alert(
             "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
           );
         } else {
           // Mensagem de erro geral
-          alert("Ocorreu um erro: " + err.response.data.message);
+          alert("Ocorreu um erro: " + err.response.data.error.description);
         }
-        alert(err.response.data.message);
       });
   }
 
+  useEffect(() => {
+    if (estacionamento === "sim") {
+      setShowModal(true);
+    }
+  }, [estacionamento]);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+    if (e.target.checked) {
+      setIsEstacionamentoDisabled(true);
+    }
+  };
+
   return (
-    <Form onSubmit={confirmPurchase}>
-      <InputContainer>
-        <label htmlFor="nome">Nome Completo do Comprador:</label>
-        <input
-          id="nome"
-          value={nome}
-          placeholder="Digite seu nome..."
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
-      </InputContainer>
-      <InputContainer>
-        <label htmlFor="cpf">CPF do comprador:</label>
-        <input
-          id="cpf"
-          value={cpf}
-          placeholder="Digite seu CPF..."
-          onChange={handleCpfChange}
-          required
-        />
-      </InputContainer>
-      <InputContainer>
-        <label htmlFor="cpf">E-mail para enviar os Ingressos:</label>
-        <input
-          id="email"
-          value={email}
-          placeholder="Digite seu E-mail..."
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </InputContainer>
-      {!avulso && (
+    <>
+      <Form onSubmit={confirmPurchase}>
         <InputContainer>
-          <label htmlFor="aluna">Nome Completo da Aluna:</label>
+          <label htmlFor="nome">Nome Completo do Comprador:</label>
           <input
-            id="aluna"
-            value={aluna}
-            placeholder="Digite o nome da Aluna..."
-            onChange={(e) => setAluna(e.target.value)}
+            id="nome"
+            value={nome}
+            placeholder="Digite seu nome..."
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </InputContainer>
+        <InputContainer>
+          <label htmlFor="cpf">CPF do comprador:</label>
+          <input
+            id="cpf"
+            value={cpf}
+            placeholder="Digite seu CPF..."
+            onChange={handleCpfChange}
+            required
+          />
+        </InputContainer>
+        <InputContainer>
+          <label htmlFor="cpf">E-mail para enviar os Ingressos:</label>
+          <input
+            id="email"
+            value={email}
+            placeholder="Digite seu E-mail..."
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </InputContainer>
+        {!avulso && (
+          <InputContainer>
+            <label htmlFor="aluna">Nome Completo da Aluna:</label>
+            <input
+              id="aluna"
+              value={aluna}
+              placeholder="Digite o nome da Aluna..."
+              onChange={(e) => setAluna(e.target.value)}
+              required
+            />
+          </InputContainer>
+        )}
+        <InputContainer>
+          <label htmlFor="estacionamento">
+            Deseja estacionar na escola Salesiano? Valor R$10,00
+          </label>
+          <select
+            id="estacionamento"
+            value={estacionamento}
+            onChange={(e) => setEstacionamento(e.target.value)}
+            required
+            disabled={isEstacionamentoDisabled}
+          >
+            <option value="não">Não</option>
+            <option value="sim">Sim</option>
+          </select>
+        </InputContainer>
+        <button type="submit">Reservar Assento(s)</button>
+      </Form>
+      {showModal && (
+        <ModalOverlay>
+          <ModalContent>
+            <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
+            <ModalText>
+              O veículo deverá permanecer estacionado no Colégio Salesiano entre
+              o período das 15h00 e 18h00. Assim que o espetáculo terminar, será
+              necessário retirá-lo do local.
+            </ModalText>
+            <CheckboxContainer>
+              <input
+                type="checkbox"
+                id="confirmation"
+                checked={isChecked}
+                onChange={handleCheckboxChange}
+              />
+              <label htmlFor="confirmation">Li e estou ciente</label>
+            </CheckboxContainer>
+            <CloseButton
+              onClick={() => setShowModal(false)}
+              disabled={!isChecked}
+            >
+              Fechar
+            </CloseButton>
+          </ModalContent>
+        </ModalOverlay>
       )}
-      <button type="submit">Reservar Assento(s)</button>
-    </Form>
+    </>
   );
 }
 
@@ -217,7 +292,8 @@ const InputContainer = styled.div`
     margin-bottom: 8px;
   }
 
-  input {
+  input,
+  select {
     padding: 10px 18px;
     font-size: 18px;
     border-radius: 10px;
@@ -229,18 +305,94 @@ const InputContainer = styled.div`
     -webkit-backdrop-filter: blur(5px);
   }
 
-  input::-webkit-input-placeholder {
+  input::-webkit-input-placeholder,
+  select::-webkit-input-placeholder {
     font-size: 18px;
     color: #000;
   }
 
-  input:-ms-input-placeholder {
+  input:-ms-input-placeholder,
+  select:-ms-input-placeholder {
     font-size: 18px;
     color: #000;
   }
 
-  input::placeholder {
+  input::placeholder,
+  select::placeholder {
     font-size: 18px;
     color: #000;
+  }
+`;
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const ModalContent = styled.div`
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalHeader = styled.h3`
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+`;
+
+const ModalText = styled.p`
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+`;
+
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 16px;
+
+  input {
+    margin-right: 10px;
+  }
+
+  label {
+    color: #555;
+  }
+`;
+
+const CloseButton = styled.button`
+  padding: 10px 20px;
+  background-color: #cd0077;
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #ff1493;
+  }
+
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
   }
 `;

@@ -24,7 +24,11 @@ export default function App() {
           <Route path="/relatorio" element={<Relatorio />} />
           <Route
             path="/assentos/1"
-            element={<SeatsView setBuyerData={setBuyerData} avulso={true} />}
+            element={<SeatsView setBuyerData={setBuyerData} overview={1} />}
+          />
+          <Route
+            path="/assentos/2"
+            element={<SeatsView setBuyerData={setBuyerData} overview={2} />}
           />
           <Route
             path="/avulso"

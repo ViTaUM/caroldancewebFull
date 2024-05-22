@@ -2,7 +2,12 @@ import styled from "styled-components";
 import qrcode from "./qr-code.png";
 
 export default function SucessPurchase({ buyerData }) {
-  let totalValor = 0;
+  let totalValor = buyerData.ids.reduce((total, seat) => total + seat.valor, 0);
+
+  // Adiciona o valor do estacionamento ao total se existir
+  if (buyerData.estacionamento) {
+    totalValor += 10;
+  }
 
   // Obtém a data e hora atual
   const currentDate = new Date();
@@ -27,6 +32,12 @@ export default function SucessPurchase({ buyerData }) {
             );
           })}
         </PurchaseInfo>
+        {buyerData.estacionamento && (
+          <PurchaseInfo>
+            <h2>Estacionamento</h2>
+            <p>R$10,00</p>
+          </PurchaseInfo>
+        )}
         <PurchaseInfo>
           <h2>Dados</h2>
           <p>

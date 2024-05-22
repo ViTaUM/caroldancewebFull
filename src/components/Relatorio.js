@@ -13,15 +13,17 @@ export default function Relatorio() {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
       },
     };
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://h-simcepi.smsprefeiturasp.com.br/python/reservas", config)
+      .get(
+        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket",
+        config
+      )
       .then((response) => {
-        setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
+        setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
       })
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
@@ -33,19 +35,26 @@ export default function Relatorio() {
     }
   }, [shouldReload]);
 
-  const handleExcluir = (id) => {
+  const handleExcluir = (periodo, assentos) => {
     // Confirmar com o usuário antes de excluir
     const confirmDelete = window.confirm(
       "Tem certeza de que deseja excluir esta reserva?"
     );
     const body = {
-      id: id,
+      periodo: periodo,
+      assentos: assentos
     };
     if (confirmDelete) {
       axios
-        .delete(`https://h-simcepi.smsprefeiturasp.com.br/python/reservas`, {
-          data: body,
-        })
+        .put(
+          `/app01/caroldance/clientTicket/ticket/cancel`,
+          body,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+        )
         .then((response) => {
           const {
             data: { message, code },
@@ -60,24 +69,28 @@ export default function Relatorio() {
           }
         })
         .catch((error) => {
-          console.error(`Erro ao excluir reserva com ID ${id}:`, error);
+          console.error(`Erro ao excluir:`, error);
         });
     }
   };
 
-  const handleConfirmarPag = (id) => {
+  const handleConfirmarPag = (periodo, assentos) => {
     // Confirmar com o usuário antes
     const confirmPag = window.confirm(
       "Tem certeza de que deseja confirmar pagamento?"
     );
 
     const body = {
-      id: id,
+      periodo: periodo,
+      assentos: assentos
     };
 
     if (confirmPag) {
       axios
-        .put(`https://h-simcepi.smsprefeiturasp.com.br/python/reservas`, body)
+        .put(
+          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/confirm`,
+          body
+        )
         .then((response) => {
           const {
             data: { message, code },
@@ -88,11 +101,14 @@ export default function Relatorio() {
             // Atualize a página para refletir as alterações
             setShouldReload(true);
           } else {
-            console.error(`Erro ao confirmar pagamento ID ${id}.`);
+            console.error(
+              `Erro ao confirmar dados.`,
+              response.data.description
+            );
           }
         })
         .catch((error) => {
-          console.error(`Erro ao confirmar pagamento ID ${id}:`, error);
+          console.error(`Erro ao confirmar dados:`, error);
         });
     }
   };
@@ -109,45 +125,69 @@ export default function Relatorio() {
         <table>
           <thead>
             <tr>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Data</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Nome</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Assento</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>E-mail</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Valor(R$)</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Aluna</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Status</th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>Ações</th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Data
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Nome
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Assento
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                E-mail
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Valor(R$)
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Aluna
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Sessão
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Status
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Ações
+              </th>
             </tr>
           </thead>
           <tbody>
             {seats
-              .filter((seat) => seat.status !== "CANCELADO" && seat.status !== "PAGO")
+              .filter(
+                (seat) => seat.Status !== "CANCELADO" && seat.Status !== "PAGO"
+              )
               .map((seat, index) => (
                 <tr key={index}>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.data_da_compra}
+                    {seat.Data}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.nome}
+                    {seat.Nome}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.assentos.replace(/[\\[\]"]+/g, "")}
+                    {seat.Assento.replace(/[\\[\]"]+/g, "")}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.email}
+                    {seat.Email}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    R${seat.valor},00
+                    R${seat.Valor},00
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.aluna}
+                    {seat.Aluna}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.status}
+                    {seat.Sessao}
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.Status}
                   </td>
                   <td>
                     <BoxAcoes>
-                      {seat.status === "pago" ? (
+                      {seat.Status === "pago" ? (
                         ""
                       ) : (
                         <>
@@ -155,14 +195,18 @@ export default function Relatorio() {
                             src={Confirmar}
                             alt="Confirmação de Pagamento"
                             width={25}
-                            onClick={() => handleConfirmarPag(seat.id)}
+                            onClick={() =>
+                              handleConfirmarPag(seat.Sessao, JSON.parse(seat.Assento))
+                            }
                             style={{ cursor: "pointer" }}
                           />
                           <img
                             src={Excluir}
                             alt="Excluir Registro"
                             width={25}
-                            onClick={() => handleExcluir(seat.id)}
+                            onClick={() =>
+                              handleExcluir(seat.Sessao, JSON.parse(seat.Assento))
+                            }
                             style={{ cursor: "pointer" }}
                           />
                         </>

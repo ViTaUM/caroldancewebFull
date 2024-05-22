@@ -5,8 +5,9 @@ import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
 import axios from "axios";
+// import assentos from "../evento/assentos.json";
 
-export default function SeatsView({ setBuyerData, avulso }) {
+export default function SeatsView({ setBuyerData, overview }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,7 +17,7 @@ export default function SeatsView({ setBuyerData, avulso }) {
     const config = {
       headers: {
         "Content-Type": "application/json",
-        "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
+        // "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
         // Exemplo: Adiciona um cabeçalho de autorização
         // 'Authorization': 'Bearer seu-token-aqui'
         // Adicione outros cabeçalhos conforme necessário
@@ -25,23 +26,32 @@ export default function SeatsView({ setBuyerData, avulso }) {
 
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
-      .get("https://h-simcepi.smsprefeiturasp.com.br/python/assentos", config)
+      .get(
+        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/seat",
+        config
+      )
       .then((response) => {
-        setSeats(response.data); // O Axios já faz o parse do JSON automaticamente
-        setLoading(false)
+        setSeats(response.data.data[overview]); // O Axios já faz o parse do JSON automaticamente
+        setLoading(false);
       })
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
       });
   }, []);
 
-  if(loading){
-    return <></>
+  // useEffect(() => {
+  //   // Carrega os dados dos assentos do arquivo JSON
+  //   setSeats(assentos);
+  //   setLoading(false);
+  // }, []);
+
+  if (loading) {
+    return <></>;
   }
-  
+
   return (
     <SeatsContent>
-      <div class="header">
+      <div className="header">
         <h1>PALCO</h1>
         <h2>Selecione o(s) assento(s)</h2>
       </div>
@@ -49,14 +59,19 @@ export default function SeatsView({ setBuyerData, avulso }) {
         seats={seats}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
-        avulso={avulso}
       />
-      <FormUser selectedSeats={selectedSeats} setBuyerData={setBuyerData} avulso={avulso} />
+      <FormUser
+        selectedSeats={selectedSeats}
+        setBuyerData={setBuyerData}
+        overview={overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2"}
+      />
       <Footer>
         <img src={logo} alt="Logo" />
         <NameTime>
-          <h3>Descendentes</h3>
-          <p>07/12/2023 - Quinta-feira às 19:30 horas</p>
+          <h3>Memórias 20 anos</h3>
+          <p>
+            08/06/2024 - Sábado às {overview === 1 ? "16:00" : "19:00"} horas
+          </p>
         </NameTime>
       </Footer>
     </SeatsContent>

@@ -5,12 +5,12 @@ import SeatsSubtitle from "./SeatsSubtitle";
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats, avulso }) {
   // Filtrar assentos ímpares
   const oddSeats = seats.map((row, index) =>
-    row.filter((seat) => parseInt(seat.numero) % 2 !== 0)
+    row.filter((seat) => parseInt(seat.id) % 2 !== 0)
   );
 
   // Filtrar assentos pares
   const evenSeats = seats.map((row, index) =>
-    row.filter((seat) => parseInt(seat.numero) % 2 === 0)
+    row.filter((seat) => parseInt(seat.id) % 2 === 0)
   );
 
   return (
@@ -22,11 +22,11 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats, avul
             {oddSeats.length > 0 ? (
               oddSeats.map((row, index) => {
                 return (
-                  <DivImpar>
+                  <DivImpar key={index}> 
                     {row.map((seat, index) => (
                       <Seat
                         key={index}
-                        name={seat.nome}
+                        name={seat.name}
                         seatId={seat.id}
                         selectedSeats={selectedSeats}
                         setSelectedSeats={setSelectedSeats}
@@ -50,11 +50,11 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats, avul
             {evenSeats.length > 0 ? (
               evenSeats.map((row, index) => {
                 return (
-                  <DivPar>
+                  <DivPar key={index}>
                     {row.map((seat, index) => (
                       <Seat
                         key={index}
-                        name={seat.nome}
+                        name={seat.name}
                         seatId={seat.id}
                         selectedSeats={selectedSeats}
                         setSelectedSeats={setSelectedSeats}
