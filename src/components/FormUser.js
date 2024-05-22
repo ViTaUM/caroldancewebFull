@@ -139,7 +139,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
           );
         } else {
           // Mensagem de erro geral
-          alert("Ocorreu um erro: " + err.response.data.error.description);
+          alert(err.response.data.error.description);
         }
       });
   }
@@ -204,7 +204,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
         )}
         <InputContainer>
           <label htmlFor="estacionamento">
-            Deseja estacionar na escola Salesiano? Valor R$10,00
+            Deseja estacionar na escola Salesiano? Valor R$15,00
           </label>
           <select
             id="estacionamento"
@@ -225,7 +225,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
             <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
             <ModalText>
               O veículo deverá permanecer estacionado no Colégio Salesiano entre
-              o período das 15h00 e 18h00. Assim que o espetáculo terminar, será
+              o período das {overview === '08/06/2024 - SESSAO 1' ? '15h00 e 18h00' : '18:30 e 21h'}. Assim que o espetáculo terminar, será
               necessário retirá-lo do local.
             </ModalText>
             <CheckboxContainer>
@@ -234,6 +234,7 @@ export default function FormUser({ selectedSeats, setBuyerData, avulso, overview
                 id="confirmation"
                 checked={isChecked}
                 onChange={handleCheckboxChange}
+                className="large-checkbox"
               />
               <label htmlFor="confirmation">Li e estou ciente</label>
             </CheckboxContainer>
@@ -367,7 +368,9 @@ const CheckboxContainer = styled.div`
   margin-bottom: 20px;
   font-size: 16px;
 
-  input {
+  input[type="checkbox"].large-checkbox {
+    width: 25px; /* Aumente o tamanho conforme necessário */
+    height: 25px; /* Aumente o tamanho conforme necessário */
     margin-right: 10px;
   }
 
