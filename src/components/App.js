@@ -6,6 +6,7 @@ import MoviesView from "./MoviesView";
 import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
 import Relatorio from "./Relatorio";
+import Qrcode from "./qrcode1";
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
@@ -40,6 +41,7 @@ export default function App() {
               <SucessView buyerData={buyerData} restartData={restartData} />
             }
           />
+          <Route path="/qrcode" element={<Qrcode />} />
         </Routes>
       </BrowserRouter>
     </main>

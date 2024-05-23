@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Autocomplete from "react-autocomplete";
 
 const studentData = [
-  { id: 1, nomeCompleto: "Maria da Silva" },
+  { id: 1, nomeCompleto: "Beatriz da Silva Santos Barros" },
   { id: 106, nomeCompleto: "Alice Dantas Andrade" },
   { id: 107, nomeCompleto: "Beatriz Duarte Cruz" },
   { id: 108, nomeCompleto: "Helena Serafim Franco Nascimento" },
