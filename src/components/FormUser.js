@@ -355,6 +355,7 @@ export default function FormUser({
                 required: true,
                 style: inputStyle,
               }}
+              wrapperStyle={{ width: "100%" }}
             />
           </InputContainer>
         )}
@@ -588,6 +589,7 @@ const inputStyle = {
   background: "rgba(255, 255, 255, 0.3)",
   backdropFilter: "blur(5px)",
   WebkitBackdropFilter: "blur(5px)",
+  width: "100%",
 };
 
 const StyledAutocomplete = styled(Autocomplete)`
