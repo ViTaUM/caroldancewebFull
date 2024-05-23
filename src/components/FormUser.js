@@ -329,7 +329,7 @@ export default function FormUser({
         </InputContainer>
         {!avulso && (
           <InputContainer>
-            <label htmlFor="aluna">Nome Completo da Aluna:</label>
+            <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>
             <StyledAutocomplete
               getItemValue={(item) => item.nomeCompleto}
               items={filteredStudents}
