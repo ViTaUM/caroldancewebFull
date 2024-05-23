@@ -43,8 +43,9 @@ function QRCode1() {
     <div
       style={{
         textAlign: "center",
-        marginTop: "50px",
+        marginTop: "20px",
         display: "flex",
+        flexWrap: "wrap",
         justifyContent: "center",
       }}
     >
@@ -52,16 +53,17 @@ function QRCode1() {
         style={{
           position: "relative",
           display: "inline-block",
-          marginRight: "50px",
+          margin: "20px",
         }}
       >
-        <h1>QR Code - Memórias 20 anos</h1>
+        <h1 style={{ fontSize: "24px" }}>QR Code - Memórias 20 anos</h1>
         <QRCode
           value={qrData}
           size={256}
           bgColor={"#ffffff"}
           fgColor={fgColor}
           renderAs="svg"
+          style={{ width: "100%", height: "auto" }}
         />
         <img
           src={logo}
@@ -71,8 +73,8 @@ function QRCode1() {
             top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            width: "50px",
-            height: "50px",
+            width: "25%",
+            height: "auto",
           }}
         />
       </div>
@@ -80,8 +82,9 @@ function QRCode1() {
         style={{
           textAlign: "left",
           fontSize: "16px",
-          maxWidth: "900px",
+          maxWidth: "400px",
           lineHeight: "1.5",
+          margin: "20px",
         }}
       >
         <h2>Informações do Cliente</h2>
@@ -94,26 +97,30 @@ function QRCode1() {
           }}
         >
           <div style={{ marginBottom: "10px" }}>
-            <label style={{ fontSize: "25px" }}>CPF: </label>
-            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            <label style={{ fontSize: "18px", display: "block" }}>CPF: </label>
+            <span style={{ fontWeight: "bold", fontSize: "18px" }}>
               {data.CPF}
             </span>
           </div>
           <div style={{ marginBottom: "10px" }}>
-            <label style={{ fontSize: "25px" }}>Nome: </label>
-            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            <label style={{ fontSize: "18px", display: "block" }}>Nome: </label>
+            <span style={{ fontWeight: "bold", fontSize: "18px" }}>
               {data.Nome}
             </span>
           </div>
           <div style={{ marginBottom: "10px" }}>
-            <label style={{ fontSize: "25px" }}>Assentos: </label>
-            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            <label style={{ fontSize: "18px", display: "block" }}>
+              Assentos:{" "}
+            </label>
+            <span style={{ fontWeight: "bold", fontSize: "18px" }}>
               {data.Assentos.join(", ")}
             </span>
           </div>
           <div style={{ marginBottom: "10px" }}>
-            <label style={{ fontSize: "25px" }}>Sessão: </label>
-            <span style={{ fontWeight: "bold", fontSize: "25px" }}>
+            <label style={{ fontSize: "18px", display: "block" }}>
+              Sessão:{" "}
+            </label>
+            <span style={{ fontWeight: "bold", fontSize: "18px" }}>
               {data.Sessao}
             </span>
           </div>
