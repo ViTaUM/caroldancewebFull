@@ -2,6 +2,106 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
+import Autocomplete from "react-autocomplete";
+
+const studentData = [
+  { id: 1, nomeCompleto: "Maria da Silva" },
+  { id: 106, nomeCompleto: "Alice Dantas Andrade" },
+  { id: 107, nomeCompleto: "Beatriz Duarte Cruz" },
+  { id: 108, nomeCompleto: "Helena Serafim Franco Nascimento" },
+  { id: 109, nomeCompleto: "Lívia Pimentel Monteiro" },
+  { id: 110, nomeCompleto: "Maria Cecília Oliveira Cabral" },
+  { id: 111, nomeCompleto: "Maria Julia Reis Boaventura" },
+  { id: 112, nomeCompleto: "Maria Teresa Motta Gonçalves Sá" },
+  { id: 113, nomeCompleto: "Valentina O. Matos Queiroz" },
+  { id: 114, nomeCompleto: "Eva Amoedo Vilas Boas" },
+  { id: 115, nomeCompleto: "Maria Clara Souza Bichara" },
+  { id: 116, nomeCompleto: "Maria Luiza Gonzaga Gaspar" },
+  { id: 117, nomeCompleto: "Marina Alves Serra Costa" },
+  { id: 118, nomeCompleto: "Misa Oliveira Matos" },
+  { id: 119, nomeCompleto: "Camilly Victória Santos Idorno" },
+  { id: 120, nomeCompleto: "Clara Victória Aguiar Gomes" },
+  { id: 121, nomeCompleto: "Gabriela Bomfim Trindade" },
+  { id: 122, nomeCompleto: "Gabrielle Fernandez Gil Amorim" },
+  { id: 123, nomeCompleto: "Marina Capinan Santiago" },
+  { id: 124, nomeCompleto: "Maria Júlia Santos Amoedo" },
+  { id: 125, nomeCompleto: "Pérola Andrade Seixas Pereira da Silva" },
+  { id: 126, nomeCompleto: "Catarina Carigé Lopes" },
+  { id: 127, nomeCompleto: "Julia Kleivi Hosana de Oliveira Brito" },
+  { id: 128, nomeCompleto: "Júlia Ribeiro Pimenta" },
+  { id: 129, nomeCompleto: "Melissa Santana Cruz dos Santos" },
+  { id: 130, nomeCompleto: "Maria Clara Ralin Silva" },
+  { id: 131, nomeCompleto: "Maria Luiza Guido" },
+  { id: 132, nomeCompleto: "Sofia Rocha Ranã" },
+  { id: 133, nomeCompleto: "Victória Sales Araújo" },
+  { id: 134, nomeCompleto: "Andressa Da Silva Moreira" },
+  { id: 135, nomeCompleto: "Júlia Guimarães de Outeiro" },
+  { id: 136, nomeCompleto: "Júlia Miranda Santos Assis" },
+  { id: 137, nomeCompleto: "Laura Guimarães de Outeiro" },
+  { id: 138, nomeCompleto: "Sofia Passos Cardozo de Lima" },
+  { id: 139, nomeCompleto: "Céu Olifer Malaquias" },
+  { id: 140, nomeCompleto: "Laura Gomes de Oliveira e Lima" },
+  { id: 141, nomeCompleto: "Mariana Pereira Alves" },
+  { id: 142, nomeCompleto: "Maitê Serafim Franco Nascimento" },
+  { id: 143, nomeCompleto: "Pietra Andrade Iglesias" },
+  { id: 144, nomeCompleto: "Pietra Marinho Argolo" },
+  { id: 145, nomeCompleto: "Valentina Lis Cardoso Almeida" },
+  { id: 146, nomeCompleto: "Alicia Pedreira Nascimento" },
+  { id: 147, nomeCompleto: "Luíza Lustosa Silva" },
+  { id: 148, nomeCompleto: "Luisa Fernanda Costa Sousa" },
+  { id: 149, nomeCompleto: "Maria Valentina Santana" },
+  { id: 150, nomeCompleto: "Vitória Santana" },
+  { id: 151, nomeCompleto: "Bruna Siviero Figueredo" },
+  { id: 152, nomeCompleto: "Giovana Botelho Dória Alves Demetrio" },
+  { id: 153, nomeCompleto: "Giulia Miguez Ribeiro Silva" },
+  { id: 154, nomeCompleto: "Heloísa Ribeiro de Novais Santiago Souza" },
+  { id: 155, nomeCompleto: "Iolanda Vitória Monteiro da Silva" },
+  { id: 156, nomeCompleto: "Laura Santos Esteves" },
+  { id: 157, nomeCompleto: "Luise Pestana Bervian" },
+  { id: 158, nomeCompleto: "Maria Carolina Moreira da Silva Vieira" },
+  { id: 159, nomeCompleto: "Maria Luiza Santana Bahia Pinto Soares" },
+  { id: 160, nomeCompleto: "Maria Rafaella Silva" },
+  { id: 161, nomeCompleto: "Mariana Oliveira Nobre" },
+  { id: 162, nomeCompleto: "Paola Santos Andrade de Oliveira" },
+  { id: 163, nomeCompleto: "Ana Vitória Silva Santos" },
+  { id: 164, nomeCompleto: "Cristiane Chaves da Silva" },
+  { id: 165, nomeCompleto: "Marilia Barbara Cruz Souzer dos Santos" },
+  { id: 166, nomeCompleto: "Mirelle Leonidia Dos Santos do Sacramento" },
+  { id: 167, nomeCompleto: "Aymara Montezuma de Mello" },
+  { id: 168, nomeCompleto: "Alicia Pedreira Nascimento" },
+  { id: 169, nomeCompleto: "Beatriz Prazeres Cruz Farias" },
+  { id: 170, nomeCompleto: "Gabriela Duarte Tondroff" },
+  { id: 171, nomeCompleto: "Juliana Almeida Vieira Campos" },
+  { id: 172, nomeCompleto: "Luna Clara S. Santos" },
+  { id: 173, nomeCompleto: "Maria Paula Da Purificação Damasceno" },
+  { id: 174, nomeCompleto: "Ana Clara Prazeres Cruz Farias" },
+  { id: 175, nomeCompleto: "Beatriz Michelli Batista" },
+  { id: 176, nomeCompleto: "Cecilia Barrena Duarte" },
+  { id: 177, nomeCompleto: "Elis Póvoa França" },
+  { id: 178, nomeCompleto: "Giovana Michelli Batista" },
+  { id: 179, nomeCompleto: "Helena Brito de Almeida Dias" },
+  { id: 180, nomeCompleto: "Flora Café Carvalho" },
+  { id: 181, nomeCompleto: "Janaína Dos Santos Pita da Hora" },
+  { id: 182, nomeCompleto: "Júlia Vigas Sodré" },
+  { id: 183, nomeCompleto: "Lara Alemany e Almeida" },
+  { id: 184, nomeCompleto: "Lara Barreto" },
+  { id: 185, nomeCompleto: "Manuela Cruz de Andrade Gomes" },
+  { id: 186, nomeCompleto: "Marina Viana Barreto" },
+  { id: 187, nomeCompleto: "Naomi Ferreira Sousa Santos" },
+  { id: 188, nomeCompleto: "Sofia De Andrade Apolônio Gomes" },
+  { id: 189, nomeCompleto: "Ana Beatriz Silva Meneses" },
+  { id: 190, nomeCompleto: "Carolina Freitas Santos" },
+  { id: 191, nomeCompleto: "Giovanna Sady Ribeiro Souza" },
+  { id: 192, nomeCompleto: "Isabella Bastos Serra" },
+  { id: 193, nomeCompleto: "Maria Luísa Cunha Santos" },
+  { id: 194, nomeCompleto: "Mirele De Carvalho Moreira" },
+  { id: 195, nomeCompleto: "Monique Cunha Santos" },
+  { id: 196, nomeCompleto: "Alice Pinto Goes de Oliveira" },
+  { id: 197, nomeCompleto: "Brisa Prazeres Cruz Farias" },
+  { id: 198, nomeCompleto: "Liz Costa Vasconcelos" },
+  { id: 199, nomeCompleto: "Mila Pedrosa Portugal" },
+  { id: 200, nomeCompleto: "Renata Souza Doria" },
+];
 
 export default function FormUser({
   selectedSeats,
@@ -13,36 +113,38 @@ export default function FormUser({
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
+  const [alunaId, setAlunaId] = useState(null);
   //const [estacionamento, setEstacionamento] = useState("não");
   //const [showModal, setShowModal] = useState(false);
   //const [isChecked, setIsChecked] = useState(false);
   // const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
   //   useState(false);
   const navigate = useNavigate();
-  const [seats, setSeats] = useState([]);
+  const [filteredStudents, setFilteredStudents] = useState(studentData);
+  // const [seats, setSeats] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    // Cria a configuração dos cabeçalhos para o Axios
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
+  // useEffect(() => {
+  //   // Cria a configuração dos cabeçalhos para o Axios
+  //   const config = {
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
 
-    // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
-    axios
-      .get(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/admin/student/list",
-        config
-      )
-      .then((response) => {
-        setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar os assentos:", error);
-      });
-  }, []);
+  //   // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
+  //   axios
+  //     .get(
+  //       "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/admin/student/list",
+  //       config
+  //     )
+  //     .then((response) => {
+  //       setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
+  //     })
+  //     .catch((error) => {
+  //       console.error("Erro ao buscar os assentos:", error);
+  //     });
+  // }, []);
 
   // Função para validar um e-mail usando regex
   function isValidEmail(email) {
@@ -83,29 +185,29 @@ export default function FormUser({
       return;
     }
 
-    const oddSeatsIds = seats
-      .filter(
-        (seat) =>
-          seat.nome
-            .trim()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\s+/g, "")
-            .toLowerCase() ===
-          aluna
-            .trim()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\s+/g, "")
-            .toLowerCase()
-      ) // Filtra os assentos onde o nome corresponde ao da aluna
-      .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
+    // const oddSeatsIds = seats
+    //   .filter(
+    //     (seat) =>
+    //       seat.nome
+    //         .trim()
+    //         .normalize("NFD")
+    //         .replace(/[\u0300-\u036f]/g, "")
+    //         .replace(/\s+/g, "")
+    //         .toLowerCase() ===
+    //       aluna
+    //         .trim()
+    //         .normalize("NFD")
+    //         .replace(/[\u0300-\u036f]/g, "")
+    //         .replace(/\s+/g, "")
+    //         .toLowerCase()
+    //   ) // Filtra os assentos onde o nome corresponde ao da aluna
+    //   .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
 
     // Verifica se encontrou a aluna nos assentos
-    if (!oddSeatsIds) {
-      alert("Erro: O nome da aluna não consta na lista.");
-      return;
-    }
+    // if (!oddSeatsIds) {
+    //   alert("Erro: O nome da aluna não consta na lista.");
+    //   return;
+    // }
 
     //const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
 
@@ -115,14 +217,14 @@ export default function FormUser({
     }, {});
 
     const body = {
-      aluno: avulso ? 0 : oddSeatsIds[0],
+      aluno: alunaId,
       cpf,
       nome,
       periodo: overview,
       email,
       assentos,
-    // estacionamento: estacionamentoValor ? 1 : 0,
-      estacionamento:  0,
+      // estacionamento: estacionamentoValor ? 1 : 0,
+      estacionamento: 0,
     };
 
     setBuyerData({ ...body, ids: selectedSeats });
@@ -167,6 +269,27 @@ export default function FormUser({
   //   }
   // };
 
+  const handleAlunaChange = (e) => {
+    const value = e.target.value;
+    setAluna(value);
+    if (value) {
+      const filtered = studentData.filter((student) =>
+        student.nomeCompleto.toLowerCase().startsWith(value.toLowerCase())
+      );
+      setFilteredStudents(filtered);
+    } else {
+      setFilteredStudents(studentData);
+    }
+  };
+
+  const handleAlunaSelect = (val) => {
+    const selectedStudent = studentData.find(
+      (student) => student.nomeCompleto === val
+    );
+    setAluna(val);
+    setAlunaId(selectedStudent ? selectedStudent.id : null);
+  };
+
   return (
     <>
       {loading && (
@@ -208,12 +331,30 @@ export default function FormUser({
         {!avulso && (
           <InputContainer>
             <label htmlFor="aluna">Nome Completo da Aluna:</label>
-            <input
-              id="aluna"
+            <StyledAutocomplete
+              getItemValue={(item) => item.nomeCompleto}
+              items={filteredStudents}
+              renderItem={(item, isHighlighted) => (
+                <div
+                  key={item.id}
+                  style={{
+                    background: isHighlighted ? "lightgray" : "white",
+                    cursor: "pointer",
+                    padding: "10px 18px",
+                  }}
+                >
+                  {item.nomeCompleto}
+                </div>
+              )}
               value={aluna}
-              placeholder="Digite o nome da Aluna..."
-              onChange={(e) => setAluna(e.target.value)}
-              required
+              onChange={handleAlunaChange}
+              onSelect={handleAlunaSelect}
+              inputProps={{
+                id: "aluna",
+                placeholder: "Digite o nome da Aluna...",
+                required: true,
+                style: inputStyle,
+              }}
             />
           </InputContainer>
         )}
@@ -435,4 +576,41 @@ const LoadingOverlay = styled.div`
 const LoadingText = styled.p`
   font-size: 24px;
   color: #ffffff;
+`;
+
+const inputStyle = {
+  padding: "10px 18px",
+  fontSize: "18px",
+  borderRadius: "10px",
+  border: "1px solid #000",
+  height: "50px",
+  outline: "none",
+  background: "rgba(255, 255, 255, 0.3)",
+  backdropFilter: "blur(5px)",
+  WebkitBackdropFilter: "blur(5px)",
+};
+
+const StyledAutocomplete = styled(Autocomplete)`
+  & input {
+    ${inputStyle}
+  }
+
+  & .react-autocomplete-menu {
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+  }
+
+  & .react-autocomplete-item {
+    cursor: pointer;
+  }
+
+  & .react-autocomplete-item:hover {
+    background-color: lightgray;
+  }
 `;

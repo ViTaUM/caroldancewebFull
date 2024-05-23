@@ -47,7 +47,7 @@ export default function Relatorio() {
     if (confirmDelete) {
       axios
         .put(
-          `/app01/caroldance/clientTicket/ticket/cancel`,
+          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/cancel`,
           body,
           {
             headers: {
