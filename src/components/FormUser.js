@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Autocomplete from "react-autocomplete";
 
