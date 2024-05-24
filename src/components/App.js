@@ -7,6 +7,7 @@ import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
 import Relatorio from "./Relatorio";
 import Qrcode from "./qrcode1";
+import RelSession from "./RelatorioSessoes"
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
@@ -42,6 +43,7 @@ export default function App() {
             }
           />
           <Route path="/qrcode" element={<Qrcode />} />
+          <Route path="/relSessao" element={<RelSession />} />
         </Routes>
       </BrowserRouter>
     </main>
