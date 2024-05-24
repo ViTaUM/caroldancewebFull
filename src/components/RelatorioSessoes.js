@@ -91,45 +91,6 @@ export default function Relatorio() {
     }
   };
 
-  const handleConfirmarPag = (periodo, assentos) => {
-    // Confirmar com o usuário antes
-    const confirmPag = window.confirm(
-      "Tem certeza de que deseja confirmar pagamento?"
-    );
-
-    const body = {
-      periodo: periodo,
-      assentos: assentos,
-    };
-
-    if (confirmPag) {
-      axios
-        .put(
-          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/confirm`,
-          body
-        )
-        .then((response) => {
-          const {
-            data: { message, code },
-          } = response;
-          if (code === 200) {
-            // Reserva excluída com sucesso
-            alert(message);
-            // Atualize a página para refletir as alterações
-            setShouldReload(true);
-          } else {
-            console.error(
-              `Erro ao confirmar dados.`,
-              response.data.description
-            );
-          }
-        })
-        .catch((error) => {
-          console.error(`Erro ao confirmar dados:`, error);
-        });
-    }
-  };
-
   const columns = React.useMemo(
     () => [
       {
