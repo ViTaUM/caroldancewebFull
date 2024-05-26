@@ -35,8 +35,7 @@ function QRCode1() {
   const validateTicket = async (ticketData) => {
     try {
       const response = await axios.post(
-        // "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/validateTicket",
-        "https://localhost:8080/caroldance/clientTicket/ticket/validateTicket",
+         "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/validateTicket",
         {
           assentos: ticketData.Assentos,
           periodo: ticketData.Sessao,

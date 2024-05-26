@@ -212,7 +212,6 @@ export default function FormUser({
       axios
         .post(
           "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
-          // "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/teste",
           body
         )
         .then((res) => {
