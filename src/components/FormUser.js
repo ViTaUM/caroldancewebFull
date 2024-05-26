@@ -97,7 +97,7 @@ const studentData = [
   { id: 194, nomeCompleto: "Mirele De Carvalho Moreira" },
   { id: 195, nomeCompleto: "Monique Cunha Santos" },
   { id: 196, nomeCompleto: "Alice Pinto Goes de Oliveira" },
-  { id: 197, nomeCompleto: "Brisa Prazeres Cruz Farias" },
+  { id: 197, nomeCompleto: "Brisa Maria Souza dos Santos" },
   { id: 198, nomeCompleto: "Liz Costa Vasconcelos" },
   { id: 199, nomeCompleto: "Mila Pedrosa Portugal" },
   { id: 200, nomeCompleto: "Renata Souza Doria" },
