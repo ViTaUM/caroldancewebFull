@@ -74,9 +74,9 @@ function QRCode1() {
         justifyContent: "center",
       }}
     >
-      {isValid === null ? (
+      {/* {isValid === null ? (
         <p>Validando ingressos...</p>
-      ) : isValid ? (
+      ) : isValid ? ( */}
         <>
           <div
             style={{
@@ -160,7 +160,7 @@ function QRCode1() {
             </form>
           </div>
         </>
-      ) : (
+      {/* ) : (
         <div
           style={{
             textAlign: "center",
@@ -170,13 +170,12 @@ function QRCode1() {
             alignItems: "center",
           }}
         >
-          {/* <img src={XRedGif} alt="Erro" style={{ width: "100px", height: "100px" }} /> */}
           <p style={{ fontSize: "24px", fontWeight: "bold", color: "#a81947" }}>
             Os ingressos não são mais válidos, pois já foram lidos
             anteriormente!
           </p>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
