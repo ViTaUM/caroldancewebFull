@@ -118,8 +118,6 @@ export default function FormUser({
   const [estacionamento, setEstacionamento] = useState("não");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
-    useState(false);
   const navigate = useNavigate();
   const [filteredStudents, setFilteredStudents] = useState(studentData);
   // const [seats, setSeats] = useState([]);
@@ -248,9 +246,6 @@ export default function FormUser({
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
-    if (e.target.checked) {
-      setIsEstacionamentoDisabled(true);
-    }
   };
 
   const handleAlunaChange = (e) => {
@@ -315,7 +310,7 @@ export default function FormUser({
         {!avulso && (
           <InputContainer>
             <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>
-            <div style={{ position: "relative", width: "100%" }}>
+            <div style={{ position: "relative", width: "100%", zIndex: 1000 }}>
               <StyledAutocomplete
                 getItemValue={(item) => item.nomeCompleto}
                 items={filteredStudents}
@@ -341,7 +336,7 @@ export default function FormUser({
                   required: true,
                   style: inputStyle,
                 }}
-                wrapperStyle={{ width: "100%" }}
+                wrapperStyle={{ width: "100%", zIndex: 1000 }}
               />
             </div>
           </InputContainer>
@@ -355,7 +350,6 @@ export default function FormUser({
             value={estacionamento}
             onChange={(e) => setEstacionamento(e.target.value)}
             required
-            disabled={isEstacionamentoDisabled}
           >
             <option value="não">Não</option>
             <option value="sim">Sim</option>
