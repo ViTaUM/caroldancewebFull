@@ -215,7 +215,9 @@ export default function Relatorio() {
                   onClick={() =>
                     handleConfirmarPag(
                       row.original.Sessao,
-                      JSON.parse(row.original.Assento)
+                      JSON.parse(row.original.Assento),
+                      row.original.CPF,
+                      row.original.Nome
                     )
                   }
                 />
