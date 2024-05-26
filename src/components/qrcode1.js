@@ -41,7 +41,7 @@ function QRCode1() {
           periodo: ticketData.Sessao,
         }
       );
-      if (response.data.valid) {
+      if (response.data.data[0]) {
         setIsValid(true);
       } else {
         setIsValid(false);
