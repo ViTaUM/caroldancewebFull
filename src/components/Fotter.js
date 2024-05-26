@@ -12,10 +12,11 @@ const BottomBar = styled.div`
   position: fixed;
   bottom: 0;
   left: 0;
-  background: rgba( 0, 0, 0, 0.4 );
-  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  backdrop-filter: blur( 4px );
-  -webkit-backdrop-filter: blur( 4px );
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100; /* Ajuste o z-index para um valor menor */
 
   img {
     width: 84px;
@@ -33,3 +34,4 @@ const BottomBar = styled.div`
     color: #FFF;
   }
 `;
+

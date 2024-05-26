@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import Autocomplete from "react-autocomplete";
+import QRCode from "qrcode.react";
 
 const studentData = [
   { id: 201, nomeCompleto: "Beatriz da Silva Santos Barros" },
@@ -100,7 +101,7 @@ const studentData = [
   { id: 198, nomeCompleto: "Liz Costa Vasconcelos" },
   { id: 199, nomeCompleto: "Mila Pedrosa Portugal" },
   { id: 200, nomeCompleto: "Renata Souza Doria" },
-  { id: 202, nomeCompleto: "Ana Clara Neiva Ferreira"},
+  { id: 202, nomeCompleto: "Ana Clara Neiva Ferreira" },
 ];
 
 export default function FormUser({
@@ -114,37 +115,17 @@ export default function FormUser({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  //const [estacionamento, setEstacionamento] = useState("não");
-  //const [showModal, setShowModal] = useState(false);
-  //const [isChecked, setIsChecked] = useState(false);
-  // const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
-  //   useState(false);
+  const [estacionamento, setEstacionamento] = useState("não");
+  const [showModal, setShowModal] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
+  const [isEstacionamentoDisabled, setIsEstacionamentoDisabled] =
+    useState(false);
   const navigate = useNavigate();
   const [filteredStudents, setFilteredStudents] = useState(studentData);
   // const [seats, setSeats] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   // Cria a configuração dos cabeçalhos para o Axios
-  //   const config = {
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-
-  //   // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
-  //   axios
-  //     .get(
-  //       "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/admin/student/list",
-  //       config
-  //     )
-  //     .then((response) => {
-  //       setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
-  //     })
-  //     .catch((error) => {
-  //       console.error("Erro ao buscar os assentos:", error);
-  //     });
-  // }, []);
+  const qrRef = useRef(null);
+  const [qrData, setQrData] = useState("");
 
   // Função para validar um e-mail usando regex
   function isValidEmail(email) {
@@ -185,36 +166,14 @@ export default function FormUser({
       return;
     }
 
-    // const oddSeatsIds = seats
-    //   .filter(
-    //     (seat) =>
-    //       seat.nome
-    //         .trim()
-    //         .normalize("NFD")
-    //         .replace(/[\u0300-\u036f]/g, "")
-    //         .replace(/\s+/g, "")
-    //         .toLowerCase() ===
-    //       aluna
-    //         .trim()
-    //         .normalize("NFD")
-    //         .replace(/[\u0300-\u036f]/g, "")
-    //         .replace(/\s+/g, "")
-    //         .toLowerCase()
-    //   ) // Filtra os assentos onde o nome corresponde ao da aluna
-    //   .map((seat) => seat.id); // Mapeia os assentos filtrados para obter seus IDs
-
-    // Verifica se encontrou a aluna nos assentos
-    // if (!oddSeatsIds) {
-    //   alert("Erro: O nome da aluna não consta na lista.");
-    //   return;
-    // }
-
-    //const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
+    const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
 
     const assentos = selectedSeats.reduce((acc, seat) => {
       acc[seat.seatId] = seat.valor;
       return acc;
     }, {});
+
+    const assentosNomes = selectedSeats.map((seat) => seat.name).join(", ");
 
     const body = {
       aluno: alunaId,
@@ -223,51 +182,77 @@ export default function FormUser({
       periodo: overview,
       email,
       assentos,
-      // estacionamento: estacionamentoValor ? 1 : 0,
-      estacionamento: 0,
+      assentosNomes,
+      estacionamento: estacionamentoValor ? 1 : 0,
+      //estacionamento: 0,
+      qrcode: "",
     };
 
-    setBuyerData({ ...body, ids: selectedSeats });
-    setLoading(true);
-    await axios
-      .post(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
-        body
-      )
-      .then((res) => {
-        // Se não houver erro, prosseguir para a rota de sucesso
-        navigate("/sucesso", { replace: true });
-      })
-      .catch((err) => {
-        if (
-          err.response.data.error.description ===
-          "'É obrigatório informar o campo ALUNO'"
-        ) {
-          alert(
-            "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
-          );
-        } else {
-          // Mensagem de erro geral
-          alert(err.response.data.error.description);
-        }
-      })
-      .finally(() => {
-        setLoading(false); // Desativa o estado de carregamento
-      });
+    // Gera o URL do QRCode com os parâmetros via GET
+    const baseURL = "https://carol-dance-web.netlify.app/qrcode?";
+    const qrDataURL = `${baseURL}CPF=${encodeURIComponent(
+      body.cpf
+    )}&Nome=${encodeURIComponent(body.nome)}&Assentos=${encodeURIComponent(
+      assentosNomes
+    )}&Sessao=${encodeURIComponent(body.periodo)}`;
+
+    // Define o estado do QRCode para renderizar
+    setQrData(qrDataURL);
+
+    // Espera a renderização do QRCode
+    setTimeout(() => {
+      const qrCanvas = qrRef.current.querySelector("canvas");
+      const qrDataURL = qrCanvas.toDataURL("image/png");
+
+      // Adiciona a imagem base64 do QRCode ao corpo da requisição
+      body.qrcode = qrDataURL;
+
+      setBuyerData({ ...body, ids: selectedSeats });
+      setLoading(true);
+      axios
+        .post(
+          "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
+          // "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/teste",
+          body
+        )
+        .then((res) => {
+          // Adiciona data.cortesias ao body
+          const { cortesias } = res.data.data;
+          setBuyerData({ ...body, ids: selectedSeats, cortesias });
+          // Se não houver erro, prosseguir para a rota de sucesso
+          navigate("/sucesso", { replace: true });
+        })
+        .catch((err) => {
+          if (
+            err.response.data.error.description ===
+            "'É obrigatório informar o campo ALUNO'"
+          ) {
+            alert(
+              "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
+            );
+          } else {
+            // Mensagem de erro geral
+            alert(err.response.data.error.description);
+          }
+        })
+        .finally(() => {
+          setLoading(false); // Desativa o estado de carregamento
+        });
+    }, 500);
   }
 
-  // useEffect(() => {
-  //   if (estacionamento === "sim") {
-  //     setShowModal(true);
-  //   }
-  // }, [estacionamento]);
+  useEffect(() => {
+    if (estacionamento === "sim") {
+      setShowModal(true);
+    }
+  }, [estacionamento]);
 
-  // const handleCheckboxChange = (e) => {
-  //   setIsChecked(e.target.checked);
-  //   if (e.target.checked) {
-  //     setIsEstacionamentoDisabled(true);
-  //   }
-  // };
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+    if (e.target.checked) {
+      setIsEstacionamentoDisabled(true);
+    }
+  };
 
   const handleAlunaChange = (e) => {
     const value = e.target.value;
@@ -331,35 +316,38 @@ export default function FormUser({
         {!avulso && (
           <InputContainer>
             <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>
-            <StyledAutocomplete
-              getItemValue={(item) => item.nomeCompleto}
-              items={filteredStudents}
-              renderItem={(item, isHighlighted) => (
-                <div
-                  key={item.id}
-                  style={{
-                    background: isHighlighted ? "lightgray" : "white",
-                    cursor: "pointer",
-                    padding: "10px 18px",
-                  }}
-                >
-                  {item.nomeCompleto}
-                </div>
-              )}
-              value={aluna}
-              onChange={handleAlunaChange}
-              onSelect={handleAlunaSelect}
-              inputProps={{
-                id: "aluna",
-                placeholder: "Digite o nome da Aluna...",
-                required: true,
-                style: inputStyle,
-              }}
-              wrapperStyle={{ width: "100%" }}
-            />
+            <div style={{ position: "relative", width: "100%" }}>
+              <StyledAutocomplete
+                getItemValue={(item) => item.nomeCompleto}
+                items={filteredStudents}
+                renderItem={(item, isHighlighted) => (
+                  <div
+                    key={item.id}
+                    style={{
+                      background: isHighlighted ? "lightgray" : "white",
+                      cursor: "pointer",
+                      padding: "10px 18px",
+                      zIndex: 1000,
+                    }}
+                  >
+                    {item.nomeCompleto}
+                  </div>
+                )}
+                value={aluna}
+                onChange={handleAlunaChange}
+                onSelect={handleAlunaSelect}
+                inputProps={{
+                  id: "aluna",
+                  placeholder: "Digite o nome da Aluna...",
+                  required: true,
+                  style: inputStyle,
+                }}
+                wrapperStyle={{ width: "100%" }}
+              />
+            </div>
           </InputContainer>
         )}
-        {/* <InputContainer>
+        <InputContainer>
           <label htmlFor="estacionamento">
             Deseja estacionar na escola Salesiano? Valor R$15,00
           </label>
@@ -373,10 +361,21 @@ export default function FormUser({
             <option value="não">Não</option>
             <option value="sim">Sim</option>
           </select>
-        </InputContainer> */}
+        </InputContainer>
+        {qrData && (
+          <div ref={qrRef} style={{ display: "none" }}>
+            <QRCode
+              value={qrData}
+              size={256}
+              bgColor={"#ffffff"}
+              fgColor={"#000000"}
+              renderAs="canvas"
+            />
+          </div>
+        )}
         <button type="submit">Reservar Assento(s)</button>
       </Form>
-      {/* {showModal && (
+      {showModal && (
         <ModalOverlay>
           <ModalContent>
             <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
@@ -407,7 +406,7 @@ export default function FormUser({
             </CloseButton>
           </ModalContent>
         </ModalOverlay>
-      )} */}
+      )}
     </>
   );
 }
@@ -486,80 +485,80 @@ const InputContainer = styled.div`
   }
 `;
 
-// const ModalOverlay = styled.div`
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background-color: rgba(0, 0, 0, 0.5);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 1000;
-// `;
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
 
-// const ModalContent = styled.div`
-//   background: white;
-//   padding: 20px;
-//   border-radius: 10px;
-//   text-align: center;
-//   max-width: 500px;
-//   width: 80%;
-//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-// `;
+const ModalContent = styled.div`
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 500px;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+`;
 
-// const ModalHeader = styled.h3`
-//   margin-bottom: 15px;
-//   font-size: 24px;
-//   font-weight: bold;
-//   color: #333;
-// `;
+const ModalHeader = styled.h3`
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+`;
 
-// const ModalText = styled.p`
-//   margin-bottom: 20px;
-//   font-size: 18px;
-//   color: #555;
-//   line-height: 1.6;
-// `;
+const ModalText = styled.p`
+  margin-bottom: 20px;
+  font-size: 18px;
+  color: #555;
+  line-height: 1.6;
+`;
 
-// const CheckboxContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   margin-bottom: 20px;
-//   font-size: 16px;
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 16px;
 
-//   input[type="checkbox"].large-checkbox {
-//     width: 25px; /* Aumente o tamanho conforme necessário */
-//     height: 25px; /* Aumente o tamanho conforme necessário */
-//     margin-right: 10px;
-//   }
+  input[type="checkbox"].large-checkbox {
+    width: 25px; /* Aumente o tamanho conforme necessário */
+    height: 25px; /* Aumente o tamanho conforme necessário */
+    margin-right: 10px;
+  }
 
-//   label {
-//     color: #555;
-//   }
-// `;
+  label {
+    color: #555;
+  }
+`;
 
-// const CloseButton = styled.button`
-//   padding: 10px 20px;
-//   background-color: #cd0077;
-//   border-radius: 4px;
-//   border: none;
-//   color: #ffffff;
-//   text-align: center;
-//   font-size: 18px;
-//   cursor: pointer;
-//   transition: background-color 0.3s ease;
+const CloseButton = styled.button`
+  padding: 10px 20px;
+  background-color: #cd0077;
+  border-radius: 4px;
+  border: none;
+  color: #ffffff;
+  text-align: center;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-//   &:hover {
-//     background-color: #ff1493;
-//   }
+  &:hover {
+    background-color: #ff1493;
+  }
 
-//   &:disabled {
-//     background-color: #ccc;
-//     cursor: not-allowed;
-//   }
-// `;
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+`;
 
 const LoadingOverlay = styled.div`
   position: fixed;
@@ -605,7 +604,9 @@ const StyledAutocomplete = styled(Autocomplete)`
     -webkit-backdrop-filter: blur(5px);
     max-height: 200px;
     overflow-y: auto;
-    z-index: 1000;
+    z-index: 1000; /* Certifique-se de que o z-index seja maior que o do Footer */
+    position: absolute; /* Garante que o menu não afete o layout do formulário */
+    width: 100%; /* Faz o menu ocupar toda a largura do input */
   }
 
   & .react-autocomplete-item {

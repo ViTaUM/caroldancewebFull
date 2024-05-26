@@ -10,6 +10,7 @@ export default function SeatsView({ setBuyerData, overview }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isFooterVisible, setIsFooterVisible] = useState(true); // Novo estado
 
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
@@ -56,17 +57,22 @@ export default function SeatsView({ setBuyerData, overview }) {
       <FormUser
         selectedSeats={selectedSeats}
         setBuyerData={setBuyerData}
-        overview={overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2"}
+        overview={
+          overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2"
+        }
+        setIsFooterVisible={setIsFooterVisible}
       />
-      <Footer>
-        <img src={logo} alt="Logo" />
-        <NameTime>
-          <h3>Memórias 20 anos</h3>
-          <p>
-            08/06/2024 - Sábado às {overview === 1 ? "16:00" : "19:00"} horas
-          </p>
-        </NameTime>
-      </Footer>
+      {isFooterVisible && (
+        <Footer>
+          <img src={logo} alt="Logo" />
+          <NameTime>
+            <h3>Memórias 20 anos</h3>
+            <p>
+              08/06/2024 - Sábado às {overview === 1 ? "16:00" : "19:00"} horas
+            </p>
+          </NameTime>
+        </Footer>
+      )}
     </SeatsContent>
   );
 }

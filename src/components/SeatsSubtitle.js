@@ -11,10 +11,10 @@ export default function SeatsSubtitle() {
         <CircleColor type="disponivel" />
         <span>Disponível</span>
       </ColorContainer>
-      <ColorContainer>
+      {/* <ColorContainer>
         <CircleColor type="cortesia" />
         <span>Cortesia</span>
-      </ColorContainer>
+      </ColorContainer> */}
       <ColorContainer>
         <CircleColor type="indisponivel" />
         <span>Indisponível</span>

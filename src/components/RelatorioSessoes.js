@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useTable, useSortBy, useFilters } from "react-table";
 import Excluir from "./excluir.png";
-// import Confirmar from "./ok.png";
+import Confirmar from "./ok.png";
+import QRCode from "qrcode.react";
 
 // Filtro de Coluna Padrão
 function DefaultColumnFilter({
@@ -24,6 +25,8 @@ function DefaultColumnFilter({
 export default function Relatorio() {
   const [seats, setSeats] = useState([]);
   const [shouldReload, setShouldReload] = useState(false);
+  const [qrData, setQrData] = useState("");
+  const qrRef = useRef(null);
 
   useEffect(() => {
     // Configuração dos cabeçalhos para o Axios
@@ -82,12 +85,74 @@ export default function Relatorio() {
             // Atualize a página para refletir as alterações
             setShouldReload(true);
           } else {
-            alert(message);
+            // Atualize a página para refletir as alterações
+            setShouldReload(true);
           }
         })
         .catch((error) => {
           console.error(`Erro ao excluir:`, error);
         });
+    }
+  };
+
+  const handleConfirmarPag = (periodo, assentos, cpf, nome) => {
+    // Confirmar com o usuário antes
+    const confirmPag = window.confirm(
+      "Tem certeza de que deseja confirmar pagamento?"
+    );
+
+    if (confirmPag) {
+      const baseURL = "https://carol-dance-web.netlify.app/qrcode?";
+      const qrDataURL = `${baseURL}CPF=${encodeURIComponent(
+        cpf
+      )}&Nome=${encodeURIComponent(
+        nome
+      )}&Assentos=${encodeURIComponent(
+        assentos.join(", ")
+      )}&Sessao=${encodeURIComponent(periodo)}`;
+
+      setQrData(qrDataURL);
+
+      // Espera a renderização do QRCode
+      setTimeout(() => {
+        const qrCanvas = qrRef.current.querySelector("canvas");
+        const qrDataURL = qrCanvas.toDataURL("image/png");
+
+        // Adiciona a imagem base64 do QRCode ao corpo da requisição
+        const body = {
+          periodo: periodo,
+          assentos: assentos,
+          cpf: cpf,
+          nome: nome,
+          qrcode: qrDataURL,
+        };
+
+        axios
+          .put(
+            `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/confirm`,
+            body
+          )
+          .then((response) => {
+            const {
+              data: { message, code },
+            } = response;
+            if (code === 200) {
+              // Pagamento confirmado com sucesso
+              alert(message);
+              // Atualize a página para refletir as alterações
+              // window.location.reload();
+            } else {
+              console.error(
+                `Erro ao confirmar dados.`,
+                response.data.description
+              );
+              // window.location.reload();
+            }
+          })
+          .catch((error) => {
+            console.error(`Erro ao confirmar dados:`, error);
+          });
+      }, 500);
     }
   };
 
@@ -110,9 +175,19 @@ export default function Relatorio() {
         accessor: "Email",
       },
       {
+        Header: "Estacionamento",
+        accessor: "Estacionamento",
+      },
+      {
         Header: "Valor(R$)",
         accessor: "Valor",
-        Cell: ({ value }) => `R$${value},00`,
+        Cell: ({ row }) => {
+          let valorTotal = parseInt(row.original.Valor);
+          if (row.original.Estacionamento === "SIM") {
+            valorTotal += 15; // Soma R$15,00 se estacionamento for SIM
+          }
+          return `R$${valorTotal},00`;
+        },
       },
       {
         Header: "Aluna",
@@ -134,6 +209,17 @@ export default function Relatorio() {
               ""
             ) : (
               <>
+                <Icon
+                  src={Confirmar} // Adicionando o ícone de confirmação
+                  alt="Confirmar Pagamento"
+                  onClick={() =>
+                    handleConfirmarPag(
+                      row.original.Sessao,
+                      JSON.parse(row.original.Assento)
+                    )
+                  }
+                />
+
                 <Icon
                   src={Excluir}
                   alt="Excluir Registro"
@@ -224,6 +310,17 @@ export default function Relatorio() {
           </tbody>
         </table>
       </TableContainer>
+      {qrData && (
+        <div ref={qrRef} style={{ display: "none" }}>
+          <QRCode
+            value={qrData}
+            size={256}
+            bgColor={"#ffffff"}
+            fgColor={"#000000"}
+            renderAs="canvas"
+          />
+        </div>
+      )}
     </SeatsContent>
   );
 }

@@ -2,11 +2,25 @@ import styled from "styled-components";
 import qrcode from "./qr-code.png";
 
 export default function SucessPurchase({ buyerData }) {
-  let totalValor = buyerData.ids.reduce((total, seat) => total + seat.valor, 0);
+  // Se existirem cortesias, substituir o valor dos assentos por 0 conforme a quantidade de cortesias
+  let cortesiasRestantes = buyerData.cortesias || 0;
+  const idsAtualizados = buyerData.ids.map((seat) => {
+    if (cortesiasRestantes > 0) {
+      seat.valor = 0;
+      cortesiasRestantes--;
+    }
+    return seat;
+  });
+
+  // Recalcula o valor total após aplicar cortesias
+  let totalValor = idsAtualizados.reduce(
+    (total, seat) => total + seat.valor,
+    0
+  );
 
   // Adiciona o valor do estacionamento ao total se existir
   if (buyerData.estacionamento) {
-    totalValor += 10;
+    totalValor += 15;
   }
 
   // Obtém a data e hora atual
@@ -22,20 +36,16 @@ export default function SucessPurchase({ buyerData }) {
         </OrderDetails>
         <PurchaseInfo>
           <h2>Ingressos</h2>
-          {buyerData.ids.map((seat, index) => {
-            // Some o valor do assento a totalValor
-            totalValor += seat.valor;
-            return (
-              <p key={index}>{`Assento ${seat.name} - ${
-                seat.valor === 0 ? "cortesia" : "R$" + seat.valor + ",00"
-              }`}</p>
-            );
-          })}
+          {idsAtualizados.map((seat, index) => (
+            <p key={index}>{`Assento ${seat.name} - ${
+              seat.valor === 0 ? "cortesia" : "R$" + seat.valor + ",00"
+            }`}</p>
+          ))}
         </PurchaseInfo>
         {buyerData.estacionamento && (
           <PurchaseInfo>
             <h2>Estacionamento</h2>
-            <p>R$10,00</p>
+            <p>R$15,00</p>
           </PurchaseInfo>
         )}
         <PurchaseInfo>
