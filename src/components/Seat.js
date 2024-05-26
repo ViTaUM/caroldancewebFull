@@ -13,10 +13,10 @@ export default function Seat({
 
   function selectSeat(seatId, name, isSelected, isAvailable, valor) {
     // Contar assentos selecionados com valor 0 e 30
-    // const countValor0 = selectedSeats.filter((seat) => seat.valor === 0).length;
-    // const countValor30 = selectedSeats.filter(
-    //   (seat) => seat.valor === 30
-    // ).length;
+   // const countValor0 = selectedSeats.filter((seat) => seat.valor === 0).length;
+    const countValor30 = selectedSeats.filter(
+      (seat) => seat.valor === 30
+    ).length;
 
     // Verifica se está tentando selecionar um novo assento
     // if (!isSelected && selectedSeats.length >= 5 && !avulso) {
@@ -34,10 +34,12 @@ export default function Seat({
     //   return;
     // }
 
-    // if (countValor30 || valor !== 0) {
-    //   alert("O assento selecionado está atualmente bloqueado e indisponível.");
-    //   return;
-    // }
+    if (countValor30 || valor !== 0) {
+      alert(
+        "Os ingressos estarão disponíveis para venda a partir das 09 horas."
+      );
+      return;
+    }
 
     if (isSelected) {
       // Remover o assento desmarcado com base no seatId
