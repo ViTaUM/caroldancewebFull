@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import QRCode from "qrcode.react";
 import Logo20anos from "./logo_qrcode.jpg";
-import axios from "axios";
+// import axios from "axios";
 
 function QRCode1() {
   const [data, setData] = useState({
@@ -10,7 +10,7 @@ function QRCode1() {
     Assentos: [],
     Sessao: "",
   });
-  const [isValid, setIsValid] = useState(null); // null means not validated yet
+  // const [isValid, setIsValid] = useState(null); // null means not validated yet
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -29,28 +29,28 @@ function QRCode1() {
     };
 
     setData(fetchedData);
-    validateTicket(fetchedData);
+    // validateTicket(fetchedData);
   }, []);
 
-  const validateTicket = async (ticketData) => {
-    try {
-      const response = await axios.post(
-         "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/validateTicket",
-        {
-          assentos: ticketData.Assentos,
-          periodo: ticketData.Sessao,
-        }
-      );
-      if (response.data.data[0]) {
-        setIsValid(true);
-      } else {
-        setIsValid(false);
-      }
-    } catch (error) {
-      console.error("Erro ao validar o ticket:", error);
-      setIsValid(false);
-    }
-  };
+  // const validateTicket = async (ticketData) => {
+  //   try {
+  //     const response = await axios.post(
+  //        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/validateTicket",
+  //       {
+  //         assentos: ticketData.Assentos,
+  //         periodo: ticketData.Sessao,
+  //       }
+  //     );
+  //     if (response.data.data[0]) {
+  //       setIsValid(true);
+  //     } else {
+  //       setIsValid(false);
+  //     }
+  //   } catch (error) {
+  //     console.error("Erro ao validar o ticket:", error);
+  //     setIsValid(false);
+  //   }
+  // };
 
   const baseURL = "https://carol-dance-web.netlify.app/qrcode?";
   const qrData = `${baseURL}CPF=${encodeURIComponent(
