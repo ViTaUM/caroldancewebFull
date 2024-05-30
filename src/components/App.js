@@ -7,7 +7,11 @@ import SeatsView from "./SeatsView";
 import SucessView from "./SucessView";
 import Relatorio from "./Relatorio";
 import Qrcode from "./qrcode1";
+import Qrcode2 from "./qrcode2";
 import RelSession from "./RelatorioSessoes"
+import RelCortesia from "./RelatorioCortesia"
+import RelEstacionamento from "./RelatorioEstacionamento"
+import RelPendentes from "./RelatorioPendentes"
 
 export default function App() {
   const [buyerData, setBuyerData] = useState({});
@@ -43,7 +47,11 @@ export default function App() {
             }
           />
           <Route path="/qrcode" element={<Qrcode />} />
+          <Route path="/qrcode2" element={<Qrcode2 />} />
           <Route path="/relSessao" element={<RelSession />} />
+          <Route path="/relCortesia" element={<RelCortesia />} />
+          <Route path="/relEstacionamento" element={<RelEstacionamento />} />
+          <Route path="/relPendentes" element={<RelPendentes />} />
         </Routes>
       </BrowserRouter>
     </main>
