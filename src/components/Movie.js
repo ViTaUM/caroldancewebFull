@@ -2,14 +2,35 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export default function Movie({ imageUrl, title, movieId, overview }) {
+export default function Movie({
+  imageUrl,
+  title,
+  movieId,
+  overview,
+  avulso,
+  vagaEstacionamento,
+}) {
   return (
     <>
-      <Link to={`/assentos/${movieId}`}>
-        <MoviePost overview={overview}>
-          <img src={imageUrl} alt={title} />
-        </MoviePost>
-      </Link>
+      {vagaEstacionamento === 1 ? (
+        <Link to={`/assentos/${movieId}/estacionamento`}>
+          <MoviePost overview={overview} avulso={avulso}>
+            <img src={imageUrl} alt={title} />
+          </MoviePost>
+        </Link>
+      ) : avulso === 1 ? (
+        <Link to={`/assentos/${movieId}/avulso`}>
+          <MoviePost overview={overview} avulso={avulso}>
+            <img src={imageUrl} alt={title} />
+          </MoviePost>
+        </Link>
+      ) : (
+        <Link to={`/assentos/${movieId}`}>
+          <MoviePost overview={overview}>
+            <img src={imageUrl} alt={title} />
+          </MoviePost>
+        </Link>
+      )}
     </>
   );
 }

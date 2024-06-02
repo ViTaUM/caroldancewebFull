@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Movie from "./Movie";
 
-export default function MoviesList({ movies }) {
+export default function MoviesList({ movies, avulso, vagaEstacionamento }) {
   return (
     <Movies>
       {movies.length !== 0 ? (
@@ -13,6 +13,8 @@ export default function MoviesList({ movies }) {
               title={movie.title}
               movieId={movie.id}
               overview={movie.overview}
+              avulso={avulso}
+              vagaEstacionamento={vagaEstacionamento}
             />
           );
         })

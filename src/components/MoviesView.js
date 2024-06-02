@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import MoviesList from "./MoviesList";
 import evento from "../evento/evento.json";
 
-export default function MoviesView() {
+export default function MoviesView({avulso, vagaEstacionamento}) {
   const [movies, setMovies] = useState([]);
-
   useEffect(() => {
     // Definindo os filmes com os dados importados do JSON
     setMovies(evento);
@@ -14,7 +13,7 @@ export default function MoviesView() {
   return (
     <Content>
       <h2>Clique no evento</h2>
-      <MoviesList movies={movies} />
+      <MoviesList movies={movies} avulso={avulso} vagaEstacionamento={vagaEstacionamento} />
     </Content>
   );
 }
