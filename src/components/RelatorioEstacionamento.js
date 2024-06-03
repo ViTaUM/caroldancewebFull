@@ -70,6 +70,10 @@ export default function RelatorioEstacionamento() {
         accessor: "Estacionamento",
       },
       {
+        Header: "Aluna",
+        accessor: "Aluna",
+      },
+      {
         Header: "Sessão",
         accessor: "Sessao",
       },
@@ -87,7 +91,7 @@ export default function RelatorioEstacionamento() {
   );
 
   const data = React.useMemo(
-    () => seats.filter((seat) => seat.Estacionamento === "SIM"),
+    () => seats.filter((seat) => seat.Estacionamento === "SIM" && seat.Status === "Concluido"),
     [seats]
   );
 
