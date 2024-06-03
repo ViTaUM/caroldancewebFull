@@ -91,7 +91,10 @@ export default function RelatorioEstacionamento() {
   );
 
   const data = React.useMemo(
-    () => seats.filter((seat) => seat.Estacionamento === "SIM" && seat.Status === "Concluido"),
+    () =>
+      seats.filter(
+        (seat) => seat.Estacionamento === "SIM" && seat.Status === "Concluido"
+      ),
     [seats]
   );
 
@@ -108,6 +111,14 @@ export default function RelatorioEstacionamento() {
         columns,
         data,
         defaultColumn,
+        initialState: {
+          sortBy: [
+            {
+              id: "Aluna", // Coluna que deseja ordenar
+              desc: false, // false para ordem crescente
+            },
+          ],
+        },
       },
       useFilters,
       useSortBy
