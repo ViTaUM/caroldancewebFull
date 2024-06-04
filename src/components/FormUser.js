@@ -181,7 +181,7 @@ export default function FormUser({
       email,
       assentos,
       assentosNomes,
-      estacionamento: estacionamentoValor ? 1 : 0,
+      estacionamento: avulso === 1 ? 0 : estacionamentoValor ? 1 : 0,
       //estacionamento: 0,
       qrcode: "",
     };
@@ -341,20 +341,22 @@ export default function FormUser({
             </div>
           </InputContainer>
         )}
-        <InputContainer>
-          <label htmlFor="estacionamento">
-            Deseja estacionar na escola Salesiano? Valor R$15,00
-          </label>
-          <select
-            id="estacionamento"
-            value={estacionamento}
-            onChange={(e) => setEstacionamento(e.target.value)}
-            required
-          >
-            <option value="não">Não</option>
-            <option value="sim">Sim</option>
-          </select>
-        </InputContainer>
+        {!avulso && (
+          <InputContainer>
+            <label htmlFor="estacionamento">
+              Deseja estacionar na escola Salesiano? Valor R$15,00
+            </label>
+            <select
+              id="estacionamento"
+              value={estacionamento}
+              onChange={(e) => setEstacionamento(e.target.value)}
+              required
+            >
+              <option value="não">Não</option>
+              <option value="sim">Sim</option>
+            </select>
+          </InputContainer>
+        )}
         {qrData && (
           <div ref={qrRef} style={{ display: "none" }}>
             <QRCode
