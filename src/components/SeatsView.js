@@ -6,7 +6,7 @@ import Footer from "./Fotter";
 import logo from "./logo.jpg";
 import axios from "axios";
 
-export default function SeatsView({ setBuyerData, overview }) {
+export default function SeatsView({ setBuyerData, overview, avulso }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +61,7 @@ export default function SeatsView({ setBuyerData, overview }) {
           overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2"
         }
         setIsFooterVisible={setIsFooterVisible}
+        avulso={avulso}
       />
       {isFooterVisible && (
         <Footer>

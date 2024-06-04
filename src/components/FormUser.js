@@ -107,8 +107,8 @@ const studentData = [
 export default function FormUser({
   selectedSeats,
   setBuyerData,
-  avulso,
   overview,
+  avulso,
 }) {
   const [nome, setName] = useState("");
   const [cpf, setCpf] = useState("");
@@ -174,7 +174,7 @@ export default function FormUser({
     const assentosNomes = selectedSeats.map((seat) => seat.name).join(", ");
 
     const body = {
-      aluno: alunaId,
+      aluno: avulso === 1 ? 203 : alunaId,
       cpf,
       nome,
       periodo: overview,

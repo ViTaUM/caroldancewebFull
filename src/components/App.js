@@ -45,7 +45,7 @@ export default function App() {
               <SeatsView
                 setBuyerData={setBuyerData}
                 overview={1}
-                avulso={true}
+                avulso={1}
               />
             }
           />
@@ -55,7 +55,7 @@ export default function App() {
               <SeatsView
                 setBuyerData={setBuyerData}
                 overview={2}
-                avulso={true}
+                avulso={1}
               />
             }
           />
