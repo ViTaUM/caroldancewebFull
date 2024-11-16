@@ -209,7 +209,7 @@ export default function FormUser({
       setLoading(true);
       axios
         .post(
-          "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/buy",
+          "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/buy",
           body
         )
         .then((res) => {

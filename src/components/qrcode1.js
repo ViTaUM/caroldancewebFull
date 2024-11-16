@@ -35,7 +35,7 @@ function QRCode1() {
   // const validateTicket = async (ticketData) => {
   //   try {
   //     const response = await axios.post(
-  //        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/validateTicket",
+  //        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/validateTicket",
   //       {
   //         assentos: ticketData.Assentos,
   //         periodo: ticketData.Sessao,

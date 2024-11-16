@@ -170,7 +170,7 @@ export default function SeatsViewVaga({
       setLoading(true);
       axios
         .post(
-          "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/parking/buy",
+          "https://greenyellow-owl-992918.hostingersite.com/clientTicket/parking/buy",
           body
         )
         .then((res) => {

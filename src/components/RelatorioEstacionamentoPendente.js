@@ -36,7 +36,7 @@ export default function RelatorioEstacionamentoPendente() {
     // Chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
       .get(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/parking",
+        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/parking",
         config
       )
       .then((response) => {
@@ -62,7 +62,7 @@ export default function RelatorioEstacionamentoPendente() {
     if (confirmDelete) {
       axios
         .put(
-          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/parking/cancel`,
+          `https://greenyellow-owl-992918.hostingersite.com/clientTicket/parking/cancel`,
           body,
           {
             headers: {
@@ -106,7 +106,7 @@ export default function RelatorioEstacionamentoPendente() {
 
         axios
           .put(
-            `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/parking/confirm`,
+            `https://greenyellow-owl-992918.hostingersite.com/clientTicket/parking/confirm`,
             body
           )
           .then((response) => {

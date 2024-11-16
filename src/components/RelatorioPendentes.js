@@ -33,7 +33,7 @@ export default function RelatorioPendentes() {
     // Chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
       .get(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket",
+        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket",
         config
       )
       .then((response) => {

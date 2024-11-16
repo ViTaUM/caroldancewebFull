@@ -19,7 +19,7 @@ export default function Relatorio() {
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
       .get(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket",
+        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket",
         config
       )
       .then((response) => {
@@ -47,7 +47,7 @@ export default function Relatorio() {
     if (confirmDelete) {
       axios
         .put(
-          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/cancel`,
+          `https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/cancel`,
           body,
           {
             headers: {
@@ -88,7 +88,7 @@ export default function Relatorio() {
     if (confirmPag) {
       axios
         .put(
-          `https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/ticket/confirm`,
+          `https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/confirm`,
           body
         )
         .then((response) => {
