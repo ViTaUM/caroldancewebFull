@@ -199,7 +199,7 @@ export default function SeatsViewVaga({
       cpf: cpf.replace(/\D/g, ""),
       nome,
       periodo:
-        overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2",
+        overview === 1 ? "11/12/2024 - SESSAO 1" : "11/12/2024 - SESSAO 2",
       email,
       estacionamento: "sim",
     };

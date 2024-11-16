@@ -417,9 +417,9 @@ export default function FormUser({
             <ModalText>
               O veículo deverá permanecer estacionado no Colégio Salesiano entre
               o período das{" "}
-              {overview === "08/06/2024 - SESSAO 1"
-                ? "15h00 e 18h00"
-                : "18:30 e 21h"}
+              {overview === "11/12/2024 - SESSAO 1"
+                ? "17h00 e 18h30"
+                : "19:30 e 21h"}
               . Assim que o espetáculo terminar, será necessário retirá-lo do
               local.
             </ModalText>

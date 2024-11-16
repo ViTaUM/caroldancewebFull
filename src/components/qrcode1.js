@@ -85,7 +85,7 @@ function QRCode1() {
               margin: "20px",
             }}
           >
-            <h1 style={{ fontSize: "24px" }}>QR Code - Memórias 20 anos</h1>
+            <h1 style={{ fontSize: "24px" }}>QR Code - O verdadeiro presente de Natal</h1>
             <QRCode
               value={qrData}
               size={256}
