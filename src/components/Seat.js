@@ -13,7 +13,7 @@ export default function Seat({
 
   function selectSeat(seatId, name, isSelected, isAvailable, valor) {
     // Contar assentos selecionados com valor 0 e 30
-   // const countValor0 = selectedSeats.filter((seat) => seat.valor === 0).length;
+    const countValor0 = selectedSeats.filter((seat) => seat.valor === 0).length;
     // const countValor30 = selectedSeats.filter(
     //   (seat) => seat.valor === 30
     // ).length;
@@ -29,10 +29,10 @@ export default function Seat({
       return;
     }
 
-    // if (countValor0 || valor === 0){
-    //   alert("O assento de cortesia selecionado está atualmente bloqueado e indisponível.");
-    //   return;
-    // }
+     if ( valor === 40){
+       alert("Apenas assentos cortesias estão liberados!");
+       return;
+     }
 
     // if (countValor30 || valor !== 0) {
     //   alert(
@@ -47,10 +47,10 @@ export default function Seat({
       setSelected(false);
     } else {
       // Regras para adicionar assento
-      // if (valor === 0 && countValor0 >= 2) {
-      //   alert("Você só pode selecionar no máximo 2 assentos cortesia.");
-      //   return;
-      // }
+       if (valor === 0 && countValor0 >= 2) {
+         alert("Você só pode selecionar no máximo 2 assentos cortesia.");
+         return;
+       }
       // if (valor === 30 && countValor30 >= 3 && !avulso) {
       //   alert("Você só pode selecionar no máximo 3 assentos normais.");
       //   return;
