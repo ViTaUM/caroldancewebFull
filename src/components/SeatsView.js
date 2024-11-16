@@ -27,7 +27,7 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
     // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
       .get(
-        "https://h-simcepi.smsprefeiturasp.com.br/app01/caroldance/clientTicket/seat",
+        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/seat",
         config
       )
       .then((response) => {
@@ -58,7 +58,7 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
         selectedSeats={selectedSeats}
         setBuyerData={setBuyerData}
         overview={
-          overview === 1 ? "08/06/2024 - SESSAO 1" : "08/06/2024 - SESSAO 2"
+          overview === 1 ? "11/12/2024 - SESSAO 1" : "11/12/2024 - SESSAO 2"
         }
         setIsFooterVisible={setIsFooterVisible}
         avulso={avulso}
@@ -67,9 +67,9 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
         <Footer>
           <img src={logo} alt="Logo" />
           <NameTime>
-            <h3>Memórias 20 anos</h3>
+            <h3>O verdadeiro presente de Natal</h3>
             <p>
-              08/06/2024 - Sábado às {overview === 1 ? "16:00" : "19:00"} horas
+              11/12/2024 - quarta-feira às {overview === 1 ? "17:00" : "19:30"} horas
             </p>
           </NameTime>
         </Footer>

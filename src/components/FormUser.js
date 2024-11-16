@@ -115,7 +115,7 @@ export default function FormUser({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento, setEstacionamento] = useState("não");
+  const [estacionamento] = useState("não");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -164,7 +164,7 @@ export default function FormUser({
       return;
     }
 
-    const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
+   // const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
 
     const assentos = selectedSeats.reduce((acc, seat) => {
       acc[seat.seatId] = seat.valor;
@@ -181,8 +181,8 @@ export default function FormUser({
       email,
       assentos,
       assentosNomes,
-      estacionamento: avulso === 1 ? 0 : estacionamentoValor ? 1 : 0,
-      //estacionamento: 0,
+      //estacionamento: avulso === 1 ? 0 : estacionamentoValor ? 1 : 0,
+      estacionamento: 0,
       qrcode: "",
     };
 
@@ -341,7 +341,7 @@ export default function FormUser({
             </div>
           </InputContainer>
         )}
-        {!avulso && (
+        {/* {!avulso && (
           <InputContainer>
             <label htmlFor="estacionamento">
               Deseja estacionar na escola Salesiano? Valor R$15,00
@@ -356,7 +356,7 @@ export default function FormUser({
               <option value="sim">Sim</option>
             </select>
           </InputContainer>
-        )}
+        )} */}
         {qrData && (
           <div ref={qrRef} style={{ display: "none" }}>
             <QRCode
