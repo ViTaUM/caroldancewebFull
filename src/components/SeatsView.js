@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importa o hook useNavigate
 import SeatsList from "./SeatsList";
 import FormUser from "./FormUser";
 import Footer from "./Fotter";
@@ -11,27 +10,17 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
   const [seats, setSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [isFooterVisible, setIsFooterVisible] = useState(true);
-  const [showModal, setShowModal] = useState(true); // Estado para o modal
-  const navigate = useNavigate(); // Hook para navegação
-
-  useEffect(() => {
-    // Exibe o modal e redireciona após 3 segundos
-    if (showModal) {
-      const timer = setTimeout(() => {
-        setShowModal(false); // Fecha o modal
-        navigate("/"); // Redireciona para a página inicial (ou outra página desejada)
-      }, 3000); // 3 segundos de exibição
-
-      return () => clearTimeout(timer); // Limpa o timer ao desmontar o componente
-    }
-  }, [showModal, navigate]);
+  const [isFooterVisible, setIsFooterVisible] = useState(true); // Novo estado
 
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
     const config = {
       headers: {
         "Content-Type": "application/json",
+        // "X-Requested-With": "XMLHttpRequest", // Adiciona o cabeçalho X-Requested-With
+        // Exemplo: Adiciona um cabeçalho de autorização
+        // 'Authorization': 'Bearer seu-token-aqui'
+        // Adicione outros cabeçalhos conforme necessário
       },
     };
 
@@ -56,14 +45,6 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
 
   return (
     <SeatsContent>
-      {showModal && (
-        <Modal>
-          <ModalContent>
-            <h2>Atenção</h2>
-            <p>O sistema será liberado a partir de 12 horas!</p>
-          </ModalContent>
-        </Modal>
-      )}
       <div className="header">
         <h1>PALCO</h1>
         <h2>Selecione o(s) assento(s)</h2>
@@ -127,35 +108,5 @@ const NameTime = styled.div`
 
   p {
     margin-top: 10px;
-  }
-`;
-
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 40px;
-  border-radius: 8px;
-  text-align: center;
-  width: 80%;
-  max-width: 600px;
-  h2 {
-    margin-bottom: 20px;
-    font-size: 2em;
-  }
-  p {
-    margin-bottom: 30px;
-    font-size: 1.2em;
   }
 `;
