@@ -200,7 +200,7 @@ export default function Relatorio() {
                             }
                             style={{ cursor: "pointer" }}
                           />
-                          {/* <img
+                          <img
                             src={Excluir}
                             alt="Excluir Registro"
                             width={25}
@@ -208,7 +208,7 @@ export default function Relatorio() {
                               handleExcluir(seat.Sessao, JSON.parse(seat.Assento))
                             }
                             style={{ cursor: "pointer" }}
-                          /> */}
+                          />
                         </>
                       )}
                     </BoxAcoes>
