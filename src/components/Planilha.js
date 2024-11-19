@@ -4,7 +4,7 @@ import axios from "axios";
 
 export default function Planilha() {
   const [seats, setSeats] = useState([]);
-  const [shouldReload, setShouldReload] = useState(false);
+  const [shouldReload] = useState(false);
 
   useEffect(() => {
     // Cria a configuração dos cabeçalhos para o Axios
@@ -117,14 +117,18 @@ const SeatsContent = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 60px;
+
   h1 {
     font-weight: bold;
     font-size: 24px;
   }
+
   h2 {
-    font-size: 24px;
+    font-size: 18px; /* Reduzido para telas menores */
     color: #293845;
+    text-align: center;
   }
+
   .header {
     justify-content: center;
     width: 100%;
@@ -132,34 +136,64 @@ const SeatsContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    padding: 0 10px; /* Margens para dispositivos móveis */
   }
 `;
 
 const TableContainer = styled.div`
+  width: 100%;
+  overflow-x: auto; /* Permite rolagem horizontal em telas pequenas */
+  margin-top: 20px;
+
   table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    min-width: 600px; /* Define um tamanho mínimo para evitar "quebras" */
   }
 
   th,
   td {
     border: 1px solid #ddd;
     padding: 8px;
-    text-align: left;
+    text-align: center; /* Centraliza texto em dispositivos menores */
+    font-size: 14px; /* Ajusta tamanho para responsividade */
   }
 
   th {
     background-color: #f2f2f2;
+    font-size: 16px;
   }
 
   tr:nth-child(even) {
     background-color: #f2f2f2;
   }
-`;
 
-const BoxAcoes = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
+  @media (max-width: 768px) {
+    th, td {
+      font-size: 12px; /* Tamanho menor para telas pequenas */
+      padding: 5px;
+    }
+
+    h1 {
+      font-size: 20px;
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    th, td {
+      font-size: 10px; /* Ainda menor em telas muito pequenas */
+    }
+
+    h1 {
+      font-size: 18px;
+    }
+
+    h2 {
+      font-size: 14px;
+    }
+  }
 `;
