@@ -33,12 +33,23 @@ export default function Planilha() {
     }
   }, [shouldReload]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+
+    return `${day}-${month}-${year} - ${hours}:${minutes}`;
+  };
+
   return (
     <SeatsContent>
       <div className="header">
         <h1>RELATÓRIO</h1>
         <h2>
-          Abaixo a lista dos compradores aguardando confirmação de pagamento
+          Segue a lista de cortesias adquiridas pelos pais ou responsáveis.
         </h2>
       </div>
       <TableContainer>
@@ -56,9 +67,6 @@ export default function Planilha() {
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                 E-mail
-              </th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                Valor(R$)
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                 Aluna
@@ -79,7 +87,7 @@ export default function Planilha() {
               .map((seat, index) => (
                 <tr key={index}>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.Data}
+                    {formatDate(seat.Data)}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Nome}
@@ -89,9 +97,6 @@ export default function Planilha() {
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Email}
-                  </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    R${seat.Valor},00
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Aluna}
