@@ -8,6 +8,7 @@ import SeatsViewVaga from "./SeatsViewVaga";
 import SucessView from "./SucessView";
 import SucessViewPart from "./SucessViewPart";
 import Relatorio from "./Relatorio";
+import Planilha from "./Planilha";
 import Qrcode from "./qrcode1";
 import Qrcode2 from "./qrcode2";
 import RelSession from "./RelatorioSessoes";
@@ -31,6 +32,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MoviesView avulso={0} />} />
           <Route path="/relatorio" element={<Relatorio />} />
+          <Route path="/planilha" element={<Planilha />} />
           <Route
             path="/assentos/1"
             element={<SeatsView setBuyerData={setBuyerData} overview={1} />}
