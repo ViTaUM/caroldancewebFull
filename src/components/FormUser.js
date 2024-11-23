@@ -395,7 +395,7 @@ export default function FormUser({
             >
               <option value="não">Não</option>
               <option value="sim">Sim - R$15,00</option>
-              <option value="duall">Nas Duas Sessões - R$25,00</option>
+              <option value="dual">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
         )}

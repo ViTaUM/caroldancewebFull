@@ -1,16 +1,16 @@
 [
     {
       "id": 1,
-      "title": "Memórias - 20 anos",
+      "title": "O verdadeiro presente de Natal",
       "img": "sessao_1.jpeg",
       "overview": "1 Sessão",
-      "releaseDate": "2024-06-08T16:00:00.000Z"
+      "releaseDate": "2024-12-11T17:00:00.000Z"
     },
     {
       "id": 2,
-      "title": "Memórias - 20 anos",
+      "title": "O verdadeiro presente de Natal",
       "img": "sessao_2.jpeg",
       "overview": "2 Sessão",
-      "releaseDate": "2024-06-08T19:00:00.000Z"
+      "releaseDate": "2024-12-11T19:30:00.000Z"
     }
   ]

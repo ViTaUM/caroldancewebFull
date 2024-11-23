@@ -339,7 +339,7 @@ export default function SeatsViewVaga({
           </InputContainer>
           <InputContainer>
             <label htmlFor="estacionamento">
-              Deseja estacionar na escola Salesiano? Valor R$15,00
+              Deseja estacionar na escola Salesiano?
             </label>
             <select
               id="estacionamento"
@@ -348,7 +348,8 @@ export default function SeatsViewVaga({
               required
             >
               <option value="não">Não</option>
-              <option value="sim">Sim</option>
+              <option value="sim">Sim - R$15,00</option>
+              <option value="dual">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
           <button type="submit">Reservar Assento(s)</button>
