@@ -149,7 +149,7 @@ export default function FormUser({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento, setEstacionamento] = useState("não");
+  const [estacionamento, setEstacionamento] = useState("0");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -200,10 +200,10 @@ export default function FormUser({
 
     // Define o valor do estacionamento com base no campo
     let estacionamentoValor = 0;
-    if (estacionamento === "sim") {
-      estacionamentoValor = 15.0;
-    } else if (estacionamento === "duall") {
-      estacionamentoValor = 25.0;
+    if (estacionamento === "1") {
+      estacionamentoValor = 1;
+    } else if (estacionamento === "2") {
+      estacionamentoValor = 2;
     }
 
 
@@ -393,9 +393,9 @@ export default function FormUser({
               onChange={(e) => setEstacionamento(e.target.value)}
               required
             >
-              <option value="não">Não</option>
-              <option value="sim">Sim - R$15,00</option>
-              <option value="dual">Nas Duas Sessões - R$25,00</option>
+              <option value="0">Não</option>
+              <option value="1">Sim - R$15,00</option>
+              <option value="2">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
         )}

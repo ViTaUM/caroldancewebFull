@@ -19,9 +19,14 @@ export default function SucessPurchase({ buyerData }) {
   );
 
   // Adiciona o valor do estacionamento ao total se existir
-  if (buyerData.estacionamento) {
-    totalValor += 15;
-  }
+  const estacionamentoValor =
+    buyerData.estacionamento === 1
+      ? 15
+      : buyerData.estacionamento === 2
+      ? 25
+      : 0;
+
+  totalValor += estacionamentoValor;
 
   // Obtém a data e hora atual
   const currentDate = new Date();
@@ -45,7 +50,7 @@ export default function SucessPurchase({ buyerData }) {
         {buyerData.estacionamento && (
           <PurchaseInfo>
             <h2>Estacionamento</h2>
-            <p>R$15,00</p>
+            <p>R$ {estacionamentoValor},00</p>
           </PurchaseInfo>
         )}
         <PurchaseInfo>

@@ -29,10 +29,10 @@ export default function Seat({
       return;
     }
 
-    if (valor === 40) {
-      alert("Apenas assentos cortesias estão liberados!");
-      return;
-    }
+    //  if ( valor === 40){
+    //    alert("Apenas assentos cortesias estão liberados!");
+    //    return;
+    //  }
 
     // if (countValor30 || valor !== 0) {
     //   alert(
@@ -47,10 +47,10 @@ export default function Seat({
       setSelected(false);
     } else {
       // Regras para adicionar assento
-      if (valor === 0 && countValor0 >= 2) {
-        alert("Você só pode selecionar no máximo 2 assentos cortesia.");
-        return;
-      }
+       if (valor === 0 && countValor0 >= 2) {
+         alert("Você só pode selecionar no máximo 2 assentos cortesia.");
+         return;
+       }
       // if (valor === 30 && countValor30 >= 3 && !avulso) {
       //   alert("Você só pode selecionar no máximo 3 assentos normais.");
       //   return;
@@ -79,37 +79,37 @@ const SeatButton = styled.li`
     text-align: center;
     font-size: 12px;
     color: ${(props) => {
-    if (props.isAvailable && props.selected) {
-      return "#000";
-    } else if (props.isAvailable) {
-      return "#FFF";
-    }
+      if (props.isAvailable && props.selected) {
+        return "#000";
+      } else if (props.isAvailable) {
+        return "#FFF";
+      }
 
-    return "#000000";
-  }};
+      return "#000000";
+    }};
     background-color: ${(props) => {
-    if (props.isAvailable && props.selected) {
-      return "#8DD7CF";
-    } else if (!props.isAvailable && props.valor === 0) {
-      return "#C3CFD9";
-    } else if (props.valor === 0) {
-      return "#FF0000";
-    } else if (props.isAvailable) {
-      return "#3AA8F9";
-    }
+      if (props.isAvailable && props.selected) {
+        return "#8DD7CF";
+      } else if (!props.isAvailable && props.valor === 0) {
+        return "#C3CFD9";
+      } else if (props.valor === 0) {
+        return "#FF0000";
+      } else if (props.isAvailable) {
+        return "#3AA8F9";
+      }
 
-    return "#C3CFD9";
-  }};
+      return "#C3CFD9";
+    }};
     border: 1px solid
       ${(props) => {
-    if (props.isAvailable && props.selected) {
-      return "#1AAE9E";
-    } else if (props.isAvailable) {
-      return "#7B8B99";
-    }
+        if (props.isAvailable && props.selected) {
+          return "#1AAE9E";
+        } else if (props.isAvailable) {
+          return "#7B8B99";
+        }
 
-    return "#C3CFD9";
-  }};
+        return "#C3CFD9";
+      }};
     cursor: ${(props) => (props.isAvailable ? "pointer" : "unset")};
   }
 `;

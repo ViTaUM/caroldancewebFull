@@ -174,7 +174,13 @@ export default function Relatorio() {
                     {seat.Email}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    R${seat.Valor},00
+                    R${
+                      seat.Estacionamento === 1
+                        ? seat.Valor + 15
+                        : seat.Estacionamento === 2
+                          ? seat.Valor + 25
+                          : seat.Valor
+                    },00
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Aluna}
