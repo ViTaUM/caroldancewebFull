@@ -11,10 +11,10 @@ export default function SeatsSubtitle() {
         <CircleColor type="disponivel" />
         <span>Disponível</span>
       </ColorContainer>
-      {/* <ColorContainer>
+      <ColorContainer>
         <CircleColor type="cortesia" />
         <span>Cortesia</span>
-      </ColorContainer> */}
+      </ColorContainer>
       <ColorContainer>
         <CircleColor type="indisponivel" />
         <span>Indisponível</span>
@@ -60,12 +60,12 @@ const CircleColor = styled.div`
   }};
   border: 1px solid
     ${(props) => {
-      if (props.type === "disponivel") {
-        return "#3AA8F9";
-      } else if (props.type === "indisponivel") {
-        return "#C3CFD9";
-      }
+    if (props.type === "disponivel") {
+      return "#3AA8F9";
+    } else if (props.type === "indisponivel") {
+      return "#C3CFD9";
+    }
 
-      return "#FFFFF";
-    }};
+    return "#FFFFF";
+  }};
 `;
