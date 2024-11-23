@@ -149,7 +149,7 @@ export default function FormUser({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento] = useState("não");
+  const [estacionamento, setEstacionamento] = useState("não");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -198,7 +198,14 @@ export default function FormUser({
       return;
     }
 
-   // const estacionamentoValor = estacionamento === "sim" ? 10.0 : 0;
+    // Define o valor do estacionamento com base no campo
+    let estacionamentoValor = 0;
+    if (estacionamento === "sim") {
+      estacionamentoValor = 15.0;
+    } else if (estacionamento === "duall") {
+      estacionamentoValor = 25.0;
+    }
+
 
     const assentos = selectedSeats.reduce((acc, seat) => {
       acc[seat.seatId] = seat.valor;
@@ -215,8 +222,8 @@ export default function FormUser({
       email,
       assentos,
       assentosNomes,
-      //estacionamento: avulso === 1 ? 0 : estacionamentoValor ? 1 : 0,
-      estacionamento: 0,
+      estacionamento: estacionamentoValor,
+      // estacionamento: 0,
       qrcode: "",
     };
 
@@ -375,10 +382,10 @@ export default function FormUser({
             </div>
           </InputContainer>
         )}
-        {/* {!avulso && (
+        {!avulso && (
           <InputContainer>
             <label htmlFor="estacionamento">
-              Deseja estacionar na escola Salesiano? Valor R$15,00
+              Deseja estacionar na escola Salesiano?
             </label>
             <select
               id="estacionamento"
@@ -387,10 +394,11 @@ export default function FormUser({
               required
             >
               <option value="não">Não</option>
-              <option value="sim">Sim</option>
+              <option value="sim">Sim - R$15,00</option>
+              <option value="duall">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
-        )} */}
+        )}
         {qrData && (
           <div ref={qrRef} style={{ display: "none" }}>
             <QRCode

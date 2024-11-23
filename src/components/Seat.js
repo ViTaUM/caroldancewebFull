@@ -29,10 +29,10 @@ export default function Seat({
       return;
     }
 
-     if ( valor === 40){
-       alert("Apenas assentos cortesias estão liberados!");
-       return;
-     }
+    //  if ( valor === 40){
+    //    alert("Apenas assentos cortesias estão liberados!");
+    //    return;
+    //  }
 
     // if (countValor30 || valor !== 0) {
     //   alert(
