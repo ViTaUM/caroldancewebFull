@@ -280,7 +280,7 @@ export default function FormUser({
   }
 
   useEffect(() => {
-    if (estacionamento === "sim") {
+    if (estacionamento === "1") {
       setShowModal(true);
     }
   }, [estacionamento]);
