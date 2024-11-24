@@ -347,9 +347,9 @@ export default function SeatsViewVaga({
               onChange={(e) => setEstacionamento(e.target.value)}
               required
             >
-              <option value="não">Não</option>
-              <option value="sim">Sim - R$15,00</option>
-              <option value="dual">Nas Duas Sessões - R$25,00</option>
+              <option value="0">Não</option>
+              <option value="1">Sim - R$15,00</option>
+              <option value="2">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
           <button type="submit">Reservar Assento(s)</button>

@@ -141,6 +141,9 @@ export default function Relatorio() {
                 Valor(R$)
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
+                Estacionamento
+              </th>
+              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                 Aluna
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
@@ -176,11 +179,19 @@ export default function Relatorio() {
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     R${
                       seat.Estacionamento === 1
-                        ? seat.Valor + 15
+                        ? Number(seat.Valor) + 15
                         : seat.Estacionamento === 2
-                          ? seat.Valor + 25
-                          : seat.Valor
+                          ? Number(seat.Valor) + 25
+                          : Number(seat.Valor)
                     },00
+                  </td>
+                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
+                    {seat.Estacionamento === 0
+                      ? 'Não!'
+                      : seat.Estacionamento === 1
+                        ? 'Sim - Uma vaga'
+                        : seat.Estacionamento === 2
+                          ? 'Duas Sessões' : ''}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Aluna}
