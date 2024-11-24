@@ -147,7 +147,7 @@ export default function SeatsViewVaga({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento, setEstacionamento] = useState("não");
+  const [estacionamento, setEstacionamento] = useState("1");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -195,7 +195,7 @@ export default function SeatsViewVaga({
       periodo:
         overview === 1 ? "11/12/2024 - SESSAO 1" : "11/12/2024 - SESSAO 2",
       email,
-      estacionamento: "sim",
+      estacionamento,
     };
     console.log();
     // Espera a renderização do QRCode
@@ -231,7 +231,7 @@ export default function SeatsViewVaga({
   }
 
   useEffect(() => {
-    if (estacionamento === "sim") {
+    if (estacionamento === "1") {
       setShowModal(true);
     }
   }, [estacionamento]);

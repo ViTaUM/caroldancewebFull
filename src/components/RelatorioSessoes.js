@@ -194,8 +194,10 @@ export default function Relatorio() {
         accessor: "Valor",
         Cell: ({ row }) => {
           let valorTotal = parseInt(row.original.Valor);
-          if (row.original.Estacionamento === "SIM") {
+          if (row.original.Estacionamento === "SIM" || row.original.Estacionamento === "1") {
             valorTotal += 15; // Soma R$15,00 se estacionamento for SIM
+          } else if (row.original.Estacionamento === "2") {
+            valorTotal += 25;
           }
           return `R$${valorTotal},00`;
         },

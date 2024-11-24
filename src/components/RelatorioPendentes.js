@@ -78,7 +78,7 @@ export default function RelatorioPendentes() {
         accessor: "Valor",
         Cell: ({ row }) => {
           let valorTotal = parseInt(row.original.Valor);
-          if (row.original.Estacionamento === "SIM") {
+          if (row.original.Estacionamento === "1") {
             valorTotal += 15; // Soma R$15,00 se estacionamento for SIM
           }
           return `R$${valorTotal},00`;

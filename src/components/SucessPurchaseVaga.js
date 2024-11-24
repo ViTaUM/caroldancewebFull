@@ -16,7 +16,7 @@ export default function SucessPurchaseVaga({ buyerData }) {
         </OrderDetails>
         <PurchaseInfo>
           <h2>Estacionamento</h2>
-          <p>R$15,00</p>
+          <p>{buyerData.estacionamento === 1 ? "R$15,00" : "R$25,00"}</p>
         </PurchaseInfo>
         <PurchaseInfo>
           <h2>Dados</h2>
@@ -26,7 +26,7 @@ export default function SucessPurchaseVaga({ buyerData }) {
           <p>{`Data do Pedido: ${formattedDate}`}</p>
           <p>{`Forma de Pagamento: PIX`}</p>
           <p>
-            Valor Total: <span>{`R$ 15,00`}</span>
+            Valor Total: <span>{buyerData.estacionamento === 1 ? "R$15,00" : "R$25,00"}</span>
           </p>
         </PurchaseInfo>
       </LeftColumn>
