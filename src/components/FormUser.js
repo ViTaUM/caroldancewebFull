@@ -382,7 +382,7 @@ export default function FormUser({
             </div>
           </InputContainer>
         )}
-        {!avulso && (
+        {!avulso && overview !== "11/12/2024 - SESSAO 2" && (
           <InputContainer>
             <label htmlFor="estacionamento">
               Deseja estacionar na escola Salesiano?
