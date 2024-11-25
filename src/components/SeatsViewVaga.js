@@ -154,6 +154,13 @@ export default function SeatsViewVaga({
   const [filteredStudents, setFilteredStudents] = useState(studentData);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    if (overview === 2) {
+      // Exibe o modal para a sessão 2
+      setShowModal(true);
+    }
+  }, [overview]);
+
   // Função para validar um e-mail usando regex
   function isValidEmail(email) {
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
@@ -208,8 +215,8 @@ export default function SeatsViewVaga({
           body
         )
         .then((res) => {
-            setBuyerData({ ...body, teste: "Ok" });
-            navigate("/sucessoEstacionamento", { replace: true });
+          setBuyerData({ ...body, teste: "Ok" });
+          navigate("/sucessoEstacionamento", { replace: true });
         })
         .catch((err) => {
           if (
@@ -348,7 +355,6 @@ export default function SeatsViewVaga({
               required
             >
               <option value="1">Sim - R$15,00</option>
-              <option value="2">Nas Duas Sessões - R$25,00</option>
             </select>
           </InputContainer>
           <button type="submit">Reservar Vaga de Estacionamento(s)</button>
@@ -356,28 +362,34 @@ export default function SeatsViewVaga({
         {showModal && (
           <ModalOverlay>
             <ModalContent>
-              <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
+              <ModalHeader>
+                {overview === 2 ? "VAGAS ESGOTADAS!" : "AVISO SOBRE O ESTACIONAMENTO"}
+              </ModalHeader>
               <ModalText>
-                O veículo deverá permanecer estacionado no Colégio Salesiano
-                entre o período das{" "}
-                {overview === 1 ? "15h00 e 18h00" : "18:30 e 21h"}. Assim que o
-                espetáculo terminar, será necessário retirá-lo do local.
+                {overview === 2
+                  ? "Infelizmente, todas as vagas para a sessão 2 já foram preenchidas."
+                  : `O veículo deverá permanecer estacionado no Colégio Salesiano entre o período das ${overview === 1 ? "15h00 e 18h00" : "18:30 e 21h"
+                  }. Assim que o espetáculo terminar, será necessário retirá-lo do local.`}
               </ModalText>
-              <CheckboxContainer>
-                <input
-                  type="checkbox"
-                  id="confirmation"
-                  checked={isChecked}
-                  onChange={handleCheckboxChange}
-                  className="large-checkbox"
-                />
-                <label htmlFor="confirmation">Li e estou ciente</label>
-              </CheckboxContainer>
+              {overview !== 2 && (
+                <CheckboxContainer>
+                  <input
+                    type="checkbox"
+                    id="confirmation"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                    className="large-checkbox"
+                  />
+                  <label htmlFor="confirmation">Li e estou ciente</label>
+                </CheckboxContainer>
+              )}
               <CloseButton
-                onClick={() => setShowModal(false)}
-                disabled={!isChecked}
+                onClick={() => {
+                  if (overview !== 2) setShowModal(false);
+                }}
+                disabled={overview === 2 || (overview !== 2 && !isChecked)}
               >
-                Fechar
+                {overview === 2 ? "Entendido" : "Fechar"}
               </CloseButton>
             </ModalContent>
           </ModalOverlay>
