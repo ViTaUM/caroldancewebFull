@@ -149,7 +149,7 @@ export default function FormUser({
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento, setEstacionamento] = useState("0");
+  const [estacionamento] = useState("0");
   const [showModal, setShowModal] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const navigate = useNavigate();
@@ -199,12 +199,12 @@ export default function FormUser({
     }
 
     // Define o valor do estacionamento com base no campo
-    let estacionamentoValor = 0;
-    if (estacionamento === "1") {
-      estacionamentoValor = 1;
-    } else if (estacionamento === "2") {
-      estacionamentoValor = 2;
-    }
+    // let estacionamentoValor = 0;
+    // if (estacionamento === "1") {
+    //   estacionamentoValor = 1;
+    // } else if (estacionamento === "2") {
+    //   estacionamentoValor = 2;
+    // }
 
 
     const assentos = selectedSeats.reduce((acc, seat) => {
@@ -222,7 +222,7 @@ export default function FormUser({
       email,
       assentos,
       assentosNomes,
-      estacionamento: estacionamentoValor,
+      estacionamento: 0,
       // estacionamento: 0,
       qrcode: "",
     };
@@ -382,7 +382,7 @@ export default function FormUser({
             </div>
           </InputContainer>
         )}
-        {!avulso && overview !== "11/12/2024 - SESSAO 2" && (
+        {/* {!avulso && overview !== "11/12/2024 - SESSAO 2" && (
           <InputContainer>
             <label htmlFor="estacionamento">
               Deseja estacionar na escola Salesiano?
@@ -397,7 +397,7 @@ export default function FormUser({
               <option value="1">Sim - R$15,00</option>
             </select>
           </InputContainer>
-        )}
+        )} */}
         {qrData && (
           <div ref={qrRef} style={{ display: "none" }}>
             <QRCode
