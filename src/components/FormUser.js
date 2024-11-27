@@ -215,7 +215,7 @@ export default function FormUser({
     const assentosNomes = selectedSeats.map((seat) => seat.name).join(", ");
 
     const body = {
-      aluno: avulso === 1 ? 203 : alunaId,
+      aluno: avulso === 1 ? 200 : alunaId,
       cpf,
       nome,
       periodo: overview,
