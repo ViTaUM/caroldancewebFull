@@ -15,11 +15,11 @@ function QRCode1() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const CPF = urlParams.get("CPF") || "";
-    const Nome = urlParams.get("Nome") || "";
-    const Assentos = urlParams.get("Assentos")
-      ? urlParams.get("Assentos").split(",")
+    const Nome = urlParams.get("NOME") || "";
+    const Assentos = urlParams.get("ASSENTOS")
+      ? urlParams.get("ASSENTOS").split(",")
       : [];
-    const Sessao = urlParams.get("Sessao") || "";
+    const Sessao = urlParams.get("SESSAO") || "";
 
     const fetchedData = {
       CPF,
