@@ -205,7 +205,7 @@ export default function RelatorioEstacionamentoPendente() {
   );
 
   const data = React.useMemo(
-    () => seats.filter((seat) => seat.statusPagamento === "Pendente"),
+    () => seats.filter((seat) => seat.statusPagamento !== "Teste"),
     [seats]
   );
 

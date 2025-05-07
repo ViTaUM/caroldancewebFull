@@ -13,9 +13,9 @@ function QRCode2() {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const CPF = urlParams.get("CPF") || "";
-    const Nome = urlParams.get("Nome") || "";
-    const Assentos = urlParams.get("Assentos") ? urlParams.get("Assentos").split(",") : [];
-    const Sessao = urlParams.get("Sessao") || "";
+    const Nome = urlParams.get("NOME") || "";
+    const Assentos = urlParams.get("ASSENTOS") ? urlParams.get("ASSENTOS").split(",") : [];
+    const Sessao = urlParams.get("SESSAO") || "";
 
     setData({
       CPF,

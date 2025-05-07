@@ -39,42 +39,46 @@ export default function SucessPurchase({ buyerData }) {
           <p>A confirmação foi enviada para o e-mail: </p>
           <span>{buyerData.email}</span>
         </OrderDetails>
-        <PurchaseInfo>
-          <h2>Ingressos</h2>
-          {idsAtualizados.map((seat, index) => (
-            <p key={index}>{`Assento ${seat.name} - ${
-              seat.valor === 0 ? "cortesia" : "R$" + seat.valor + ",00"
-            }`}</p>
-          ))}
-        </PurchaseInfo>
-        {buyerData.estacionamento && (
-          <PurchaseInfo>
-            <h2>Estacionamento</h2>
-            <p>R$ {estacionamentoValor},00</p>
-          </PurchaseInfo>
-        )}
-        <PurchaseInfo>
-          <h2>Dados</h2>
-          <p>
-            Status: <span>Aguardando Pagamento</span>
-          </p>
-          <p>{`Data do Pedido: ${formattedDate}`}</p>
-          <p>{`Forma de Pagamento: PIX`}</p>
-          <p>
-            Valor Total: <span>{`R$ ${totalValor},00`}</span>
-          </p>
-        </PurchaseInfo>
+        <div className="row w-100 g-4">
+          <div className="col-12 col-md-7">
+            <PurchaseInfo>
+              <h2>Ingressos</h2>
+              <div className="d-flex flex-wrap justify-content-center gap-2 mb-3">
+                {idsAtualizados.map((seat, index) => (
+                  <SeatTag key={index}>{seat.name}</SeatTag>
+                ))}
+              </div>
+            </PurchaseInfo>
+            {buyerData.estacionamento && (
+              <PurchaseInfo>
+                <h2>Estacionamento</h2>
+                <p>R$ {estacionamentoValor},00</p>
+              </PurchaseInfo>
+            )}
+            <PurchaseInfo>
+              <h2>Dados</h2>
+              <p>
+                Status: <span>Aguardando Pagamento</span>
+              </p>
+              <p>{`Data do Pedido: ${formattedDate}`}</p>
+              <p>{`Forma de Pagamento: PIX`}</p>
+              <p>
+                Valor Total: <span>{`R$ ${totalValor},00`}</span>
+              </p>
+            </PurchaseInfo>
+          </div>
+          <div className="col-12 col-md-5 d-flex flex-column align-items-center justify-content-center">
+            <PurchaseInfo>
+              <h2>PIX</h2>
+              <p>{`Chave: (71) 98690-4826`}</p>
+              <p>
+                <img src={qrcode} alt="QRCODE" />
+              </p>
+              <p>{`Nome: Beatriz da Silva Santos Barros`}</p>
+            </PurchaseInfo>
+          </div>
+        </div>
       </LeftColumn>
-      <RightColumn>
-        <PurchaseInfo>
-          <h2>PIX</h2>
-          <p>{`Chave: (71) 98690-4826`}</p>
-          <p>
-            <img src={qrcode} alt="QRCODE" />
-          </p>
-          <p>{`Nome: Beatriz da Silva Santos Barros`}</p>
-        </PurchaseInfo>
-      </RightColumn>
     </PurchaseContainer>
   );
 }
@@ -98,15 +102,6 @@ const LeftColumn = styled.div`
   @media (min-width: 822px) {
     width: 60%;
     padding-right: 20px;
-  }
-`;
-
-const RightColumn = styled.div`
-  flex: 1;
-  width: 100%;
-
-  @media (min-width: 822px) {
-    width: 40%;
   }
 `;
 
@@ -137,6 +132,17 @@ const PurchaseInfo = styled.div`
     font-size: 24px;
     font-weight: bold;
   }
+`;
+
+const SeatTag = styled.span`
+  display: inline-block;
+  background: #293845;
+  color: #fff;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 8px 18px;
+  font-size: 1.1rem;
+  margin: 2px 4px;
 `;
 
 const OrderDetails = styled.div`

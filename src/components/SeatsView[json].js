@@ -4,12 +4,7 @@ import SeatsList from "./SeatsList";
 import FormUser from "./FormUser";
 import Footer from "./Fotter";
 import logo from "./logo.jpg";
-import axios from "axios";
-import cadeiranteImg from "../assets/cadeirante.png";
-
-const PREFERENCIAL = [
-  "B2", "B4", "B5", "B8", "B9", "B12", "B13", "B18"
-];
+import assentos from "../evento/assentos.json";
 
 export default function SeatsView({ setBuyerData, overview, avulso }) {
   const [seats, setSeats] = useState([]);
@@ -18,36 +13,9 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
   const [isFooterVisible, setIsFooterVisible] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`https://smsprefeiturasp.com.br/go/seat?session=${overview}`)
-      .then((response) => {
-        // Junta todos os arrays das propriedades em um único array
-        const assentosObj = response.data;
-        const assentosArray = Object.values(assentosObj).flat();
-        const matrizAssentos = agruparAssentosPorFileira(assentosArray);
-        setSeats(matrizAssentos);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Erro ao buscar os assentos:", error);
-      });
-  }, [overview]);
-
-  function agruparAssentosPorFileira(assentos) {
-    const fileiras = {};
-    assentos.forEach((assento) => {
-      if (!fileiras[assento.letter]) fileiras[assento.letter] = [];
-      fileiras[assento.letter].push(assento);
-    });
-
-    // Ordem das fileiras do fundo para frente (Q até A)
-    const ordem = [
-      "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "A"
-    ];
-    return ordem.map((letra) =>
-      (fileiras[letra] || []).sort((a, b) => a.id - b.id)
-    );
-  }
+    setSeats(assentos);
+    setLoading(false);
+  }, []);
 
   if (loading) {
     return <></>;
@@ -62,14 +30,12 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
         seats={seats}
         selectedSeats={selectedSeats}
         setSelectedSeats={setSelectedSeats}
-        cadeiranteImg={cadeiranteImg}
-        preferenciais={PREFERENCIAL}
       />
       <FormUser
         selectedSeats={selectedSeats}
         setBuyerData={setBuyerData}
         overview={
-          overview === 1 ? "15/06/2025 - SESSAO 1" : "15/06/2025 - SESSAO 2"
+          overview === 1 ? "11/06/2025 - SESSAO 1" : "11/06/2025 - SESSAO 2"
         }
         setIsFooterVisible={setIsFooterVisible}
         avulso={avulso}
@@ -80,7 +46,7 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
           <NameTime>
             <h3>Broadway - O show vai começar!</h3>
             <p>
-              15/06/2025 - domingo às {overview === 1 ? "10:00" : "11:30"} horas
+              11/06/2025 - quarta-feira às {overview === 1 ? "10:00" : "11:30"} horas
             </p>
           </NameTime>
         </Footer>

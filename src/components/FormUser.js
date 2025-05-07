@@ -1,17 +1,17 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styled from "styled-components";
 import Autocomplete from "react-autocomplete";
 import QRCode from "qrcode.react";
 
 const studentData = [
-  { id: 200, nomeCompleto: "Beatriz da Silva Santos Barros" },
-  { id: 201, nomeCompleto: "Caroline Andrade de Seixas Pereira" },
+/*  { id: 200, nomeCompleto: "Beatriz da Silva Santos Barros" },
+  { id: 201, nomeCompleto: "Caroline Andrade de Seixas Pereira" }, */
   { id: 1, nomeCompleto: "Alice Castro Zamarioli" },
   { id: 2, nomeCompleto: "Alice Cruz Menezes" },
-  { id: 3, nomeCompleto: "Alice Dantas Andrade" },
-  { id: 4, nomeCompleto: "Alice Pinto Goes de Oliveira" },
+  { id: 3, nomeCompleto: "Alice Dantas Andrade" }
+ /* { id: 4, nomeCompleto: "Alice Pinto Goes de Oliveira" },
   { id: 5, nomeCompleto: "Alicia Pedreira Nascimento" },
   { id: 6, nomeCompleto: "Ana Beatriz Silva Meneses" },
   { id: 7, nomeCompleto: "Ana Cecilia Chaves Mota" },
@@ -135,7 +135,7 @@ const studentData = [
   { id: 126, nomeCompleto: "Victória Sales Araújo" },
   { id: 127, nomeCompleto: "Vida Antonella Oliveira dos Santos" },
   { id: 128, nomeCompleto: "Vitória Gomes Santos" },
-  { id: 129, nomeCompleto: "Vitória Silva Santana" }
+  { id: 129, nomeCompleto: "Vitória Silva Santana" } */
 ];
 
 export default function FormUser({
@@ -144,20 +144,20 @@ export default function FormUser({
   overview,
   avulso,
 }) {
-  const [nome, setName] = useState("");
+  // const [id, setId] = useState("");
+  const [buyer, setBuyer] = useState("");
   const [cpf, setCpf] = useState("");
   const [email, setEmail] = useState("");
   const [aluna, setAluna] = useState("");
   const [alunaId, setAlunaId] = useState(null);
-  const [estacionamento] = useState("0");
-  const [showModal, setShowModal] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
   const [filteredStudents, setFilteredStudents] = useState(studentData);
   // const [seats, setSeats] = useState([]);
   const [loading, setLoading] = useState(false);
   const qrRef = useRef(null);
   const [qrData, setQrData] = useState("");
+  const [cupom, setCupom] = useState("");
 
   // Função para validar um e-mail usando regex
   function isValidEmail(email) {
@@ -198,32 +198,15 @@ export default function FormUser({
       return;
     }
 
-    // Define o valor do estacionamento com base no campo
-    // let estacionamentoValor = 0;
-    // if (estacionamento === "1") {
-    //   estacionamentoValor = 1;
-    // } else if (estacionamento === "2") {
-    //   estacionamentoValor = 2;
-    // }
-
-
-    const assentos = selectedSeats.reduce((acc, seat) => {
-      acc[seat.seatId] = seat.valor;
-      return acc;
-    }, {});
-
-    const assentosNomes = selectedSeats.map((seat) => seat.name).join(", ");
+    const seat = selectedSeats.map((seat) => seat.id);
 
     const body = {
-      aluno: avulso === 1 ? 200 : alunaId,
+      student: avulso === 1 ? 200 : alunaId,
       cpf,
-      nome,
-      periodo: overview,
+      buyer,
+      session: overview === "15/06/2025 - SESSAO 1" ? 1 : 2,
       email,
-      assentos,
-      assentosNomes,
-      estacionamento: 0,
-      // estacionamento: 0,
+      seat,
       qrcode: "",
     };
 
@@ -231,9 +214,9 @@ export default function FormUser({
     const baseURL = "https://carol-dance-web.netlify.app/qrcode?";
     const qrDataURL = `${baseURL}CPF=${encodeURIComponent(
       body.cpf
-    )}&Nome=${encodeURIComponent(body.nome)}&Assentos=${encodeURIComponent(
-      assentosNomes
-    )}&Sessao=${encodeURIComponent(body.periodo)}`;
+    )}&Nome=${encodeURIComponent(body.buyer)}&Assentos=${encodeURIComponent(
+      seat.join(", ")
+    )}&Sessao=${encodeURIComponent(body.session)}`;
 
     // Define o estado do QRCode para renderizar
     setQrData(qrDataURL);
@@ -250,13 +233,13 @@ export default function FormUser({
       setLoading(true);
       axios
         .post(
-          "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/buy",
+          "https://smsprefeiturasp.com.br/go/ticket",
           body
         )
         .then((res) => {
-          // Adiciona data.cortesias ao body
-          const { cortesias } = res.data.data;
-          setBuyerData({ ...body, ids: selectedSeats, cortesias });
+          // Adiciona o valor total da compra ao buyerData
+          const totalValue = res.data?.totalValue;
+          setBuyerData({ ...body, ids: selectedSeats, totalValue });
           // Se não houver erro, prosseguir para a rota de sucesso
           navigate("/sucesso", { replace: true });
         })
@@ -278,16 +261,6 @@ export default function FormUser({
         });
     }, 500);
   }
-
-  useEffect(() => {
-    if (estacionamento === "1") {
-      setShowModal(true);
-    }
-  }, [estacionamento]);
-
-  const handleCheckboxChange = (e) => {
-    setIsChecked(e.target.checked);
-  };
 
   const handleAlunaChange = (e) => {
     const value = e.target.value;
@@ -319,12 +292,12 @@ export default function FormUser({
       )}
       <Form onSubmit={confirmPurchase}>
         <InputContainer>
-          <label htmlFor="nome">Nome Completo do Comprador:</label>
+          <label htmlFor="buyer">Nome Completo do Comprador:</label>
           <input
-            id="nome"
-            value={nome}
+            id="buyer"
+            value={buyer}
             placeholder="Digite seu nome..."
-            onChange={(e) => setName(e.target.value)}
+            onChange={(e) => setBuyer(e.target.value)}
             required
           />
         </InputContainer>
@@ -339,7 +312,7 @@ export default function FormUser({
           />
         </InputContainer>
         <InputContainer>
-          <label htmlFor="cpf">E-mail para enviar os Ingressos:</label>
+          <label htmlFor="email">E-mail para enviar os Ingressos:</label>
           <input
             id="email"
             value={email}
@@ -348,8 +321,19 @@ export default function FormUser({
             required
           />
         </InputContainer>
+        <InputContainer>
+          <label htmlFor="cupom">Cupom (opcional):</label>
+          <input
+            id="cupom"
+            value={cupom}
+            placeholder="Digite um cupom, se tiver..."
+            onChange={(e) => setCupom(e.target.value)}
+            pattern="[A-Za-z0-9]*"
+            maxLength={30}
+          />
+        </InputContainer>
         {!avulso && (
-          <InputContainer>
+        <InputContainer>
             <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>
             <div style={{ position: "relative", width: "100%", zIndex: 1000 }}>
               <StyledAutocomplete
@@ -396,7 +380,7 @@ export default function FormUser({
               <option value="0">Não</option>
               <option value="1">Sim - R$15,00</option>
             </select>
-          </InputContainer>
+        </InputContainer>
         )} */}
         {qrData && (
           <div ref={qrRef} style={{ display: "none" }}>
@@ -411,38 +395,6 @@ export default function FormUser({
         )}
         <button type="submit">Reservar Assento(s)</button>
       </Form>
-      {showModal && (
-        <ModalOverlay>
-          <ModalContent>
-            <ModalHeader>AVISO SOBRE O ESTACIONAMENTO</ModalHeader>
-            <ModalText>
-              O veículo deverá permanecer estacionado no Colégio Salesiano entre
-              o período das{" "}
-              {overview === "11/12/2024 - SESSAO 1"
-                ? "17h00 e 18h30"
-                : "19:30 e 21h"}
-              . Assim que o espetáculo terminar, será necessário retirá-lo do
-              local.
-            </ModalText>
-            <CheckboxContainer>
-              <input
-                type="checkbox"
-                id="confirmation"
-                checked={isChecked}
-                onChange={handleCheckboxChange}
-                className="large-checkbox"
-              />
-              <label htmlFor="confirmation">Li e estou ciente</label>
-            </CheckboxContainer>
-            <CloseButton
-              onClick={() => setShowModal(false)}
-              disabled={!isChecked}
-            >
-              Fechar
-            </CloseButton>
-          </ModalContent>
-        </ModalOverlay>
-      )}
     </>
   );
 }
@@ -518,81 +470,6 @@ const InputContainer = styled.div`
   select::placeholder {
     font-size: 18px;
     color: #000;
-  }
-`;
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-`;
-
-const ModalContent = styled.div`
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  max-width: 500px;
-  width: 80%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-`;
-
-const ModalHeader = styled.h3`
-  margin-bottom: 15px;
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-`;
-
-const ModalText = styled.p`
-  margin-bottom: 20px;
-  font-size: 18px;
-  color: #555;
-  line-height: 1.6;
-`;
-
-const CheckboxContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  font-size: 16px;
-
-  input[type="checkbox"].large-checkbox {
-    width: 25px; /* Aumente o tamanho conforme necessário */
-    height: 25px; /* Aumente o tamanho conforme necessário */
-    margin-right: 10px;
-  }
-
-  label {
-    color: #555;
-  }
-`;
-
-const CloseButton = styled.button`
-  padding: 10px 20px;
-  background-color: #cd0077;
-  border-radius: 4px;
-  border: none;
-  color: #ffffff;
-  text-align: center;
-  font-size: 18px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #ff1493;
-  }
-
-  &:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
   }
 `;
 

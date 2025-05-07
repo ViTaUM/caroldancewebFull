@@ -42,8 +42,8 @@ export default function Seat({
     // }
 
     if (isSelected) {
-      // Remover o assento desmarcado com base no seatId
-      setSelectedSeats(selectedSeats.filter((seat) => seat.seatId !== seatId));
+      // Remover o assento desmarcado com base no id
+      setSelectedSeats(selectedSeats.filter((seat) => seat.id !== seatId));
       setSelected(false);
     } else {
       // Regras para adicionar assento
@@ -56,7 +56,7 @@ export default function Seat({
       //   return;
       // }
 
-      setSelectedSeats([...selectedSeats, { name, seatId, valor }]);
+      setSelectedSeats([...selectedSeats, { name, id: seatId, valor }]);
       setSelected(true);
     }
   }
@@ -95,7 +95,7 @@ const SeatButton = styled.li`
       } else if (props.valor === 0) {
         return "#FF0000";
       } else if (props.isAvailable) {
-        return "#3AA8F9";
+        return "#32CD32";
       }
 
       return "#C3CFD9";
