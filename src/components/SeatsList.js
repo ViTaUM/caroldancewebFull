@@ -6,6 +6,8 @@ const ROW_LABELS = [
   "Q", "P", "O", "N", "M", "L", "K", "J", "I", "H", "G", "F", "E", "D", "C", "B", "A"
 ];
 
+const CADEIRANTE_SEATS = ["B2", "B4", "B5", "B8", "B9", "B12", "B13", "B18"];
+
 export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // seats deve ser uma matriz de arrays, cada um representando uma fileira
   return (
@@ -17,6 +19,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
             <RowLabel>{ROW_LABELS[rowIndex] || ""}</RowLabel>
             {row.map((seat, colIndex) => {
               if (!seat || seat.vazio) return null;
+              const isCadeirante = CADEIRANTE_SEATS.includes(seat.name);
               return (
                 <Seat
                   key={colIndex}
@@ -26,6 +29,7 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
                   setSelectedSeats={setSelectedSeats}
                   isAvailable={seat.is_available}
                   valor={seat.valor}
+                  isCadeirante={isCadeirante}
                 />
               );
             })}

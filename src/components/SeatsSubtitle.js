@@ -15,6 +15,10 @@ export default function SeatsSubtitle() {
         <CircleColor type="indisponivel" />
         <span>Indisponível</span>
       </ColorContainer>
+      <ColorContainer>
+        <CircleColor type="cadeirante" />
+        <span>Assento para Cadeirante</span>
+      </ColorContainer>
     </ColorsSubtitle>
   );
 }
@@ -50,6 +54,8 @@ const CircleColor = styled.div`
       return "#C3CFD9";
     } else if (props.type === "cortesia") {
       return "#FF0000";
+    } else if (props.type === "cadeirante") {
+      return "#0000FF";
     }
 
     return "#8DD7CF";
@@ -60,6 +66,8 @@ const CircleColor = styled.div`
       return "#32CD32";
     } else if (props.type === "indisponivel") {
       return "#C3CFD9";
+    } else if (props.type === "cadeirante") {
+      return "#0000FF";
     }
 
     return "#FFFFF";
