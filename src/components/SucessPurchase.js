@@ -13,10 +13,10 @@ export default function SucessPurchase({ buyerData }) {
   });
 
   // Recalcula o valor total após aplicar cortesias
-  let totalValor = idsAtualizados.reduce(
-    (total, seat) => total + seat.valor,
-    0
-  );
+  //let totalValor = idsAtualizados.reduce(
+  //  (total, seat) => total + seat.valor,
+  //  0
+  //);
 
   // Adiciona o valor do estacionamento ao total se existir
   const estacionamentoValor =
@@ -26,7 +26,7 @@ export default function SucessPurchase({ buyerData }) {
       ? 25
       : 0;
 
-  totalValor += estacionamentoValor;
+  // totalValor += estacionamentoValor;
 
   // Obtém a data e hora atual
   const currentDate = new Date();
@@ -43,11 +43,14 @@ export default function SucessPurchase({ buyerData }) {
           <div className="col-12 col-md-7">
             <PurchaseInfo>
               <h2>Ingressos</h2>
+              <p>
+            
               <div className="d-flex flex-wrap justify-content-center gap-2 mb-3">
                 {idsAtualizados.map((seat, index) => (
                   <SeatTag key={index}>{seat.name}</SeatTag>
                 ))}
               </div>
+              </p>
             </PurchaseInfo>
             {buyerData.estacionamento && (
               <PurchaseInfo>
@@ -63,7 +66,7 @@ export default function SucessPurchase({ buyerData }) {
               <p>{`Data do Pedido: ${formattedDate}`}</p>
               <p>{`Forma de Pagamento: PIX`}</p>
               <p>
-                Valor Total: <span>{`R$ ${totalValor},00`}</span>
+                Valor Total: <span>{`R$ ${buyerData.totalValue},00`}</span>
               </p>
             </PurchaseInfo>
           </div>

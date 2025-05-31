@@ -211,6 +211,7 @@ export default function FormUser({
       email,
       seat,
       qrcode: "",
+      coupon: cupom,
     };
 
     // Gera o URL do QRCode com os parâmetros via GET
