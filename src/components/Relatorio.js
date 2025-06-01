@@ -6,48 +6,38 @@ import Confirmar from "./ok.png";
 
 export default function Relatorio() {
   const [seats, setSeats] = useState([]);
-  const [shouldReload, setShouldReload] = useState(false);
 
   useEffect(() => {
-    // Cria a configuração dos cabeçalhos para o Axios
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
 
-    // Faz uma chamada para o servidor backend para buscar os dados dos eventos usando Axios
     axios
       .get(
-        "https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket",
+        "https://smsprefeiturasp.com.br/go/ticket",
         config
       )
       .then((response) => {
-        setSeats(response.data.data); // O Axios já faz o parse do JSON automaticamente
+        setSeats(response.data);
       })
       .catch((error) => {
         console.error("Erro ao buscar os assentos:", error);
       });
+  }, []);
 
-    if (shouldReload) {
-      // Atualize a página para refletir as alterações
-      window.location.reload();
-    }
-  }, [shouldReload]);
-
-  const handleExcluir = (periodo, assentos) => {
-    // Confirmar com o usuário antes de excluir
+  const handleExcluir = (id) => {
     const confirmDelete = window.confirm(
       "Tem certeza de que deseja excluir esta reserva?"
     );
     const body = {
-      periodo: periodo,
-      assentos: assentos
+      id
     };
     if (confirmDelete) {
       axios
         .put(
-          `https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/cancel`,
+          `https://smsprefeiturasp.com.br/go/ticket/cancel-purchase`,
           body,
           {
             headers: {
@@ -60,12 +50,11 @@ export default function Relatorio() {
             data: { message, code },
           } = response;
           if (code === 200) {
-            // Reserva excluída com sucesso
             alert(message);
-            // Atualize a página para refletir as alterações
-            setShouldReload(true);
+            window.location.reload();
           } else {
             alert(message);
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -74,21 +63,19 @@ export default function Relatorio() {
     }
   };
 
-  const handleConfirmarPag = (periodo, assentos) => {
-    // Confirmar com o usuário antes
+  const handleConfirmarPag = (id) => {
     const confirmPag = window.confirm(
       "Tem certeza de que deseja confirmar pagamento?"
     );
 
     const body = {
-      periodo: periodo,
-      assentos: assentos
+      id
     };
 
     if (confirmPag) {
       axios
         .put(
-          `https://greenyellow-owl-992918.hostingersite.com/clientTicket/ticket/confirm`,
+          `https://smsprefeiturasp.com.br/go/ticket/confirm-purchase`,
           body
         )
         .then((response) => {
@@ -96,15 +83,11 @@ export default function Relatorio() {
             data: { message, code },
           } = response;
           if (code === 200) {
-            // Reserva excluída com sucesso
             alert(message);
-            // Atualize a página para refletir as alterações
-            setShouldReload(true);
+            window.location.reload();
           } else {
-            console.error(
-              `Erro ao confirmar dados.`,
-              response.data.description
-            );
+            alert(message);
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -141,9 +124,6 @@ export default function Relatorio() {
                 Valor(R$)
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
-                Estacionamento
-              </th>
-              <th style={{ textAlign: "center", verticalAlign: "middle" }}>
                 Aluna
               </th>
               <th style={{ textAlign: "center", verticalAlign: "middle" }}>
@@ -158,14 +138,16 @@ export default function Relatorio() {
             </tr>
           </thead>
           <tbody>
-            {seats
-              .filter(
-                (seat) => seat.Status !== "CANCELADO" && seat.Status !== "PAGO"
-              )
-              .map((seat, index) => (
+            {seats.filter(seat => seat.Status === "PENDENTE" || seat.Status === "APROVADO").map((seat, index) => (
                 <tr key={index}>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.Data}
+                    {new Date(seat.Data).toLocaleString('pt-BR', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Nome}
@@ -177,21 +159,7 @@ export default function Relatorio() {
                     {seat.Email}
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    R${
-                      seat.Estacionamento === 1
-                        ? Number(seat.Valor) + 15
-                        : seat.Estacionamento === 2
-                          ? Number(seat.Valor) + 25
-                          : Number(seat.Valor)
-                    },00
-                  </td>
-                  <td style={{ textAlign: "center", verticalAlign: "middle" }}>
-                    {seat.Estacionamento === 0
-                      ? 'Não!'
-                      : seat.Estacionamento === 1
-                        ? 'Sim - Uma vaga'
-                        : seat.Estacionamento === 2
-                          ? 'Duas Sessões' : ''}
+                    R${Number(seat.Valor)},00
                   </td>
                   <td style={{ textAlign: "center", verticalAlign: "middle" }}>
                     {seat.Aluna}
@@ -204,7 +172,7 @@ export default function Relatorio() {
                   </td>
                   <td>
                     <BoxAcoes>
-                      {seat.Status === "pago" ? (
+                      {seat.Status === "APROVADO" ? (
                         ""
                       ) : (
                         <>
@@ -213,7 +181,7 @@ export default function Relatorio() {
                             alt="Confirmação de Pagamento"
                             width={25}
                             onClick={() =>
-                              handleConfirmarPag(seat.Sessao, JSON.parse(seat.Assento))
+                              handleConfirmarPag(seat.Id)
                             }
                             style={{ cursor: "pointer" }}
                           />
@@ -222,7 +190,7 @@ export default function Relatorio() {
                             alt="Excluir Registro"
                             width={25}
                             onClick={() =>
-                              handleExcluir(seat.Sessao, JSON.parse(seat.Assento))
+                              handleExcluir(seat.Id)
                             }
                             style={{ cursor: "pointer" }}
                           />
