@@ -226,7 +226,7 @@ export default function FormUser({
     setQrData(qrDataURL);
 
     // Espera a renderização do QRCode
-    setTimeout(() => {
+    setTimeout(async () => {
       const qrCanvas = qrRef.current.querySelector("canvas");
       const qrDataURL = qrCanvas.toDataURL("image/png");
 
@@ -235,6 +235,23 @@ export default function FormUser({
 
       setBuyerData({ ...body, ids: selectedSeats });
       setLoading(true);
+      try {
+        const res = await axios.post("https://smsprefeiturasp.com.br/go/ticket",
+          body);
+
+        // Adiciona o valor total da compra ao buyerData
+        const totalValue = res.data?.totalValue;
+        setBuyerData({ ...body, ids: selectedSeats, totalValue });
+        // Se não houver erro, prosseguir para a rota de sucesso
+        navigate("/sucesso", { replace: true });
+
+      } catch (error) {
+        alert(error.response.data.error);
+      } finally {
+        setLoading(false); // Desativa o estado de carregamento
+      }
+
+      return;
       axios
         .post(
           "https://smsprefeiturasp.com.br/go/ticket",
@@ -248,6 +265,7 @@ export default function FormUser({
           navigate("/sucesso", { replace: true });
         })
         .catch((err) => {
+          console.log(err);
           if (
             err.response.data.error.description ===
             "'É obrigatório informar o campo ALUNO'"
@@ -257,7 +275,7 @@ export default function FormUser({
             );
           } else {
             // Mensagem de erro geral
-            alert(err.response.data.error.description);
+            alert(err.error);
           }
         })
         .finally(() => {
@@ -337,7 +355,7 @@ export default function FormUser({
           />
         </InputContainer>
         {!avulso && (
-        <InputContainer>
+          <InputContainer>
             <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>
             <div style={{ position: "relative", width: "100%", zIndex: 1000 }}>
               <StyledAutocomplete

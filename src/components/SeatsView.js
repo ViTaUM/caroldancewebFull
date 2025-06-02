@@ -95,6 +95,9 @@ const SeatsContent = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 60px;
+  box-sizing: border-box;
+  padding: 0 8px;
+
   h1 {
     font-weight: bold;
     font-size: 24px;
@@ -110,6 +113,13 @@ const SeatsContent = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  @media (max-width: 768px) {
+    margin-top: 30px;
+    padding: 0 2px;
+    width: 100vw;
+    overflow-x: hidden;
   }
 `;
 

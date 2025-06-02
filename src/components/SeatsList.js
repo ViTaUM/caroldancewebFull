@@ -12,32 +12,34 @@ export default function SeatsList({ seats, selectedSeats, setSelectedSeats }) {
   // seats deve ser uma matriz de arrays, cada um representando uma fileira
   return (
     <SeatsContainer>
-      <SeatsGrid>
-        {seats.map((row, rowIndex) => (
-          <Row key={rowIndex}>
-            {/* Letra da fileira à esquerda */}
-            <RowLabel>{ROW_LABELS[rowIndex] || ""}</RowLabel>
-            {row.map((seat, colIndex) => {
-              if (!seat || seat.vazio) return null;
-              const isCadeirante = CADEIRANTE_SEATS.includes(seat.name);
-              return (
-                <Seat
-                  key={colIndex}
-                  name={seat.name}
-                  seatId={seat.id}
-                  selectedSeats={selectedSeats}
-                  setSelectedSeats={setSelectedSeats}
-                  isAvailable={seat.is_available}
-                  valor={seat.valor}
-                  isCadeirante={isCadeirante}
-                />
-              );
-            })}
-            {/* Letra da fileira à direita */}
-            <RowLabel>{ROW_LABELS[rowIndex] || ""}</RowLabel>
-          </Row>
-        ))}
-      </SeatsGrid>
+      <SeatsGridWrapper>
+        <SeatsGrid>
+          {seats.map((row, rowIndex) => (
+            <Row key={rowIndex}>
+              {/* Letra da fileira à esquerda */}
+              <RowLabel>{ROW_LABELS[rowIndex] || ""}</RowLabel>
+              {row.map((seat, colIndex) => {
+                if (!seat || seat.vazio) return null;
+                const isCadeirante = CADEIRANTE_SEATS.includes(seat.name);
+                return (
+                  <Seat
+                    key={colIndex}
+                    name={seat.name}
+                    seatId={seat.id}
+                    selectedSeats={selectedSeats}
+                    setSelectedSeats={setSelectedSeats}
+                    isAvailable={seat.is_available}
+                    valor={seat.valor}
+                    isCadeirante={isCadeirante}
+                  />
+                );
+              })}
+              {/* Letra da fileira à direita */}
+              <RowLabel>{ROW_LABELS[rowIndex] || ""}</RowLabel>
+            </Row>
+          ))}
+        </SeatsGrid>
+      </SeatsGridWrapper>
       <SeatsSubtitle />
     </SeatsContainer>
   );
@@ -58,11 +60,28 @@ const SeatsContainer = styled.div`
   margin-top: 30px;
 `;
 
+const SeatsGridWrapper = styled.div`
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    max-width: 100vw;
+  }
+`;
+
 const SeatsGrid = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
-  list-style: none; 
+  list-style: none;
+  min-width: 600px;
+  /* Garante largura mínima para rolagem */
+
+  @media (max-width: 768px) {
+    min-width: 500px;
+  }
 `;
 
 const Row = styled.div`
