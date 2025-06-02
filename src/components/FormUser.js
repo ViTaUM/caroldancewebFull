@@ -252,35 +252,6 @@ export default function FormUser({
       }
 
       return;
-      axios
-        .post(
-          "https://smsprefeiturasp.com.br/go/ticket",
-          body
-        )
-        .then((res) => {
-          // Adiciona o valor total da compra ao buyerData
-          const totalValue = res.data?.totalValue;
-          setBuyerData({ ...body, ids: selectedSeats, totalValue });
-          // Se não houver erro, prosseguir para a rota de sucesso
-          navigate("/sucesso", { replace: true });
-        })
-        .catch((err) => {
-          console.log(err);
-          if (
-            err.response.data.error.description ===
-            "'É obrigatório informar o campo ALUNO'"
-          ) {
-            alert(
-              "Por favor, insira o nome completo da aluna, pois o nome fornecido está incorreto."
-            );
-          } else {
-            // Mensagem de erro geral
-            alert(err.error);
-          }
-        })
-        .finally(() => {
-          setLoading(false); // Desativa o estado de carregamento
-        });
     }, 500);
   }
 
