@@ -194,7 +194,7 @@ export default function FormUser({
     const seat = selectedSeats.map((seat) => seat.id);
 
     const body = {
-      student: avulso === 1 ? 200 : alunaId,
+      student: avulso === 1 ? 999 : alunaId,
       cpf,
       buyer,
       session: overview === "15/06/2025 - SESSAO 1" ? 1 : 2,
@@ -304,17 +304,19 @@ export default function FormUser({
             required
           />
         </InputContainer>
-        <InputContainer>
-          <label htmlFor="cupom">Cupom (opcional):</label>
-          <input
-            id="cupom"
-            value={cupom}
-            placeholder="Digite um cupom, se tiver..."
-            onChange={(e) => setCupom(e.target.value)}
-            pattern="[A-Za-z0-9]*"
-            maxLength={30}
-          />
-        </InputContainer>
+        {!avulso && (
+          <InputContainer>
+            <label htmlFor="cupom">Cupom (opcional):</label>
+            <input
+              id="cupom"
+              value={cupom}
+              placeholder="Digite um cupom, se tiver..."
+              onChange={(e) => setCupom(e.target.value)}
+              pattern="[A-Za-z0-9]*"
+              maxLength={30}
+            />
+          </InputContainer>
+        )}
         {!avulso && (
           <InputContainer>
             <label htmlFor="aluna">Selecione o Nome Completo da Aluna:</label>

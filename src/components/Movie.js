@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Movie({
@@ -9,29 +8,17 @@ export default function Movie({
   overview,
   avulso,
   vagaEstacionamento,
+  onClick
 }) {
   return (
-    <>
-      {vagaEstacionamento === 1 ? (
-        <Link to={`/assentos/${movieId}/estacionamento`}>
-          <MoviePost overview={overview} avulso={avulso}>
-            <img src={imageUrl} alt={title} />
-          </MoviePost>
-        </Link>
-      ) : avulso === 1 ? (
-        <Link to={`/assentos/${movieId}/avulso`}>
-          <MoviePost overview={overview} avulso={avulso}>
-            <img src={imageUrl} alt={title} />
-          </MoviePost>
-        </Link>
-      ) : (
-        <Link to={`/assentos/${movieId}`}>
-          <MoviePost overview={overview}>
-            <img src={imageUrl} alt={title} />
-          </MoviePost>
-        </Link>
-      )}
-    </>
+    <MoviePost 
+      overview={overview} 
+      avulso={avulso}
+      onClick={onClick}
+      style={{ cursor: 'pointer' }}
+    >
+      <img src={imageUrl} alt={title} />
+    </MoviePost>
   );
 }
 
@@ -47,8 +34,6 @@ const MoviePost = styled.li`
     transition: transform 0.2s ease-in-out;
   }
   &:hover img {
-    transform: scale(
-      1.1
-    ); /* Aplica um aumento de 10% na escala quando o mouse passa por cima */
+    transform: scale(1.1); /* Aplica um aumento de 10% na escala quando o mouse passa por cima */
   }
 `;
