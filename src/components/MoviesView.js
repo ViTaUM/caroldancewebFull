@@ -5,16 +5,16 @@ import evento from "../evento/evento.json";
 
 export default function MoviesView({avulso, vagaEstacionamento}) {
   const [movies, setMovies] = useState([]);
-  const [showModal, setShowModal] = useState(false);
+  // const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     // Definindo os filmes com os dados importados do JSON
     setMovies(evento);
   }, []);
 
-  const handleEventClick = () => {
+  /* const handleEventClick = () => {
     setShowModal(true);
-  };
+  };*/
 
   return (
     <Content>
@@ -23,9 +23,9 @@ export default function MoviesView({avulso, vagaEstacionamento}) {
         movies={movies} 
         avulso={avulso} 
         vagaEstacionamento={vagaEstacionamento} 
-        onEventClick={handleEventClick}
+        //onEventClick={handleEventClick}
       />
-      {showModal && (
+      {/*showModal && (
         <ModalOverlay onClick={() => setShowModal(false)}>
           <ModalContent onClick={e => e.stopPropagation()}>
             <h3>Atenção</h3>
@@ -33,7 +33,7 @@ export default function MoviesView({avulso, vagaEstacionamento}) {
             <button onClick={() => setShowModal(false)}>Fechar</button>
           </ModalContent>
         </ModalOverlay>
-      )}
+      )*/}
     </Content>
   );
 }
@@ -52,7 +52,7 @@ const Content = styled.div`
   }
 `;
 
-const ModalOverlay = styled.div`
+/*const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -63,9 +63,9 @@ const ModalOverlay = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1000;
-`;
+`;*/
 
-const ModalContent = styled.div`
+/*const ModalContent = styled.div`
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -99,4 +99,4 @@ const ModalContent = styled.div`
       background-color: #a80062;
     }
   }
-`;
+`;*/ 

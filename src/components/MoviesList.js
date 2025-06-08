@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Movie from "./Movie";
 
-export default function MoviesList({ movies, avulso, vagaEstacionamento, onEventClick }) {
+export default function MoviesList({ movies, avulso, vagaEstacionamento }) {
   return (
     <Movies>
       {movies.length !== 0 ? (
@@ -15,7 +15,7 @@ export default function MoviesList({ movies, avulso, vagaEstacionamento, onEvent
               overview={movie.overview}
               avulso={avulso}
               vagaEstacionamento={vagaEstacionamento}
-              onClick={onEventClick}
+              //onClick={onEventClick}
             />
           );
         })
