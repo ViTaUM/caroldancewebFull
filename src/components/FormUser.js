@@ -226,7 +226,7 @@ export default function FormUser({
       setBuyerData({ ...body, ids: selectedSeats });
       setLoading(true);
       try {
-        const res = await axios.post("https://smsprefeiturasp.com.br/go/ticket",
+        const res = await axios.post("https://h-simcepi.smsprefeiturasp.com.br/go/ticket",
           body);
 
         // Adiciona o valor total da compra ao buyerData

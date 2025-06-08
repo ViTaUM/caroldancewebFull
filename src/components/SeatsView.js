@@ -19,7 +19,7 @@ export default function SeatsView({ setBuyerData, overview, avulso }) {
 
   useEffect(() => {
     axios
-      .get(`https://smsprefeiturasp.com.br/go/seat?session=${overview}`)
+      .get(`https://h-simcepi.smsprefeiturasp.com.br/go/seat?session=${overview}`)
       .then((response) => {
         // Junta todos os arrays das propriedades em um único array
         const assentosObj = response.data;

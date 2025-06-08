@@ -16,7 +16,7 @@ export default function Relatorio() {
 
     axios
       .get(
-        "https://smsprefeiturasp.com.br/go/ticket",
+        "https://h-simcepi.smsprefeiturasp.com.br/go/ticket",
         config
       )
       .then((response) => {
@@ -37,7 +37,7 @@ export default function Relatorio() {
     if (confirmDelete) {
       axios
         .put(
-          `https://smsprefeiturasp.com.br/go/ticket/cancel-purchase`,
+          `https://h-simcepi.smsprefeiturasp.com.br/go/ticket/cancel-purchase`,
           body,
           {
             headers: {
@@ -75,7 +75,7 @@ export default function Relatorio() {
     if (confirmPag) {
       axios
         .put(
-          `https://smsprefeiturasp.com.br/go/ticket/confirm-purchase`,
+          `https://h-simcepi.smsprefeiturasp.com.br/go/ticket/confirm-purchase`,
           body
         )
         .then((response) => {
