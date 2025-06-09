@@ -35,31 +35,31 @@ export default function App() {
           <Route path="/planilha" element={<Planilha />} />
           <Route
             path="/assentos/1"
-            element={<SeatsView setBuyerData={setBuyerData} overview={1} />}
+            // element={<SeatsView setBuyerData={setBuyerData} overview={1} />}
           />
           <Route
             path="/assentos/2"
-           element={<SeatsView setBuyerData={setBuyerData} overview={2} />}
+           // element={<SeatsView setBuyerData={setBuyerData} overview={2} />}
           />
           <Route
             path="/assentos/1/avulso"
-            element={
+           /* element={
               <SeatsView
                 setBuyerData={setBuyerData}
                 overview={1}
                 avulso={1}
               />
-            }
+            }*/
           />
           <Route
             path="/assentos/2/avulso"
-            element={
+            /*element={
               <SeatsView
                 setBuyerData={setBuyerData}
                 overview={2}
                 avulso={1}
               />
-            }
+            }*/
           />
           <Route path="/avulso" element={<MoviesView avulso={1} />} />
           <Route

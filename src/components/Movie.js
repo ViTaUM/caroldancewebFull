@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import SystemClosedModal from "./SystemClosedModal";
 
 export default function Movie({
   imageUrl,
@@ -10,22 +11,30 @@ export default function Movie({
   avulso,
   vagaEstacionamento,
 }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    setIsModalOpen(true);
+  };
+
   return (
     <>
+      <SystemClosedModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       {vagaEstacionamento === 1 ? (
-        <Link to={`/assentos/${movieId}/estacionamento`}>
+        <Link to={`/assentos/${movieId}/estacionamento`} onClick={handleClick}>
           <MoviePost overview={overview} avulso={avulso}>
             <img src={imageUrl} alt={title} />
           </MoviePost>
         </Link>
       ) : avulso === 1 ? (
-        <Link to={`/assentos/${movieId}/avulso`}>
+        <Link to={`/assentos/${movieId}/avulso`} onClick={handleClick}>
           <MoviePost overview={overview} avulso={avulso}>
             <img src={imageUrl} alt={title} />
           </MoviePost>
         </Link>
       ) : (
-        <Link to={`/assentos/${movieId}`}>
+        <Link to={`/assentos/${movieId}`} onClick={handleClick}>
           <MoviePost overview={overview}>
             <img src={imageUrl} alt={title} />
           </MoviePost>
